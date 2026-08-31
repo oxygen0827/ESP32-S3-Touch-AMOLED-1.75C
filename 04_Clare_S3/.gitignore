@@ -1,0 +1,6 @@
+sdkconfig.local
+build/
+build-clare/
+*.private
+managed_components/
+dependencies.lock

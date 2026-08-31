@@ -1,0 +1,62 @@
+menu "Clare S3 Configuration"
+
+    config CLARE_WIFI_SSID
+        string "Wi-Fi SSID"
+        default ""
+        help
+            Supplied locally in sdkconfig.local; never commit credentials.
+
+    config CLARE_WIFI_PASSWORD
+        string "Wi-Fi password"
+        default ""
+
+    config CLARE_API_BASE_URL
+        string "Clare Voice API base URL"
+        default ""
+        help
+            HTTPS base URL including the API prefix, for example
+            https://host.example/voice-api.
+
+    config CLARE_TOPIC
+        string "Default meeting topic"
+        default ""
+
+    config CLARE_BOOT_SELF_TEST
+        bool "Run network self-test after boot"
+        default n
+        help
+            Create and close one test session after Wi-Fi connects, and probe
+            both meeting WebSocket channels. Intended for board bring-up.
+
+    config CLARE_BOOT_SELF_TEST_RETRIES
+        int "Boot network self-test retries"
+        default 3
+        range 0 10
+        help
+            Additional session-creation attempts after the first, used when
+            the self-test fails while Wi-Fi is still connecting or recovering.
+
+    config CLARE_BOOT_SELF_TEST_RETRY_DELAY_MS
+        int "Boot network self-test retry delay (ms)"
+        default 5000
+        range 0 30000
+        help
+            Delay between self-test attempts, giving Wi-Fi time to recover
+            after a beacon-timeout or disconnect event.
+
+    config CLARE_VAD_THRESHOLD
+        int "VAD RMS threshold"
+        default 500
+        range 100 5000
+
+    config CLARE_VAD_MIN_MS
+        int "Minimum speech duration (ms)"
+        default 600
+        range 100 3000
+
+    config CLARE_VAD_SILENCE_MS
+        int "Silence duration for end of speech (ms)"
+        default 1200
+        range 200 5000
+
+endmenu

@@ -1,0 +1,6 @@
+# Copy this file to sdkconfig.local and replace the placeholders locally.
+# Never commit or paste the resulting file into chat, issues, or public repos.
+CONFIG_CLARE_WIFI_SSID="your-wifi-ssid"
+CONFIG_CLARE_WIFI_PASSWORD="your-wifi-password"
+CONFIG_CLARE_API_BASE_URL="https://your-private-host.example/voice-api"
+CONFIG_CLARE_TOPIC="meeting"

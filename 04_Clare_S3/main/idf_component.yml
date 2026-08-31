@@ -1,0 +1,16 @@
+## IDF Component Manager Manifest File
+dependencies:
+  # Pinned to the exact release proven by the S3 reference product
+  # (vocat/ws_meeting_demo runs 1.5.0 in production against the same backend).
+  espressif/esp_websocket_client: ==1.5.0
+  espressif/esp_codec_dev: ^1.4.0
+  # CO5300 QSPI AMOLED driver (466x466) used by the 1.75C board.
+  espressif/esp_lcd_co5300: ^2.0.3
+  espressif/esp_audio_effects: ^1.4.2
+  espressif/esp_audio_codec: "^2.4.0"
+  ## Required IDF version
+  idf:
+    version: '>=4.1.0'
+  lvgl/lvgl: ^9.5.0
+  waveshare/esp_lcd_touch_cst9217: ^1.0.4
+  espressif/esp_lvgl_adapter: ^0.3.0

@@ -1,0 +1,11 @@
+idf_component_register(
+    SRCS
+    "lvgl_bsp.cpp"
+    PRIV_REQUIRES
+    espressif__esp_lvgl_adapter
+    port_bsp
+    lvgl__lvgl
+    esp_timer
+    main
+    INCLUDE_DIRS 
+    "./")

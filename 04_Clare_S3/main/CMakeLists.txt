@@ -1,0 +1,31 @@
+idf_component_register(
+    SRCS
+        "main.cpp"
+        "clare_audio.cpp"
+        "clare_net.cpp"
+        "clare_ui.cpp"
+        "lv_font_clare_cjk_16.c"
+    INCLUDE_DIRS "."
+    EMBED_FILES "selftest_chime.mp3"
+    PRIV_REQUIRES
+        app_bsp
+        port_bsp
+        pmicpower
+        nvs_flash
+        esp_wifi
+        esp_netif
+        esp_event
+        esp_http_client
+        esp_websocket_client
+        json
+        mbedtls
+        esp-tls
+        esp_timer
+        esp_codec_dev
+        esp_audio_effects
+        esp_audio_codec
+        esp_driver_i2s
+        esp_driver_i2c
+        lvgl
+        spiffs
+)

@@ -1,0 +1,117 @@
+# Clare S3 application defaults — Waveshare ESP32-S3-Touch-AMOLED-1.75C.
+# Device-specific Wi-Fi/API values live in sdkconfig.local, which is
+# intentionally kept outside source control.
+#
+# Memory strategy follows the production-proven S3 reference
+# (vocat/products/ws_meeting_demo/sdkconfig.defaults): octal PSRAM carries
+# mbedTLS/Wi-Fi/lwIP buffers, so the TLS allocation failures that were fatal
+# on the RAM-constrained C6 cannot occur here. Full server certificate
+# verification stays ENABLED (the C6 INSECURE experiment is not carried over).
+CONFIG_IDF_TARGET="esp32s3"
+CONFIG_APP_RETRIEVE_LEN_ELF_SHA=16
+CONFIG_ESPTOOLPY_FLASHMODE_QIO=y
+CONFIG_ESPTOOLPY_FLASHSIZE_32MB=y
+CONFIG_PARTITION_TABLE_CUSTOM=y
+CONFIG_COMPILER_OPTIMIZATION_PERF=y
+CONFIG_ESP_DEFAULT_CPU_FREQ_MHZ_240=y
+CONFIG_ESP32S3_DATA_CACHE_LINE_64B=y
+CONFIG_ESP_MAIN_TASK_STACK_SIZE=8192
+CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG=y
+CONFIG_ESP_INT_WDT_TIMEOUT_MS=2000
+CONFIG_ESP_TASK_WDT_TIMEOUT_S=10
+
+# --- PSRAM: 8 MB Octal (ESP32-S3R8) ---
+CONFIG_SPIRAM=y
+CONFIG_SPIRAM_MODE_OCT=y
+CONFIG_SPIRAM_XIP_FROM_PSRAM=y
+CONFIG_SPIRAM_SPEED_80M=y
+CONFIG_SPIRAM_MALLOC_ALWAYSINTERNAL=0
+CONFIG_SPIRAM_TRY_ALLOCATE_WIFI_LWIP=y
+CONFIG_SPIRAM_ALLOW_BSS_SEG_EXTERNAL_MEMORY=y
+
+# --- mbedTLS: big buffers live in PSRAM ---
+CONFIG_MBEDTLS_EXTERNAL_MEM_ALLOC=y
+# Static SSL buffers, NOT dynamic: with DYNAMIC_BUFFER=y the RX buffer is
+# freed (in_ctr temporarily NULL) after every read, and any concurrent
+# mbedtls_ssl_write from the audio task crashes in
+# ssl_check_ctr_renegotiate() with LoadProhibited EXCVADDR=0
+# (logs/clare_s3_reboot_check_20260829.log). Static buffers keep in_ctr valid
+# for the whole session; the ~20 KB/connection cost lands in PSRAM anyway.
+CONFIG_MBEDTLS_DYNAMIC_BUFFER=n
+# Renegotiation check is the exact crash site above; no modern TLS server
+# (incl. clare.vinex.top behind Cloudflare) ever renegotiates, so drop it.
+CONFIG_MBEDTLS_SSL_RENEGOTIATION=n
+# Nothing in the app inspects the peer certificate after the handshake.
+CONFIG_MBEDTLS_SSL_KEEP_PEER_CERTIFICATE=n
+
+# --- TLS certificate verification (ON) ---
+CONFIG_MBEDTLS_CERTIFICATE_BUNDLE=y
+CONFIG_MBEDTLS_CERTIFICATE_BUNDLE_DEFAULT_FULL=y
+# Note: the pinned chain in main/clare_ca_chain.h is passed per-connection
+# (cert_pem) by clare_net.cpp; the bundle above is the fallback for any other
+# HTTPS client. ESP_TLS_USE_GLOBAL_CA_STORE does not exist in IDF 5.5.x — the
+# C6 config line mentioning it was vestigial and is not carried over.
+
+# --- Wi-Fi (from the proven S3 reference) ---
+CONFIG_ESP_WIFI_DYNAMIC_RX_MGMT_BUFFER=y
+CONFIG_ESP_WIFI_TX_BA_WIN=16
+CONFIG_ESP_WIFI_RX_BA_WIN=6
+# Run Wi-Fi code from flash, not IRAM: frees tens of KB of internal RAM for
+# DMA buffers (LCD flush, Wi-Fi static RX). Without this the Wi-Fi driver
+# fails to allocate its static buffers (logs/clare_s3_boot2_20260829.log).
+CONFIG_ESP_WIFI_IRAM_OPT=n
+CONFIG_ESP_WIFI_RX_IRAM_OPT=n
+
+# --- lwIP (from the proven S3 reference) ---
+CONFIG_LWIP_TCP_SND_BUF_DEFAULT=65535
+CONFIG_LWIP_TCP_RECVMBOX_SIZE=10
+CONFIG_LWIP_SNTP_MAX_SERVERS=2
+CONFIG_LWIP_DHCP_GET_NTP_SRV=y
+CONFIG_LWIP_FALLBACK_DNS_SERVER_SUPPORT=y
+# Nothing on the meeting path needs v6 (backend is public v4 via Cloudflare).
+CONFIG_LWIP_IPV6=n
+
+# --- FreeRTOS ---
+CONFIG_FREERTOS_HZ=1000
+CONFIG_FREERTOS_ENABLE_BACKWARD_COMPATIBILITY=y
+CONFIG_FREERTOS_TIMER_TASK_STACK_DEPTH=4096
+
+# --- LVGL ---
+# Route LVGL allocations through clib malloc so large blocks land in PSRAM
+# (SPIRAM_MALLOC_ALWAYSINTERNAL=0). A fixed internal LV pool would starve the
+# LCD flush DMA buffer and Wi-Fi static buffers (proven by the S3 reference).
+CONFIG_LV_USE_CLIB_MALLOC=y
+CONFIG_LV_USE_CLIB_STRING=y
+CONFIG_LV_USE_CLIB_SPRINTF=y
+CONFIG_LV_COLOR_SCREEN_TRANSP=y
+CONFIG_LV_MEM_SIZE_KILOBYTES=64
+CONFIG_LV_ATTRIBUTE_FAST_MEM_USE_IRAM=y
+CONFIG_LV_FONT_MONTSERRAT_12=y
+CONFIG_LV_FONT_MONTSERRAT_16=y
+CONFIG_LV_FONT_MONTSERRAT_20=y
+CONFIG_LV_FONT_MONTSERRAT_24=y
+CONFIG_LV_USE_LOG=y
+CONFIG_LV_LOG_PRINTF=y
+
+# --- Chinese font support ---
+# Custom GB2312 font (lv_font_clare_cjk_16.c) is generated in lv_font_conv's
+# default COMPRESSED format; without this switch glyph lookup fails and text
+# rendering dereferences NULL (LoadProhibited panic on first Chinese
+# transcript char, logs/clare_s3_crash_repro2_20260829.log).
+CONFIG_LV_USE_FONT_COMPRESSED=y
+CONFIG_LV_FONT_SOURCE_HAN_SANS_SC_16_CJK=y
+CONFIG_LV_FONT_DEFAULT_SOURCE_HAN_SANS_SC_16_CJK=y
+
+# --- Clare app ---
+# Run the network self-test automatically on every boot (HTTP session +
+# both WSS channels); acceptance gate for first bring-up on this board.
+CONFIG_CLARE_BOOT_SELF_TEST=y
+
+# Private values are supplied by sdkconfig.local at build time.
+CONFIG_CLARE_WIFI_SSID=""
+CONFIG_CLARE_WIFI_PASSWORD=""
+CONFIG_CLARE_API_BASE_URL=""
+CONFIG_CLARE_TOPIC=""
+CONFIG_CLARE_VAD_THRESHOLD=500
+CONFIG_CLARE_VAD_MIN_MS=600
+CONFIG_CLARE_VAD_SILENCE_MS=1200
