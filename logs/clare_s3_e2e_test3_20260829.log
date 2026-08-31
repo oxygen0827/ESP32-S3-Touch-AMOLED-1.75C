@@ -1,0 +1,87 @@
+I (17738) clare_net: WebSocket connected kind=0
+I (17739) clare_s3: Boot network self-test transcribe err=0
+I (18841) clare_net: WS pre-start heap free8=5902639 largest8=5767168
+I (18842) websocket_client: Started
+I (24013) clare_net: WebSocket connected kind=1
+I (24014) clare_s3: Ask Clare a question
+I (24014) clare_s3: Boot network self-test host err=0
+I (25116) clare_net: HTTP before init free8=5936339 largest8=5767168 free_internal=50123 largest_internal=31744
+I (27803) clare_net: HTTP response status=200 bytes=255 truncated=1
+I (27805) clare_net: HTTP after cleanup free8=5936167 largest8=5767168
+I (27806) clare_s3: Boot network self-test complete
+I (27806) clare_s3: Ask E2E: create session
+I (27806) clare_net: Create session URL ready=1
+I (27806) clare_net: HTTP before init free8=5936143 largest8=5767168 free_internal=50123 largest_internal=31744
+I (33979) clare_net: HTTP response status=200 bytes=82 truncated=0
+I (33981) clare_net: HTTP after cleanup free8=5935971 largest8=5767168
+I (33982) clare_s3: Ask E2E: host connect (403 gate)
+I (33983) clare_net: WS pre-start heap free8=5902103 largest8=5767168
+I (33984) websocket_client: Started
+I (36703) clare_net: WebSocket connected kind=1
+I (36703) clare_s3: Ask Clare a question
+I (36703) clare_s3: Ask E2E: recording 10 s - play the question near the mic NOW
+I (36704) clare_s3: Audio stream started
+I (46709) clare_s3: Ask E2E: end_of_speech sent, waiting 20 s for answer
+I (47665) clare_net: recv kind=1 type=transcription len=85
+I (47670) clare_s3: Question received
+I (50942) clare_net: recv kind=1 type=answer_text len=45
+I (50943) clare_net: recv kind=1 type=answer_text len=51
+I (50949) clare_net: recv kind=1 type=answer_text len=51
+I (50951) clare_net: recv kind=1 type=answer_text len=51
+I (50953) clare_net: recv kind=1 type=answer_text len=48
+I (50954) clare_net: recv kind=1 type=answer_text len=57
+I (51251) clare_net: recv kind=1 type=answer_text len=48
+I (51257) ESP_ES_PARSER: The version of es_parser is v1.0.1
+I (51257) clare_net: tts stream begin expected=7517
+I (51878) clare_net: tts stream end
+I (51883) ESP_ES_PARSER: The version of es_parser is v1.0.1
+I (51883) clare_net: tts stream begin expected=5665
+I (52403) clare_net: tts stream end
+I (52405) clare_net: recv kind=1 type=answer_text len=51
+I (52407) clare_net: recv kind=1 type=answer_text len=51
+I (52408) clare_net: recv kind=1 type=answer_text len=48
+I (52410) clare_net: recv kind=1 type=answer_text len=50
+I (52411) clare_net: recv kind=1 type=answer_text len=54
+I (52412) clare_net: recv kind=1 type=answer_text len=54
+I (52414) clare_net: recv kind=1 type=answer_text len=51
+I (52415) clare_net: recv kind=1 type=answer_text len=51
+I (52418) clare_net: recv kind=1 type=answer_text len=54
+I (52420) clare_net: recv kind=1 type=answer_text len=51
+I (52421) clare_net: recv kind=1 type=answer_text len=48
+I (52426) ESP_ES_PARSER: The version of es_parser is v1.0.1
+I (52427) clare_net: tts stream begin expected=7517
+I (53108) clare_net: tts stream end
+I (53110) clare_net: recv kind=1 type=answer_text len=54
+I (53466) ESP_ES_PARSER: The version of es_parser is v1.0.1
+I (53467) clare_net: tts stream begin expected=8481
+I (54188) clare_net: tts stream end
+I (54190) clare_net: recv kind=1 type=answer_text len=51
+I (54192) clare_net: recv kind=1 type=answer_text len=51
+I (54193) clare_net: recv kind=1 type=answer_text len=48
+I (54196) clare_net: recv kind=1 type=answer_text len=44
+I (54354) ESP_ES_PARSER: The version of es_parser is v1.0.1
+I (54355) clare_net: tts stream begin expected=8481
+I (55073) clare_net: tts stream end
+I (55251) ESP_ES_PARSER: The version of es_parser is v1.0.1
+I (55251) clare_net: tts stream begin expected=8737
+I (56003) clare_net: tts stream end
+I (56167) ESP_ES_PARSER: The version of es_parser is v1.0.1
+I (56167) clare_net: tts stream begin expected=5921
+I (56648) clare_net: tts stream end
+I (56652) ESP_ES_PARSER: The version of es_parser is v1.0.1
+I (56652) clare_net: tts stream begin expected=7517
+I (57353) clare_net: tts stream end
+I (57580) ESP_ES_PARSER: The version of es_parser is v1.0.1
+I (57581) clare_net: tts stream begin expected=8481
+I (58298) clare_net: tts stream end
+I (58538) ESP_ES_PARSER: The version of es_parser is v1.0.1
+I (58538) clare_net: tts stream begin expected=8737
+I (59288) clare_net: tts stream end
+I (59292) ESP_ES_PARSER: The version of es_parser is v1.0.1
+I (59292) clare_net: tts stream begin expected=8481
+I (60308) clare_net: tts stream end
+I (60463) ESP_ES_PARSER: The version of es_parser is v1.0.1
+I (60463) clare_net: tts stream begin expected=5921
+I (60938) clare_net: tts stream end
+I (60940) clare_net: recv kind=1 type=done len=15
+I (60941) clare_net: recv kind=1 type=ping len=15

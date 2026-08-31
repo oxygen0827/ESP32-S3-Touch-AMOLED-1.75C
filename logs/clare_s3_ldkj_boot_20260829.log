@@ -1,0 +1,177 @@
+10000 00600000
+I (28) boot:  3 storage          Unknown data     01 82 00610000 00300000
+I (28) boot: End of partition table
+I (29) esp_image: segment 0: paddr=00010020 vaddr=3c110020 size=7837ch (492412) map
+I (102) esp_image: segment 1: paddr=000883a4 vaddr=3fcb4400 size=057cch ( 22476) load
+I (106) esp_image: segment 2: paddr=0008db78 vaddr=40374000 size=024a0h (  9376) load
+I (109) esp_image: segment 3: paddr=00090020 vaddr=42000020 size=103358h (1061720) map
+I (267) esp_image: segment 4: paddr=00193380 vaddr=403764a0 size=2de70h (188016) load
+I (302) esp_image: segment 5: paddr=001c11f8 vaddr=50000000 size=00020h (    32) load
+I (320) boot: Loaded app from partition at offset 0x10000
+I (320) boot: Disabling RNG early entropy source...
+I (321) octal_psram: vendor id    : 0x0d (AP)
+I (321) octal_psram: dev id       : 0x02 (generation 3)
+I (321) octal_psram: density      : 0x03 (64 Mbit)
+I (322) octal_psram: good-die     : 0x01 (Pass)
+I (322) octal_psram: Latency      : 0x01 (Fixed)
+I (322) octal_psram: VCC          : 0x01 (3V)
+I (322) octal_psram: SRF          : 0x01 (Fast Refresh)
+I (323) octal_psram: BurstType    : 0x01 (Hybrid Wrap)
+I (323) octal_psram: BurstLen     : 0x01 (32 Byte)
+I (323) octal_psram: Readlatency  : 0x02 (10 cycles@Fixed)
+I (323) octal_psram: DriveStrength: 0x00 (1/1)
+I (323) MSPI Timing: Enter psram timing tuning
+I (324) esp_psram: Found 8MB PSRAM device
+I (324) esp_psram: Speed: 80MHz
+I (354) mmu_psram: Read only data copied and mapped to SPIRAM
+I (426) mmu_psram: Instructions copied and mapped to SPIRAM
+I (426) cpu_start: Multicore app
+I (656) esp_psram: SPI SRAM memory test OK
+I (664) cpu_start: Pro cpu start user code
+I (664) cpu_start: cpu freq: 240000000 Hz
+I (664) app_init: Application information:
+I (665) app_init: Project name:     Clare_S3
+I (665) app_init: App version:      3e09a44-dirty
+I (665) app_init: Compile time:     Aug 29 2026 12:58:24
+I (665) app_init: ELF file SHA256:  d5a4ca8965e0d260...
+I (665) app_init: ESP-IDF:          v5.5.3
+I (665) efuse_init: Min chip rev:     v0.0
+I (666) efuse_init: Max chip rev:     v0.99 
+I (666) efuse_init: Chip rev:         v0.2
+I (666) heap_init: Initializing. RAM available for dynamic allocation:
+I (666) heap_init: At 3FCBCE08 len 0002C908 (178 KiB): RAM
+I (666) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM
+I (666) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM
+I (667) heap_init: At 600FE000 len 00001FE8 (7 KiB): RTCRAM
+I (667) esp_psram: Adding pool of 6579K of PSRAM memory to heap allocator
+I (667) esp_psram: Adding pool of 31K of PSRAM memory gap generated due to end address alignment of drom to the heap allocator
+I (667) spi_flash: detected chip: gd
+I (667) spi_flash: flash io: qio
+I (668) sleep_gpio: Configure to isolate all GPIO pins in sleep state
+I (668) sleep_gpio: Enable automatic switching of GPIO sleep configuration
+I (669) main_task: Started on CPU0
+I (670) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations
+I (670) main_task: Calling app_main()
+I (670) clare_s3: Clare S3 starting
+I (678) axp2101: Init PMU SUCCESS!
+I (684) DisplayPort: SPI BUS init
+I (684) DisplayPort: Install panel IO
+I (685) co5300: version: 2.1.0
+I (685) co5300_spi: LCD panel create success, version: 2.1.0
+W (845) co5300_spi: The 3Ah command has been used and will be overwritten by external initialization sequence
+I (2119) CST9217: Checkcode: 0x204ECACA
+I (2121) CST9217: Resolution X: 466, Y: 466
+I (2123) CST9217: Chip Type: 0x9217, ProjectID: 0x5734
+I (2123) esp_lvgl:adapter: LVGL adapter initialized successfully
+I (2126) esp_lvgl:touch: Touch input device registered successfully (IRQ mode: enabled)
+I (2156) esp_lvgl:adapter: LVGL task started successfully
+i2c: {sda: 15, scl: 14}
+i2s: {mclk: 16, bclk: 9, ws: 45, din: 10, dout: 8}
+out: {codec: ES8311, pa: 46, pa_gain: 6, use_mclk: 1}
+Codec 0 dir 2 type:1
+in: {codec: ES7210}
+Codec 1 dir 1 type:2
+I (2158) CODEC_INIT: in:1 out:1 port: 1
+I (2158) CODEC_INIT: Success to int i2c: 0
+I (2158) CODEC_INIT: Init i2s 0 type: 3 mclk:16 bclk:9 ws:45 din:10 dout:8
+I (2158) CODEC_INIT: tx:0x3c18ba88 rx:0x3c18bc44
+W (2158) i2s_tdm: the current mclk multiple is too small, adjust the mclk multiple to 384
+I (2159) CODEC_INIT: output init tdm ret 0
+W (2159) i2s_tdm: the current mclk multiple is too small, adjust the mclk multiple to 384
+I (2160) CODEC_INIT: Input init tdm ret 0
+I (2160) CODEC_INIT: Init i2s 0 ok
+I (2160) CODEC_INIT: Success to init i2s: 0
+I (2160) CODEC_INIT: Success to int i2c: 0
+I (2160) CODEC_INIT: Success to init i2s: 0
+I (2160) CODEC_INIT: Get out handle 0x3c18ba88 port 0
+I (2166) ES8311: Work in Slave mode
+I (2172) ES7210: Work in Slave mode
+I (2178) ES7210: Enable ES7210_INPUT_MIC1
+I (2181) ES7210: Enable ES7210_INPUT_MIC2
+I (2184) ES7210: Enable ES7210_INPUT_MIC3
+I (2187) ES7210: Enable ES7210_INPUT_MIC4
+I (2190) ES7210: Enable TDM mode
+I (2197) I2S_IF: channel mode 2 bits:16/16 channel:2 mask:3
+I (2198) I2S_IF: TDM Mode 1 bits:16/16 channel:2 sample_rate:16000 mask:3
+I (2213) Adev_Codec: Open codec device OK
+I (2213) I2S_IF: channel mode 2 bits:16/16 channel:2 mask:3
+I (2213) I2S_IF: TDM Mode 0 bits:16/16 channel:2 sample_rate:16000 mask:3
+I (2214) ES7210: Bits 8
+I (2221) ES7210: Enable ES7210_INPUT_MIC1
+I (2224) ES7210: Enable ES7210_INPUT_MIC2
+I (2227) ES7210: Enable ES7210_INPUT_MIC3
+I (2230) ES7210: Enable ES7210_INPUT_MIC4
+I (2233) ES7210: Enable TDM mode
+I (2239) ES7210: Unmuted
+I (2239) Adev_Codec: Open codec device OK
+I (2239) Adev_Codec: Input already open
+I (2239) Adev_Codec: Input already open
+I (2248) clare_audio: ALC ready: 16000 Hz mono PCM16, gain 6 dB
+I (2392) pp: pp rom version: e7ae62f
+I (2392) net80211: net80211 rom version: e7ae62f
+I (2394) wifi:wifi driver task: 3fcdcf24, prio:23, stack:6656, core=0
+I (2398) wifi:wifi firmware version: 4df78f2
+I (2398) wifi:wifi certification version: v7.0
+I (2398) wifi:config NVS flash: enabled
+I (2398) wifi:config nano formatting: disabled
+I (2398) wifi:Init data frame dynamic rx buffer num: 32
+I (2399) wifi:Init dynamic rx mgmt buffer num: 5
+I (2399) wifi:Init management short buffer num: 32
+I (2399) wifi:Init static tx buffer num: 16
+I (2400) wifi:Init tx cache buffer num: 32
+I (2400) wifi:Init static tx FG buffer num: 2
+I (2400) wifi:Init static rx buffer size: 1600
+I (2400) wifi:Init static rx buffer num: 16
+I (2400) wifi:Init dynamic rx buffer num: 32
+I (2401) wifi_init: rx ba win: 6
+I (2401) wifi_init: accept mbox: 6
+I (2401) wifi_init: tcpip mbox: 32
+I (2401) wifi_init: udp mbox: 6
+I (2401) wifi_init: tcp mbox: 10
+I (2402) wifi_init: tcp tx win: 65535
+I (2402) wifi_init: tcp rx win: 5760
+I (2402) wifi_init: tcp mss: 1440
+I (2402) wifi_init: WiFi/LWIP prefer SPIRAM
+W (2402) wifi:Password length matches WPA2 standards, authmode threshold changes from OPEN to WPA2
+I (2403) phy_init: phy_version 711,97bcf0a2,Aug 25 2025,19:04:10
+I (2432) wifi:mode : sta (10:20:ba:3d:34:b8)
+I (2433) wifi:enable tsf
+I (2435) clare_net: Wi-Fi protocols limited to 11b/g/n mask=0x07
+I (2435) wifi:Set ps type: 0, coexist: 0
+
+I (2436) clare_s3: Clare UI ready; touch the Clare tile
+I (2436) main_task: Returned from app_main()
+I (2443) wifi:new:<6,1>, old:<1,0>, ap:<255,255>, sta:<6,1>, prof:1, snd_ch_cfg:0x0
+I (2443) wifi:state: init -> auth (0xb0)
+I (2450) wifi:state: auth -> assoc (0x0)
+I (2461) wifi:state: assoc -> run (0x10)
+I (2478) wifi:connected with LDKJ, aid = 2, channel 6, 40U, bssid = 50:fe:39:e6:47:92
+I (2478) wifi:security: WPA2-PSK, phy: bgn, rssi: -41
+I (2479) wifi:pm start, type: 0
+
+I (2479) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us
+I (2479) wifi:set rx beacon pti, rx_bcn_pti: 0, bcn_timeout: 25000, mt_pti: 0, mt_time: 10000
+I (2487) wifi:<ba-add>idx:0 (ifx:0, 50:fe:39:e6:47:92), tid:0, ssn:0, winSize:64
+I (2509) wifi:AP's beacon interval = 102400 us, DTIM period = 1
+I (3520) esp_netif_handlers: sta ip: 192.168.31.124, mask: 255.255.255.0, gw: 192.168.31.1
+I (3520) clare_net: DHCP DNS main=192.168.31.1
+I (6215) wifi:<ba-add>idx:1 (ifx:0, 50:fe:39:e6:47:92), tid:6, ssn:2, winSize:64
+I (10436) clare_s3: Boot network self-test begin
+I (10436) clare_net: Create session URL ready=1
+I (10436) clare_net: HTTP before init free8=6743895 largest8=6553600 free_internal=74551 largest_internal=31744
+I (15116) clare_net: HTTP response status=200 bytes=82 truncated=0
+I (15118) clare_net: HTTP after cleanup free8=6743183 largest8=6553600
+I (15119) clare_s3: Boot network self-test session err=0 (attempt 1/4)
+I (15119) clare_net: WS pre-start heap free8=6740027 largest8=6553600
+I (15121) websocket_client: Started
+I (17929) clare_net: WebSocket connected kind=0
+I (17929) clare_s3: Boot network self-test transcribe err=0
+I (19031) clare_net: WS pre-start heap free8=6739803 largest8=6553600
+I (19032) websocket_client: Started
+I (21513) clare_net: WebSocket connected kind=1
+I (21513) clare_s3: Ask Clare a question
+I (21513) clare_s3: Boot network self-test host err=0
+I (22615) clare_net: HTTP before init free8=6742759 largest8=6553600 free_internal=74103 largest_internal=31744
+I (25511) clare_net: HTTP response status=200 bytes=255 truncated=1
+I (25512) clare_net: HTTP after cleanup free8=6742759 largest8=6553600
+I (25513) clare_s3: Boot network self-test complete

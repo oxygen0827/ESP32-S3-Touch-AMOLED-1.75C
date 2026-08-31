@@ -1,0 +1,16 @@
+I (12688) clare_net: HTTP response status=200 bytes=82 truncated=0
+I (12690) clare_net: HTTP after cleanup free8=5937195 largest8=5767168
+I (12691) clare_s3: Boot network self-test session err=0 (attempt 1/4)
+I (12691) clare_net: WS pre-start heap free8=5903303 largest8=5767168
+I (12693) websocket_client: Started
+I (15024) clare_net: WebSocket connected kind=0
+I (15024) clare_s3: Boot network self-test transcribe err=0
+I (16126) clare_net: WS pre-start heap free8=5903095 largest8=5767168
+I (16127) websocket_client: Started
+I (18409) clare_net: WebSocket connected kind=1
+I (18409) clare_s3: Ask Clare a question
+I (18410) clare_s3: Boot network self-test host err=0
+I (19512) clare_net: HTTP before init free8=5936791 largest8=5767168 free_internal=50123 largest_internal=31744
+I (24201) clare_net: HTTP response status=200 bytes=255 truncated=1
+I (24203) clare_net: HTTP after cleanup free8=5936619 largest8=5767168
+I (24204) clare_s3: Boot network self-test complete

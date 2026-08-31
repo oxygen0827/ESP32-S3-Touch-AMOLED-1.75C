@@ -1,0 +1,122 @@
+E (1039910) transport_ws: Sec-WebSocket-Accept not found
+E (1039910) websocket_client: esp_transport_connect() failed with -1, transport_error=ESP_OK, tls_error_code=0, tls_flags=0, esp_ws_handshake_status_code=403, errno=119
+W (1039911) clare_net: WS ERR heap free8=5910451 largest8=5767168
+W (1039911) clare_net: WS ERR detail kind=1 stack_err=0x3fccad50 flags=0x3fccad30 type=0 errno=1007803536
+W (1039912) clare_net: WebSocket error kind=1 err=1027428725 status=403
+W (1039912) clare_net: WebSocket connect timeout kind=1 bits=0x2
+I (1039912) clare_s3: Session expired - recreating
+I (1039914) clare_net: WebSocket disconnected kind=1 event=2 close=0 type=1 errno=0
+I (1040014) clare_s3: Clare Q&A unavailable
+I (1040014) clare_net: HTTP before init free8=5990479 largest8=5767168 free_internal=65443 largest_internal=31744
+I (1045431) clare_net: HTTP response status=200 bytes=255 truncated=1
+I (1045433) clare_net: HTTP after cleanup free8=5990375 largest8=5767168
+I (1045434) clare_s3: Reconnecting...
+I (1045434) clare_net: Create session URL ready=1
+I (1045435) clare_net: HTTP before init free8=5990335 largest8=5767168 free_internal=65443 largest_internal=31744
+I (1047504) clare_net: HTTP response status=200 bytes=82 truncated=0
+I (1047506) clare_net: HTTP after cleanup free8=5990199 largest8=5767168
+I (1047507) clare_net: WS pre-start heap free8=5956359 largest8=5767168
+I (1047509) websocket_client: Started
+I (1051543) clare_net: WebSocket connected kind=1
+I (1051543) clare_s3: Ask Clare a question
+I (1051544) clare_s3: Ask Clare a question
+I (1051544) clare_s3: Audio stream started
+E (1052858) transport_ws: Error transport_poll_write(0)
+E (1052858) websocket_client: esp_transport_write() returned 0, transport_error=ESP_OK, tls_error_code=0, tls_flags=0, errno=0
+W (1052859) clare_net: WS ERR heap free8=5864443 largest8=5767168
+W (1052859) clare_net: WS ERR detail kind=1 stack_err=0x3fcc31e0 flags=0x3fcc31c0 type=0 errno=1007803536
+W (1052860) clare_net: WebSocket error kind=1 err=2718 status=0
+I (1052860) clare_s3: Network error - check Wi-Fi/API
+I (1052861) clare_net: WebSocket disconnected kind=1 event=2 close=0 type=1 errno=0
+W (1052862) clare_s3: Audio stream send failed err=-1
+I (1053969) clare_net: HTTP before init free8=5927927 largest8=5767168 free_internal=58531 largest_internal=31744
+I (1061642) clare_net: HTTP response status=200 bytes=255 truncated=1
+I (1061644) clare_net: HTTP after cleanup free8=5947727 largest8=5767168
+I (1061645) clare_s3: Creating meeting session...
+I (1061645) clare_net: Create session URL ready=1
+I (1061645) clare_net: HTTP before init free8=5947675 largest8=5767168 free_internal=58531 largest_internal=31744
+I (1065216) clare_net: HTTP response status=200 bytes=82 truncated=0
+I (1065218) clare_net: HTTP after cleanup free8=5947539 largest8=5767168
+I (1065229) clare_s3: Connecting transcription...
+I (1065229) clare_net: WS pre-start heap free8=5912735 largest8=5767168
+I (1065231) websocket_client: Started
+I (1069537) clare_net: WebSocket connected kind=0
+I (1069537) clare_s3: Listening - recording only
+I (1069537) clare_s3: Listening - recording only
+I (1069543) clare_s3: Clare Q&A unavailable
+I (1069544) clare_s3: Clare Q&A unavailable
+I (1077776) clare_net: recv kind=0 type=transcript len=79
+I (1077793) clare_net: recv kind=0 type=transcript len=79
+I (1077811) clare_net: recv kind=0 type=transcript len=79
+I (1078132) clare_net: recv kind=0 type=transcript len=85
+I (1078722) clare_net: recv kind=0 type=transcript len=85
+I (1078724) clare_net: recv kind=0 type=transcript len=85
+I (1078726) clare_net: recv kind=0 type=transcript len=91
+I (1078728) clare_net: recv kind=0 type=transcript len=91
+I (1078730) clare_net: recv kind=0 type=transcript len=91
+I (1078731) clare_net: recv kind=0 type=transcript len=91
+I (1078733) clare_net: recv kind=0 type=transcript len=94
+I (1078735) clare_net: recv kind=0 type=transcript len=94
+I (1078737) clare_net: recv kind=0 type=transcript len=94
+I (1079040) clare_net: recv kind=0 type=transcript len=100
+I (1079104) clare_net: recv kind=0 type=transcript len=100
+I (1079106) clare_net: recv kind=0 type=transcript len=100
+I (1079960) clare_net: recv kind=0 type=transcript len=103
+I (1079963) clare_net: recv kind=0 type=transcript len=103
+I (1079965) clare_net: recv kind=0 type=transcript len=103
+I (1079967) clare_net: recv kind=0 type=transcript len=109
+I (1079968) clare_net: recv kind=0 type=transcript len=109
+I (1079970) clare_net: recv kind=0 type=transcript len=109
+I (1079972) clare_net: recv kind=0 type=transcript len=118
+I (1079974) clare_net: recv kind=0 type=transcript len=118
+I (1080149) clare_net: recv kind=0 type=transcript len=118
+I (1080241) clare_net: recv kind=0 type=transcript len=118
+I (1080395) clare_net: recv kind=0 type=transcript len=127
+I (1080416) clare_net: recv kind=0 type=transcript len=127
+I (1080544) clare_net: recv kind=0 type=transcript len=127
+I (1080675) clare_net: recv kind=0 type=transcript len=139
+I (1080690) clare_net: recv kind=0 type=transcript len=139
+I (1080707) clare_net: recv kind=0 type=transcript len=139
+I (1080851) clare_net: recv kind=0 type=transcript len=142
+I (1080872) clare_net: recv kind=0 type=transcript len=142
+I (1080892) clare_net: recv kind=0 type=transcript len=142
+I (1081042) clare_net: recv kind=0 type=transcript len=145
+I (1081311) clare_net: recv kind=0 type=transcript len=145
+I (1081354) clare_net: recv kind=0 type=transcript len=145
+I (1082044) clare_net: recv kind=0 type=transcript len=145
+I (1082046) clare_net: recv kind=0 type=transcript len=145
+I (1082048) clare_net: recv kind=0 type=transcript len=145
+I (1082050) clare_net: recv kind=0 type=transcript len=145
+I (1082052) clare_net: recv kind=0 type=transcript len=145
+I (1082053) clare_net: recv kind=0 type=transcript len=145
+I (1082055) clare_net: recv kind=0 type=transcript len=145
+I (1082312) clare_net: recv kind=0 type=transcript len=145
+I (1082314) clare_net: recv kind=0 type=transcript len=145
+I (1082385) clare_net: recv kind=0 type=transcript len=145
+I (1082481) clare_net: recv kind=0 type=transcript len=145
+I (1084168) clare_net: recv kind=0 type=transcript len=145
+I (1084169) clare_net: recv kind=0 type=transcript len=148
+I (1084171) clare_net: recv kind=0 type=transcript len=148
+I (1084173) clare_net: recv kind=0 type=transcript len=148
+I (1084175) clare_net: recv kind=0 type=transcript len=148
+I (1086356) clare_net: recv kind=0 type=transcript len=151
+I (1086357) clare_net: recv kind=0 type=transcript len=151
+I (1086359) clare_net: recv kind=0 type=transcript len=151
+I (1086361) clare_net: recv kind=0 type=transcript len=151
+I (1086363) clare_net: recv kind=0 type=transcript len=157
+I (1086365) clare_net: recv kind=0 type=transcript len=157
+I (1086366) clare_net: recv kind=0 type=transcript len=157
+E (1091368) transport_base: esp_tls_conn_read error, errno=No more processes
+W (1091368) transport_ws: Requested to read 2, actually read 0 bytes
+E (1091368) transport_ws: Error read data(-1)
+E (1091368) websocket_client: esp_transport_read() failed with -1, transport_error=ESP_OK, tls_error_code=0, tls_flags=0, errno=11
+W (1091369) clare_net: WS ERR heap free8=5859527 largest8=5767168
+W (1091369) clare_net: WS ERR detail kind=0 stack_err=0x3fccad50 flags=0x3fccad30 type=0 errno=1007803536
+W (1091369) clare_net: WebSocket error kind=0 err=1009142512 status=0
+I (1091370) clare_s3: Network error - check Wi-Fi/API
+E (1091370) websocket_client: Error receive data
+I (1091372) clare_net: WebSocket disconnected kind=0 event=2 close=0 type=1 errno=0
+I (1091472) clare_s3: Meeting ended - Ask Clare or refresh summary
+I (1091474) clare_s3: Clare Q&A unavailable
+I (1092501) clare_s3: Clare Q&A unavailable
+I (1093557) clare_s3: Clare Q&A unavailable

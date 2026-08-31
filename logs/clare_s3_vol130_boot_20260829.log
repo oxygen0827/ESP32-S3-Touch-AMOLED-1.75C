@@ -1,0 +1,108 @@
+I (12772) clare_net: HTTP response status=200 bytes=82 truncated=0
+I (12774) clare_net: HTTP after cleanup free8=5936759 largest8=5767168
+I (12775) clare_s3: Boot network self-test session err=0 (attempt 1/4)
+I (12776) clare_net: WS pre-start heap free8=5902899 largest8=5767168
+I (12777) websocket_client: Started
+I (15829) clare_net: WebSocket connected kind=0
+I (15829) clare_s3: Boot network self-test transcribe err=0
+I (16932) clare_net: WS pre-start heap free8=5902679 largest8=5767168
+I (16933) websocket_client: Started
+I (20046) clare_net: WebSocket connected kind=1
+I (20047) clare_s3: Ask Clare a question
+I (20047) clare_s3: Boot network self-test host err=0
+I (21149) clare_net: HTTP before init free8=5936351 largest8=5767168 free_internal=50123 largest_internal=31744
+I (23693) clare_net: HTTP response status=200 bytes=255 truncated=1
+I (23695) clare_net: HTTP after cleanup free8=5936179 largest8=5767168
+I (23695) clare_s3: Boot network self-test complete
+I (23696) clare_s3: Ask E2E: create session
+I (23696) clare_net: Create session URL ready=1
+I (23696) clare_net: HTTP before init free8=5936155 largest8=5767168 free_internal=50123 largest_internal=31744
+I (45702) clare_net: HTTP response status=200 bytes=82 truncated=0
+I (45703) clare_net: HTTP after cleanup free8=5935983 largest8=5767168
+I (45704) clare_s3: Ask E2E: host connect (403 gate)
+I (45705) clare_net: WS pre-start heap free8=5902159 largest8=5767168
+I (45706) websocket_client: Started
+I (48222) clare_net: WebSocket connected kind=1
+I (48222) clare_s3: Ask Clare a question
+I (48223) clare_s3: Ask E2E: recording 10 s - play the question near the mic NOW
+I (48223) clare_s3: Audio stream started
+I (58228) clare_s3: Ask E2E: end_of_speech sent, waiting 20 s for answer
+I (59495) clare_net: recv kind=1 type=transcription len=58
+I (59497) clare_s3: Question received
+I (62419) clare_net: recv kind=1 type=answer_text len=45
+I (62419) clare_net: recv kind=1 type=answer_text len=48
+I (62423) clare_net: recv kind=1 type=answer_text len=54
+I (62425) clare_net: recv kind=1 type=answer_text len=51
+I (62428) clare_net: recv kind=1 type=answer_text len=51
+I (62430) clare_net: recv kind=1 type=answer_text len=51
+I (62433) clare_net: recv kind=1 type=answer_text len=51
+I (62555) clare_net: recv kind=1 type=answer_text len=48
+I (62622) clare_net: recv kind=1 type=answer_text len=48
+I (62879) ESP_ES_PARSER: The version of es_parser is v1.0.1
+I (62880) clare_net: tts stream begin expected=7517
+I (63503) clare_net: tts stream end
+I (63505) clare_net: recv kind=1 type=answer_text len=51
+I (63506) clare_net: recv kind=1 type=answer_text len=51
+I (63507) clare_net: recv kind=1 type=answer_text len=57
+I (63510) clare_net: recv kind=1 type=answer_text len=51
+I (63511) clare_net: recv kind=1 type=answer_text len=54
+I (63729) ESP_ES_PARSER: The version of es_parser is v1.0.1
+I (63729) clare_net: tts stream begin expected=8737
+I (64478) clare_net: tts stream end
+I (64480) clare_net: recv kind=1 type=answer_text len=51
+I (64482) clare_net: recv kind=1 type=answer_text len=51
+I (64485) clare_net: recv kind=1 type=answer_text len=48
+I (64687) ESP_ES_PARSER: The version of es_parser is v1.0.1
+I (64687) clare_net: tts stream begin expected=8481
+I (65408) clare_net: tts stream end
+I (65410) clare_net: recv kind=1 type=answer_text len=51
+I (65411) clare_net: recv kind=1 type=answer_text len=48
+I (65412) clare_net: recv kind=1 type=answer_text len=51
+I (65417) ESP_ES_PARSER: The version of es_parser is v1.0.1
+I (65417) clare_net: tts stream begin expected=8225
+I (66173) clare_net: tts stream end
+I (66175) clare_net: recv kind=1 type=answer_text len=51
+I (66176) clare_net: recv kind=1 type=answer_text len=57
+I (66179) clare_net: recv kind=1 type=answer_text len=54
+I (66181) clare_net: recv kind=1 type=answer_text len=54
+I (66184) clare_net: recv kind=1 type=answer_text len=48
+I (66186) clare_net: recv kind=1 type=answer_text len=44
+I (66401) ESP_ES_PARSER: The version of es_parser is v1.0.1
+I (66402) clare_net: tts stream begin expected=7517
+I (67028) clare_net: tts stream end
+I (67340) ESP_ES_PARSER: The version of es_parser is v1.0.1
+I (67340) clare_net: tts stream begin expected=8481
+I (68063) clare_net: tts stream end
+I (68067) ESP_ES_PARSER: The version of es_parser is v1.0.1
+I (68067) clare_net: tts stream begin expected=8737
+I (68888) clare_net: tts stream end
+I (69104) ESP_ES_PARSER: The version of es_parser is v1.0.1
+I (69104) clare_net: tts stream begin expected=6433
+I (69623) clare_net: tts stream end
+I (69819) ESP_ES_PARSER: The version of es_parser is v1.0.1
+I (69820) clare_net: tts stream begin expected=6749
+I (70373) clare_net: tts stream end
+I (71256) ESP_ES_PARSER: The version of es_parser is v1.0.1
+I (71256) clare_net: tts stream begin expected=8481
+I (71978) clare_net: tts stream end
+I (71982) ESP_ES_PARSER: The version of es_parser is v1.0.1
+I (71982) clare_net: tts stream begin expected=8737
+I (72803) clare_net: tts stream end
+I (73065) ESP_ES_PARSER: The version of es_parser is v1.0.1
+I (73065) clare_net: tts stream begin expected=8481
+I (73778) clare_net: tts stream end
+I (73779) ESP_ES_PARSER: The version of es_parser is v1.0.1
+I (73779) clare_net: tts stream begin expected=3873
+I (74138) clare_net: tts stream end
+I (74138) clare_net: recv kind=1 type=done len=15
+I (74140) clare_net: recv kind=1 type=ping len=15
+I (79249) clare_net: HTTP before init free8=5927611 largest8=5767168 free_internal=50123 largest_internal=31744
+I (82556) clare_net: HTTP response status=200 bytes=1475 truncated=0
+I (82557) clare_net: HTTP after cleanup free8=5927439 largest8=5767168
+I (82558) clare_s3: Ask E2E: understanding err=0
+I (82560) clare_s3: Ask E2E: summary formatted ok
+I (82560) clare_net: HTTP before init free8=5935639 largest8=5767168 free_internal=50123 largest_internal=31744
+I (85807) clare_net: HTTP response status=200 bytes=255 truncated=1
+I (85809) clare_net: HTTP after cleanup free8=5935471 largest8=5767168
+I (85809) clare_s3: Ask E2E: complete
+I (85810) clare_s3: Answer ready

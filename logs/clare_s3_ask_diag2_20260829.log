@@ -1,0 +1,14 @@
+I (1421333) clare_net: HTTP response status=200 bytes=255 truncated=1
+I (1421335) clare_net: HTTP after cleanup free8=5990539 largest8=5767168
+I (1421336) clare_s3: Creating meeting session...
+I (1421336) clare_net: Create session URL ready=1
+I (1421337) clare_net: HTTP before init free8=5990475 largest8=5767168 free_internal=65443 largest_internal=31744
+I (1424884) clare_net: HTTP response status=200 bytes=82 truncated=0
+I (1424886) clare_net: HTTP after cleanup free8=5990335 largest8=5767168
+I (1424889) clare_s3: Connecting transcription...
+I (1424889) clare_net: WS pre-start heap free8=5955515 largest8=5767168
+I (1424891) websocket_client: Started
+I (1427938) clare_net: WebSocket connected kind=0
+I (1427938) clare_s3: Listening - recording only
+I (1427938) clare_s3: Listening - recording only
+I (1427943) clare_s3: Audio stream started

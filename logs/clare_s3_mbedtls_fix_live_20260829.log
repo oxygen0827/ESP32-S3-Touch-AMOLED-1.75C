@@ -1,0 +1,63 @@
+I (315295) clare_s3: Creating meeting session...
+I (315295) clare_net: Create session URL ready=1
+I (315295) clare_net: HTTP before init free8=5999367 largest8=5898240 free_internal=74107 largest_internal=31744
+I (317863) clare_net: HTTP response status=200 bytes=82 truncated=0
+I (317865) clare_net: HTTP after cleanup free8=5999695 largest8=5898240
+I (317875) clare_s3: Connecting transcription...
+I (317876) clare_net: WS pre-start heap free8=5995619 largest8=5898240
+I (317877) websocket_client: Started
+I (322002) clare_net: WebSocket connected kind=0
+I (322002) clare_s3: Listening - live notes on
+I (322002) clare_s3: Listening - live notes on
+I (322013) clare_s3: Audio stream started
+E (342577) esp-tls-mbedtls: write error :-0x6C00
+E (342577) transport_base: esp_tls_conn_write error, errno=Connection already in progress
+E (342577) transport_ws: Error write header
+E (342794) esp-tls-mbedtls: read error :-0x0050
+E (342794) transport_base: esp_tls_conn_read error, errno=Connection reset by peer
+E (342794) transport_ws: Error read data(-80)
+E (342795) websocket_client: esp_transport_read() failed with -80, transport_error=ESP_ERR_MBEDTLS_SSL_READ_FAILED, tls_error_code=80, tls_flags=0, errno=104
+W (342795) clare_net: WS ERR heap free8=5943471 largest8=5767168
+E (342796) transport_base: poll_write select error 104, errno = Connection reset by peer, fd = 54
+W (342796) clare_net: WS ERR detail kind=0 stack_err=0x3fcc6ae0 flags=0x3fcc6ac0 type=0 errno=1007803360
+E (342796) transport_ws: Error transport_poll_write(-1)
+W (342796) clare_net: WebSocket error kind=0 err=1009096228 status=0
+E (342797) websocket_client: esp_transport_write() returned -1, transport_error=ESP_ERR_MBEDTLS_SSL_READ_FAILED, tls_error_code=80, tls_flags=0, errno=0
+I (342797) clare_s3: Network error - check Wi-Fi/API
+E (342797) websocket_client: Error receive data
+W (342797) clare_net: WS ERR heap free8=5943555 largest8=5767168
+W (342798) clare_net: WS ERR detail kind=0 stack_err=0x3fcc0ec0 flags=0x3fcc0ea0 type=0 errno=1007803360
+W (342798) clare_net: WebSocket error kind=0 err=393760 status=0
+I (342798) clare_s3: Network error - check Wi-Fi/API
+I (342799) clare_net: WebSocket disconnected kind=0 event=2 close=0 type=1 errno=104
+E (342800) websocket_client: esp_websocket_client_abort_connection(239): Websocket already stop
+W (342800) clare_s3: Audio stream send failed err=-1
+W (342830) websocket_client: Client was not started
+I (342931) clare_s3: Connection lost - tap Start to retry
+I (352831) clare_net: HTTP before init free8=5999179 largest8=5767168 free_internal=74107 largest_internal=31744
+I (357272) clare_net: HTTP response status=200 bytes=255 truncated=1
+I (357274) clare_net: HTTP after cleanup free8=5999519 largest8=5767168
+I (357275) clare_s3: Creating meeting session...
+I (357275) clare_net: Create session URL ready=1
+I (357276) clare_net: HTTP before init free8=5999463 largest8=5767168 free_internal=74107 largest_internal=31744
+I (362138) clare_net: HTTP response status=200 bytes=82 truncated=0
+I (362140) clare_net: HTTP after cleanup free8=5999319 largest8=5767168
+I (362143) clare_s3: Connecting transcription...
+I (362144) clare_net: WS pre-start heap free8=5995211 largest8=5767168
+I (362145) websocket_client: Started
+I (364356) clare_net: WebSocket connected kind=0
+I (364356) clare_s3: Listening - live notes on
+I (364356) clare_s3: Listening - live notes on
+I (364379) clare_s3: Audio stream started
+E (447379) esp-tls-mbedtls: write error :-0x6C00
+E (447379) transport_base: esp_tls_conn_write error, errno=Success
+E (447379) transport_ws: Error write header
+E (447379) websocket_client: esp_transport_write() returned -1, transport_error=ESP_ERR_MBEDTLS_SSL_WRITE_FAILED, tls_error_code=27648, tls_flags=0, errno=0
+W (447380) clare_net: WS ERR heap free8=5931495 largest8=5767168
+W (447381) clare_net: WS ERR detail kind=0 stack_err=0x3fcc0ec0 flags=0x3fcc0ea0 type=0 errno=1007803360
+W (447381) clare_net: WebSocket error kind=0 err=393760 status=0
+I (447381) clare_s3: Network error - check Wi-Fi/API
+I (447383) clare_net: WebSocket disconnected kind=0 event=2 close=0 type=1 errno=0
+W (447387) clare_s3: Audio stream send failed err=-1
+W (447413) websocket_client: Client was not started
+I (447514) clare_s3: Connection lost - tap Start to retry

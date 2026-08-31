@@ -1,0 +1,15 @@
+E (1767171) esp-tls-mbedtls: write error :-0x6C00
+E (1767171) transport_base: esp_tls_conn_write error, errno=Connection already in progress
+E (1767172) transport_ws: Error write header
+E (1767361) esp-tls-mbedtls: read error :-0x7780
+E (1767361) transport_base: esp_tls_conn_read error, errno=Connection already in progress
+E (1767361) transport_ws: Error read data(-30592)
+E (1767362) websocket_client: esp_transport_read() failed with -30592, transport_error=ESP_ERR_MBEDTLS_SSL_READ_FAILED, tls_error_code=30592, tls_flags=0, errno=119
+W (1767362) clare_net: WS ERR heap free8=5904367 largest8=5767168
+W (1767363) clare_net: WS ERR detail kind=0 stack_err=0x3fccad50 flags=0x3fccad30 type=0 errno=1007803536
+W (1767363) clare_net: WebSocket error kind=0 err=1009102612 status=0
+I (1767364) clare_s3: Network error - check Wi-Fi/API
+E (1767364) websocket_client: Error receive data
+I (1767365) clare_net: WebSocket disconnected kind=0 event=2 close=0 type=1 errno=0
+W (1767385) websocket_client: Client was not started
+I (1767486) clare_s3: Connection lost - tap Start to retry

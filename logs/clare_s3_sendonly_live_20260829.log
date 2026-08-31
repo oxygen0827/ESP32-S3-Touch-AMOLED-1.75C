@@ -1,0 +1,140 @@
+I (995608) clare_net: WS pre-start heap free8=5852203 largest8=5767168
+I (995610) websocket_client: Started
+I (998118) clare_net: WebSocket connected kind=1
+I (998119) clare_s3: Ask Clare a question
+I (998119) clare_s3: Ask Clare a question
+I (998121) clare_s3: Clare is answering...
+I (999850) clare_s3: Listening - recording only
+I (999851) clare_net: WS pre-start heap free8=5857891 largest8=5767168
+I (999854) websocket_client: Started
+I (1003926) clare_net: WebSocket connected kind=1
+I (1003926) clare_s3: Ask Clare a question
+I (1003926) clare_s3: Ask Clare a question
+I (1005745) clare_s3: Clare is answering...
+I (1006656) clare_s3: Network error - check Wi-Fi/API
+I (1010440) clare_s3: Network error - check Wi-Fi/API
+I (1010441) clare_s3: Network error - check Wi-Fi/API
+I (1010441) clare_s3: Network error - check Wi-Fi/API
+I (1010442) clare_s3: Network error - check Wi-Fi/API
+I (1010566) clare_s3: Network error - check Wi-Fi/API
+I (1010626) clare_s3: Network error - check Wi-Fi/API
+I (1010627) clare_s3: Network error - check Wi-Fi/API
+I (1010846) clare_s3: Network error - check Wi-Fi/API
+I (1010856) clare_s3: Network error - check Wi-Fi/API
+I (1010979) clare_s3: Network error - check Wi-Fi/API
+I (1011112) clare_s3: Network error - check Wi-Fi/API
+I (1012158) clare_s3: Network error - check Wi-Fi/API
+I (1013262) clare_s3: Listening - recording only
+I (1017932) clare_net: WS pre-start heap free8=5855703 largest8=5767168
+I (1017934) websocket_client: Started
+I (1022367) clare_net: WebSocket connected kind=1
+I (1022367) clare_s3: Ask Clare a question
+I (1022368) clare_s3: Ask Clare a question
+I (1022377) clare_s3: Clare is answering...
+I (1024168) clare_s3: Listening - recording only
+I (1024169) clare_net: WS pre-start heap free8=5862023 largest8=5767168
+I (1024171) websocket_client: Started
+I (1028570) clare_net: WebSocket connected kind=1
+I (1028571) clare_s3: Ask Clare a question
+I (1028571) clare_s3: Ask Clare a question
+I (1034669) clare_s3: Clare is answering...
+I (1036013) clare_s3: Network error - check Wi-Fi/API
+I (1037986) clare_s3: Network error - check Wi-Fi/API
+I (1037987) clare_s3: Network error - check Wi-Fi/API
+I (1037991) clare_s3: Network error - check Wi-Fi/API
+I (1037995) clare_s3: Network error - check Wi-Fi/API
+I (1037995) clare_s3: Network error - check Wi-Fi/API
+I (1037996) clare_s3: Network error - check Wi-Fi/API
+I (1037996) clare_s3: Network error - check Wi-Fi/API
+I (1038053) clare_s3: Network error - check Wi-Fi/API
+I (1041673) clare_s3: Listening - recording only
+I (1055691) clare_net: WS pre-start heap free8=5856875 largest8=5767168
+I (1055692) websocket_client: Started
+I (1062900) clare_net: WebSocket connected kind=1
+I (1062901) clare_s3: Ask Clare a question
+I (1062901) clare_s3: Ask Clare a question
+I (1062904) clare_s3: Clare is answering...
+I (1064851) clare_s3: Listening - recording only
+I (1072921) clare_net: WS pre-start heap free8=5856871 largest8=5767168
+I (1072923) websocket_client: Started
+I (1077396) clare_net: WebSocket connected kind=1
+I (1077397) clare_s3: Ask Clare a question
+I (1077397) clare_s3: Ask Clare a question
+I (1077561) clare_s3: Clare is answering...
+I (1079421) clare_s3: Listening - recording only
+I (1108710) clare_s3: Meeting ended - Ask Clare or refresh summary
+I (1113664) clare_net: WS pre-start heap free8=5955627 largest8=5767168
+I (1113666) websocket_client: Started
+I (1117377) clare_net: WebSocket connected kind=1
+I (1117378) clare_s3: Ask Clare a question
+I (1117378) clare_s3: Audio stream started
+I (1117379) clare_s3: Ask Clare a question
+I (1126083) clare_s3: Clare is answering...
+I (1127820) clare_s3: Network error - check Wi-Fi/API
+I (1131001) clare_s3: Network error - check Wi-Fi/API
+I (1131007) clare_s3: Network error - check Wi-Fi/API
+I (1131045) clare_s3: Network error - check Wi-Fi/API
+I (1131053) clare_s3: Network error - check Wi-Fi/API
+I (1131469) clare_s3: Network error - check Wi-Fi/API
+I (1131471) clare_s3: Network error - check Wi-Fi/API
+I (1131472) clare_s3: Network error - check Wi-Fi/API
+I (1131474) clare_s3: Network error - check Wi-Fi/API
+I (1131476) clare_s3: Network error - check Wi-Fi/API
+I (1131478) clare_s3: Network error - check Wi-Fi/API
+I (1131480) clare_s3: Network error - check Wi-Fi/API
+I (1132904) clare_s3: Network error - check Wi-Fi/API
+I (1132906) clare_s3: Network error - check Wi-Fi/API
+I (1139138) clare_s3: Answer ready
+I (1160991) clare_net: WS pre-start heap free8=5955995 largest8=5767168
+I (1160993) websocket_client: Started
+I (1165241) clare_net: WebSocket connected kind=1
+I (1165242) clare_s3: Ask Clare a question
+I (1165242) clare_s3: Ask Clare a question
+I (1165242) clare_s3: Audio stream started
+I (1170078) clare_s3: Clare is answering...
+I (1171340) clare_s3: Network error - check Wi-Fi/API
+I (1173289) clare_s3: Network error - check Wi-Fi/API
+I (1173290) clare_s3: Network error - check Wi-Fi/API
+I (1173834) clare_s3: Network error - check Wi-Fi/API
+I (1173836) clare_s3: Network error - check Wi-Fi/API
+I (1173838) clare_s3: Network error - check Wi-Fi/API
+I (1173840) clare_s3: Network error - check Wi-Fi/API
+I (1173842) clare_s3: Network error - check Wi-Fi/API
+I (1173844) clare_s3: Network error - check Wi-Fi/API
+I (1173966) clare_s3: Network error - check Wi-Fi/API
+I (1174046) clare_s3: Network error - check Wi-Fi/API
+I (1174137) clare_s3: Network error - check Wi-Fi/API
+I (1174644) clare_s3: Network error - check Wi-Fi/API
+I (1174646) clare_s3: Network error - check Wi-Fi/API
+I (1174648) clare_s3: Network error - check Wi-Fi/API
+I (1174650) clare_s3: Network error - check Wi-Fi/API
+I (1175076) clare_s3: Network error - check Wi-Fi/API
+I (1175078) clare_s3: Network error - check Wi-Fi/API
+I (1175079) clare_s3: Network error - check Wi-Fi/API
+I (1175085) clare_s3: Network error - check Wi-Fi/API
+I (1175690) clare_s3: Network error - check Wi-Fi/API
+I (1175695) clare_s3: Network error - check Wi-Fi/API
+I (1175697) clare_s3: Network error - check Wi-Fi/API
+I (1175922) clare_s3: Network error - check Wi-Fi/API
+I (1175924) clare_s3: Network error - check Wi-Fi/API
+I (1175925) clare_s3: Network error - check Wi-Fi/API
+I (1175925) clare_s3: Network error - check Wi-Fi/API
+I (1175926) clare_s3: Network error - check Wi-Fi/API
+I (1175927) clare_s3: Network error - check Wi-Fi/API
+I (1175929) clare_s3: Network error - check Wi-Fi/API
+I (1175931) clare_s3: Network error - check Wi-Fi/API
+I (1176019) clare_s3: Network error - check Wi-Fi/API
+I (1176106) clare_s3: Network error - check Wi-Fi/API
+I (1176208) clare_s3: Network error - check Wi-Fi/API
+I (1176300) clare_s3: Network error - check Wi-Fi/API
+I (1176697) clare_s3: Network error - check Wi-Fi/API
+I (1176703) clare_s3: Network error - check Wi-Fi/API
+I (1184879) clare_s3: Answer ready
+I (1204358) clare_net: WS pre-start heap free8=5956351 largest8=5767168
+I (1204360) websocket_client: Started
+I (1207103) clare_net: WebSocket connected kind=1
+I (1207103) clare_s3: Ask Clare a question
+I (1207104) clare_s3: Audio stream started
+I (1207104) clare_s3: Ask Clare a question
+I (1210480) clare_s3: Clare is answering...
+I (1211585) clare_s3: Network error - check Wi-Fi/API

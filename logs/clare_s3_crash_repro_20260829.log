@@ -1,0 +1,431 @@
+10000 00600000
+I (28) boot:  3 storage          Unknown data     01 82 00610000 00300000
+I (28) boot: End of partition table
+I (29) esp_image: segment 0: paddr=00010020 vaddr=3c110020 size=12f21ch (1241628) map
+I (213) esp_image: segment 1: paddr=0013f244 vaddr=3fcb4400 size=00dd4h (  3540) load
+I (215) esp_image: segment 2: paddr=00140020 vaddr=42000020 size=102d78h (1060216) map
+I (372) esp_image: segment 3: paddr=00242da0 vaddr=3fcb51d4 size=049f8h ( 18936) load
+I (376) esp_image: segment 4: paddr=002477a0 vaddr=40374000 size=30310h (197392) load
+I (413) esp_image: segment 5: paddr=00277ab8 vaddr=50000000 size=00020h (    32) load
+I (431) boot: Loaded app from partition at offset 0x10000
+I (432) boot: Disabling RNG early entropy source...
+I (433) octal_psram: vendor id    : 0x0d (AP)
+I (433) octal_psram: dev id       : 0x02 (generation 3)
+I (433) octal_psram: density      : 0x03 (64 Mbit)
+I (433) octal_psram: good-die     : 0x01 (Pass)
+I (433) octal_psram: Latency      : 0x01 (Fixed)
+I (433) octal_psram: VCC          : 0x01 (3V)
+I (434) octal_psram: SRF          : 0x01 (Fast Refresh)
+I (434) octal_psram: BurstType    : 0x01 (Hybrid Wrap)
+I (434) octal_psram: BurstLen     : 0x01 (32 Byte)
+I (434) octal_psram: Readlatency  : 0x02 (10 cycles@Fixed)
+I (435) octal_psram: DriveStrength: 0x00 (1/1)
+I (435) MSPI Timing: Enter psram timing tuning
+I (436) esp_psram: Found 8MB PSRAM device
+I (436) esp_psram: Speed: 80MHz
+I (505) mmu_psram: Read only data copied and mapped to SPIRAM
+I (577) mmu_psram: Instructions copied and mapped to SPIRAM
+I (577) cpu_start: Multicore app
+I (782) esp_psram: SPI SRAM memory test OK
+I (791) cpu_start: Pro cpu start user code
+I (791) cpu_start: cpu freq: 240000000 Hz
+I (791) app_init: Application information:
+I (791) app_init: Project name:     Clare_S3
+I (791) app_init: App version:      3e09a44-dirty
+I (792) app_init: Compile time:     Aug 29 2026 12:58:24
+I (792) app_init: ELF file SHA256:  28a14366213352dd...
+I (792) app_init: ESP-IDF:          v5.5.3
+I (792) efuse_init: Min chip rev:     v0.0
+I (792) efuse_init: Max chip rev:     v0.99 
+I (792) efuse_init: Chip rev:         v0.2
+I (792) heap_init: Initializing. RAM available for dynamic allocation:
+I (793) heap_init: At 3FCBCE00 len 0002C910 (178 KiB): RAM
+I (793) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM
+I (793) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM
+I (793) heap_init: At 600FE000 len 00001FE8 (7 KiB): RTCRAM
+I (793) esp_psram: Adding pool of 5875K of PSRAM memory to heap allocator
+I (794) esp_psram: Adding pool of 3K of PSRAM memory gap generated due to end address alignment of drom to the heap allocator
+I (794) spi_flash: detected chip: gd
+I (794) spi_flash: flash io: qio
+I (795) sleep_gpio: Configure to isolate all GPIO pins in sleep state
+I (795) sleep_gpio: Enable automatic switching of GPIO sleep configuration
+I (796) main_task: Started on CPU0
+I (797) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations
+I (797) main_task: Calling app_main()
+I (797) clare_s3: Clare S3 starting
+I (804) axp2101: Init PMU SUCCESS!
+I (811) DisplayPort: SPI BUS init
+I (811) DisplayPort: Install panel IO
+I (812) co5300: version: 2.1.0
+I (812) co5300_spi: LCD panel create success, version: 2.1.0
+W (972) co5300_spi: The 3Ah command has been used and will be overwritten by external initialization sequence
+I (2246) CST9217: Checkcode: 0x204ECACA
+I (2248) CST9217: Resolution X: 466, Y: 466
+I (2250) CST9217: Chip Type: 0x9217, ProjectID: 0x5734
+I (2250) esp_lvgl:adapter: LVGL adapter initialized successfully
+I (2253) esp_lvgl:touch: Touch input device registered successfully (IRQ mode: enabled)
+I (2284) esp_lvgl:adapter: LVGL task started successfully
+i2c: {sda: 15, scl: 14}
+i2s: {mclk: 16, bclk: 9, ws: 45, din: 10, dout: 8}
+out: {codec: ES8311, pa: 46, pa_gain: 6, use_mclk: 1}
+Codec 0 dir 2 type:1
+in: {codec: ES7210}
+Codec 1 dir 1 type:2
+I (2285) CODEC_INIT: in:1 out:1 port: 1
+I (2285) CODEC_INIT: Success to int i2c: 0
+I (2285) CODEC_INIT: Init i2s 0 type: 3 mclk:16 bclk:9 ws:45 din:10 dout:8
+I (2285) CODEC_INIT: tx:0x3c246100 rx:0x3c2462bc
+W (2286) i2s_tdm: the current mclk multiple is too small, adjust the mclk multiple to 384
+I (2286) CODEC_INIT: output init tdm ret 0
+W (2287) i2s_tdm: the current mclk multiple is too small, adjust the mclk multiple to 384
+I (2287) CODEC_INIT: Input init tdm ret 0
+I (2287) CODEC_INIT: Init i2s 0 ok
+I (2287) CODEC_INIT: Success to init i2s: 0
+I (2287) CODEC_INIT: Success to int i2c: 0
+I (2287) CODEC_INIT: Success to init i2s: 0
+I (2288) CODEC_INIT: Get out handle 0x3c246100 port 0
+I (2293) ES8311: Work in Slave mode
+I (2299) ES7210: Work in Slave mode
+I (2305) ES7210: Enable ES7210_INPUT_MIC1
+I (2308) ES7210: Enable ES7210_INPUT_MIC2
+I (2311) ES7210: Enable ES7210_INPUT_MIC3
+I (2314) ES7210: Enable ES7210_INPUT_MIC4
+I (2317) ES7210: Enable TDM mode
+I (2324) I2S_IF: channel mode 2 bits:16/16 channel:2 mask:3
+I (2325) I2S_IF: TDM Mode 1 bits:16/16 channel:2 sample_rate:16000 mask:3
+I (2340) Adev_Codec: Open codec device OK
+I (2340) I2S_IF: channel mode 2 bits:16/16 channel:2 mask:3
+I (2340) I2S_IF: TDM Mode 0 bits:16/16 channel:2 sample_rate:16000 mask:3
+I (2341) ES7210: Bits 8
+I (2348) ES7210: Enable ES7210_INPUT_MIC1
+I (2351) ES7210: Enable ES7210_INPUT_MIC2
+I (2354) ES7210: Enable ES7210_INPUT_MIC3
+I (2357) ES7210: Enable ES7210_INPUT_MIC4
+I (2360) ES7210: Enable TDM mode
+I (2366) ES7210: Unmuted
+I (2366) Adev_Codec: Open codec device OK
+I (2366) Adev_Codec: Input already open
+I (2366) Adev_Codec: Input already open
+I (2375) clare_audio: ALC ready: 16000 Hz mono PCM16, gain 6 dB
+I (2475) pp: pp rom version: e7ae62f
+I (2475) net80211: net80211 rom version: e7ae62f
+I (2476) wifi:wifi driver task: 3fcdcf24, prio:23, stack:6656, core=0
+I (2480) wifi:wifi firmware version: 4df78f2
+I (2480) wifi:wifi certification version: v7.0
+I (2480) wifi:config NVS flash: enabled
+I (2480) wifi:config nano formatting: disabled
+I (2480) wifi:Init data frame dynamic rx buffer num: 32
+I (2480) wifi:Init dynamic rx mgmt buffer num: 5
+I (2481) wifi:Init management short buffer num: 32
+I (2481) wifi:Init static tx buffer num: 16
+I (2482) wifi:Init tx cache buffer num: 32
+I (2482) wifi:Init static tx FG buffer num: 2
+I (2482) wifi:Init static rx buffer size: 1600
+I (2482) wifi:Init static rx buffer num: 16
+I (2482) wifi:Init dynamic rx buffer num: 32
+I (2483) wifi_init: rx ba win: 6
+I (2483) wifi_init: accept mbox: 6
+I (2483) wifi_init: tcpip mbox: 32
+I (2483) wifi_init: udp mbox: 6
+I (2483) wifi_init: tcp mbox: 10
+I (2483) wifi_init: tcp tx win: 65535
+I (2484) wifi_init: tcp rx win: 5760
+I (2484) wifi_init: tcp mss: 1440
+I (2484) wifi_init: WiFi/LWIP prefer SPIRAM
+W (2484) wifi:Password length matches WPA2 standards, authmode threshold changes from OPEN to WPA2
+I (2485) phy_init: phy_version 711,97bcf0a2,Aug 25 2025,19:04:10
+I (2515) wifi:mode : sta (10:20:ba:3d:34:b8)
+I (2515) wifi:enable tsf
+I (2518) clare_net: Wi-Fi protocols limited to 11b/g/n mask=0x07
+I (2518) wifi:Set ps type: 0, coexist: 0
+
+I (2518) clare_s3: Clare UI ready; touch the Clare tile
+I (2518) main_task: Returned from app_main()
+I (2525) wifi:new:<6,1>, old:<1,0>, ap:<255,255>, sta:<6,1>, prof:1, snd_ch_cfg:0x0
+I (2526) wifi:state: init -> auth (0xb0)
+I (2534) wifi:state: auth -> assoc (0x0)
+I (2541) wifi:state: assoc -> run (0x10)
+I (2556) wifi:connected with LDKJ, aid = 2, channel 6, 40U, bssid = 50:fe:39:e6:47:92
+I (2557) wifi:security: WPA2-PSK, phy: bgn, rssi: -39
+I (2558) wifi:pm start, type: 0
+
+I (2558) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us
+I (2558) wifi:set rx beacon pti, rx_bcn_pti: 0, bcn_timeout: 25000, mt_pti: 0, mt_time: 10000
+I (2564) wifi:<ba-add>idx:0 (ifx:0, 50:fe:39:e6:47:92), tid:0, ssn:0, winSize:64
+I (2598) wifi:AP's beacon interval = 102400 us, DTIM period = 1
+I (3586) esp_netif_handlers: sta ip: 192.168.31.124, mask: 255.255.255.0, gw: 192.168.31.1
+I (3586) clare_net: DHCP DNS main=192.168.31.1
+I (7649) wifi:<ba-add>idx:1 (ifx:0, 50:fe:39:e6:47:92), tid:6, ssn:2, winSize:64
+I (10518) clare_s3: Boot network self-test begin
+I (10518) clare_net: Create session URL ready=1
+I (10518) clare_net: HTTP before init free8=6000303 largest8=5898240 free_internal=74551 largest_internal=31744
+I (14336) clare_net: HTTP response status=200 bytes=82 truncated=0
+I (14338) clare_net: HTTP after cleanup free8=5999483 largest8=5898240
+I (14338) clare_s3: Boot network self-test session err=0 (attempt 1/4)
+I (14339) clare_net: WS pre-start heap free8=5996319 largest8=5898240
+I (14340) websocket_client: Started
+I (18102) clare_net: WebSocket connected kind=0
+I (18102) clare_s3: Boot network self-test transcribe err=0
+I (19205) clare_net: WS pre-start heap free8=5996087 largest8=5898240
+I (19206) websocket_client: Started
+I (23400) clare_net: WebSocket connected kind=1
+I (23400) clare_s3: Ask Clare a question
+I (23400) clare_s3: Boot network self-test host err=0
+I (24503) clare_net: HTTP before init free8=5999043 largest8=5898240 free_internal=74103 largest_internal=31744
+I (27964) clare_net: HTTP response status=200 bytes=255 truncated=1
+I (27966) clare_net: HTTP after cleanup free8=5998859 largest8=5898240
+I (27967) clare_s3: Boot network self-test complete
+[Warn]	(125.097, +125097)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.098, +1)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.098, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.098, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.098, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.099, +1)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.099, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.099, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.100, +1)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.100, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.100, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.101, +1)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.101, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.101, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.102, +1)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.102, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.102, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.102, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.103, +1)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.103, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.103, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.104, +1)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.104, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.104, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.105, +1)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.105, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.105, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.105, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.106, +1)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.106, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.106, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.107, +1)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.107, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.107, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.108, +1)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.108, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.108, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.108, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.109, +1)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.109, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.109, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.110, +1)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.110, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.110, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.111, +1)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.111, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.111, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.112, +1)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.112, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.112, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.117, +5)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.117, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.118, +1)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.118, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.118, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.119, +1)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.119, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.119, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.119, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.120, +1)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.120, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.120, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.121, +1)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.121, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.121, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.122, +1)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.122, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.122, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.123, +1)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.123, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.123, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.123, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.124, +1)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.124, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.124, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.125, +1)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.125, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.125, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.126, +1)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.126, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.126, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.126, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.127, +1)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.127, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.127, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.128, +1)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.128, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.128, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.129, +1)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.129, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.129, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.130, +1)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.130, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.130, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.130, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.131, +1)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.131, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.131, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.132, +1)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.132, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.132, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.133, +1)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.133, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.133, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.134, +1)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.134, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.134, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.134, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.135, +1)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.135, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.135, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.136, +1)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.136, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.136, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.137, +1)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.137, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.137, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.137, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.138, +1)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.138, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.138, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.139, +1)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.139, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.139, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.140, +1)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.140, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.145, +5)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.146, +1)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.146, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.146, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.147, +1)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.147, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.147, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.148, +1)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.148, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.148, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.149, +1)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.149, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.149, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.149, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.150, +1)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.150, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.150, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.151, +1)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.151, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.151, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.152, +1)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.152, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.152, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.152, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.153, +1)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.153, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.153, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.154, +1)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.154, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.154, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.155, +1)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.155, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.155, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.155, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.156, +1)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.156, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.156, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.157, +1)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.157, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.157, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.158, +1)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.158, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.158, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.158, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.159, +1)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.159, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.159, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.160, +1)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.160, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.160, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.161, +1)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.161, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.161, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.161, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.162, +1)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.162, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.162, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.163, +1)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.163, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.163, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.164, +1)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.164, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.164, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.164, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.169, +5)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.170, +1)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.170, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.170, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.171, +1)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.171, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.171, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.172, +1)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.172, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.172, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.173, +1)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.173, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.173, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.173, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.174, +1)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.174, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.174, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.175, +1)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.175, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.175, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.176, +1)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.176, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.176, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.176, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.177, +1)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.177, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.177, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.178, +1)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.178, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.178, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.179, +1)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.179, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.179, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.180, +1)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.180, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.180, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.180, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.181, +1)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.181, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.181, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.182, +1)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.182, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.182, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.183, +1)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.183, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.183, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.184, +1)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.184, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.184, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.184, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.185, +1)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.185, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.185, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.186, +1)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.186, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.186, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.187, +1)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.187, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.187, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.188, +1)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.188, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.188, +0)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174
+[Warn]	(125.188, +0)	 lv_font_get_bitmap_fmt_txt: Compressed fonts is used but LV_USE_FONT_COMPRESSED is not enabled in lv_conf.h lv_font_fmt_txt.c:213
+[Warn]	(125.189, +1)	 draw_letter_cb: Couldn't get the bitmap of a glyph lv_draw_sw_letter.c:174

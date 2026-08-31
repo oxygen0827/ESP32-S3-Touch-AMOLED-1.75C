@@ -1,0 +1,7 @@
+I (24028) clare_net: WebSocket connected kind=1
+I (24028) clare_s3: Ask Clare a question
+I (24029) clare_s3: Boot network self-test host err=0
+I (25131) clare_net: HTTP before init free8=5835907 largest8=5636096 free_internal=47963 largest_internal=30720
+I (29897) clare_net: HTTP response status=200 bytes=255 truncated=1
+I (29899) clare_net: HTTP after cleanup free8=5835735 largest8=5636096
+I (29900) clare_s3: Boot network self-test complete
