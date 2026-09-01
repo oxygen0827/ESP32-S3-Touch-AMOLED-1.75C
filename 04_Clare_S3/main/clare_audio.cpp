@@ -338,6 +338,13 @@ static esp_err_t mp3_write_decoded_locked(const uint8_t *pcm, size_t pcm_bytes,
 
 } // namespace
 
+#if CLARE_AUDIO_HAS_MP3
+// Defined in the TTS section below; the TX keep-alive mirrors the proven
+// vocat player (its play task never stops writing: zeros when idle).
+static void tts_keepalive_start(void);
+static void tts_keepalive_stop(void);
+#endif
+
 extern "C" esp_err_t clare_audio_init(const clare_audio_config_t *config)
 {
     if (!config || !config->playback || !config->capture) return ESP_ERR_INVALID_ARG;
@@ -409,6 +416,9 @@ extern "C" esp_err_t clare_audio_init(const clare_audio_config_t *config)
     }
 
     s_audio.ready = true;
+#if CLARE_AUDIO_HAS_MP3
+    tts_keepalive_start();
+#endif
     ESP_LOGI(TAG, "ready: %lu Hz, %u-bit, %u codec channels, mono network PCM",
              static_cast<unsigned long>(s_audio.sample_rate), s_audio.bits, s_audio.channels);
     return ESP_OK;
@@ -433,6 +443,9 @@ extern "C" esp_err_t clare_audio_init_from_codec(void *codec_port)
 extern "C" esp_err_t clare_audio_deinit(void)
 {
 #if CLARE_AUDIO_HAS_MP3
+    // Stop the keep-alive first: it must not touch the codec/semaphores
+    // while they are being torn down below.
+    tts_keepalive_stop();
     clare_audio_mp3_end();
 #endif
     if (s_audio.capture_lock && lock(s_audio.capture_lock)) {
@@ -639,7 +652,7 @@ extern "C" void clare_audio_alc_deinit(void)
 // arrive in bursts, and the I2S DMA underran between them ("断断续续").
 // Now the WS task only enqueues compressed bytes; this task decodes and
 // plays at I2S pace, like the proven vocat reference (mp3_player.c queue).
-constexpr size_t kTtsRingBytes = 96 * 1024;   // PSRAM; a full spoken answer fits
+constexpr size_t kTtsRingBytes = 1024 * 1024; // PSRAM; ~3 min of TTS even if nothing drains
 constexpr size_t kTtsPrebufferBytes = 8 * 1024; // ~0.5 s @128 kbps before play
 
 struct TtsStream {
@@ -649,6 +662,8 @@ struct TtsStream {
     uint32_t wpos = 0;
     bool eos = false;
     bool overflow_logged = false;
+    uint32_t dropped_bytes = 0;          // cumulative bytes dropped this stream
+    uint32_t dropped_last_report = 0;    // dropped_bytes at the last overflow log
     SemaphoreHandle_t lock = nullptr;
     TaskHandle_t task = nullptr;
 };
@@ -662,6 +677,8 @@ static void tts_ring_reset_locked()
     s_tts.wpos = 0;
     s_tts.eos = false;
     s_tts.overflow_logged = false;
+    s_tts.dropped_bytes = 0;
+    s_tts.dropped_last_report = 0;
 }
 
 static size_t tts_ring_write(const uint8_t *data, size_t len)
@@ -669,10 +686,19 @@ static size_t tts_ring_write(const uint8_t *data, size_t len)
     const size_t avail = tts_avail();
     const size_t free_bytes = s_tts.cap - avail;
     if (len > free_bytes) {
-        if (!s_tts.overflow_logged) {
-            ESP_LOGW(TAG, "tts ring overflow: dropping %u of %u bytes",
-                     static_cast<unsigned>(len - free_bytes), static_cast<unsigned>(len));
+        // Ring full: drop the NEW tail, never the unplayed old bytes — losing
+        // the beginning of an answer is far worse than losing its end (the
+        // old 96 KB ring filled after ~8 s of a long answer and the user only
+        // heard the last sentence).  Warn on the first drop and then once per
+        // further 64 KB so a real overflow is never silent.
+        s_tts.dropped_bytes += static_cast<uint32_t>(len - free_bytes);
+        if (!s_tts.overflow_logged ||
+            s_tts.dropped_bytes - s_tts.dropped_last_report >= 64U * 1024U) {
+            ESP_LOGW(TAG, "tts ring overflow: dropping %u of %u B (dropped %u B total this answer)",
+                     static_cast<unsigned>(len - free_bytes), static_cast<unsigned>(len),
+                     static_cast<unsigned>(s_tts.dropped_bytes));
             s_tts.overflow_logged = true;
+            s_tts.dropped_last_report = s_tts.dropped_bytes;
         }
         len = free_bytes;
     }
@@ -803,16 +829,18 @@ static void tts_play_task(void *)
             if (frame.decoded_size > 0) {
                 consecutive_errors = 0;
                 stat_pcm_bytes += frame.decoded_size;
-                if (stat_t0 == 0) {
-                    stat_t0 = 1;
-                    ESP_LOGI(TAG, "tts first audio out (ring consumed %u bytes so far)",
-                             static_cast<unsigned>(stat_ring_bytes));
-                }
                 esp_audio_simple_dec_info_t info = {};
                 if (esp_audio_simple_dec_get_info(s_audio.mp3_decoder, &info) == ESP_AUDIO_ERR_OK) {
                     lock(s_audio.playback_lock);
                     (void)mp3_write_decoded_locked(frame.buffer, frame.decoded_size, info);
                     unlock(s_audio.playback_lock);
+                }
+                if (stat_t0 == 0) {
+                    // Logged AFTER the first codec write, so the timestamp
+                    // marks audio actually handed to the I2S driver.
+                    stat_t0 = 1;
+                    ESP_LOGI(TAG, "tts first audio out (ring consumed %u bytes so far)",
+                             static_cast<unsigned>(stat_ring_bytes));
                 }
             }
             if (raw.consumed > raw.len) { stream_open = false; break; }
@@ -855,6 +883,64 @@ static esp_err_t tts_stream_init()
         s_tts.cap = kTtsRingBytes;
     }
     return ESP_OK;
+}
+
+// --- TX keep-alive (vocat-proven pattern: the player never stops writing) ---
+// The first sentence of every answer played after the TX path had been idle
+// for a while never reached the speaker, even though the decoder produced it
+// and every esp_codec_dev_write succeeded (logs/clare_s3_firstsent_20260831.log:
+// ring/pcm byte-exact, zero write errors, "first audio out" at 1024 B consumed
+// for every stream).  What is eaten is the idle->active transition of the TX
+// path itself (the I2S driver falls back to auto_clear zero-output during
+// idle; re-priming swallows the first real samples).  The proven vocat
+// reference avoids this entirely: its mp3_play_task (pipeline_ws.c) NEVER
+// lets the TX go idle — it writes zeros whenever there is no real PCM, plus
+// a 100 ms pre-roll after an underrun.  Mirror that: while no TTS stream is
+// active, feed 20 ms silence chunks so the channel never drops back into the
+// idle state.  The keeper serializes through playback_lock like normal PCM
+// and stays parked while a stream is active (mp3_active), so it can never
+// interleave zeros into speech.
+constexpr size_t kKeepAliveFrames = 320;  // 20 ms at 16 kHz
+static const int16_t kKeepAliveSilence[kKeepAliveFrames] = {};
+static volatile bool s_keepalive_run = false;
+static TaskHandle_t s_keepalive_task = nullptr;
+
+static void tts_keepalive_task(void *)
+{
+    while (s_keepalive_run) {
+        if (!clare_audio_is_ready()) break;
+        if (s_audio.mp3_active) {
+            vTaskDelay(pdMS_TO_TICKS(50));
+            continue;
+        }
+        if (clare_audio_write_pcm16(kKeepAliveSilence, kKeepAliveFrames) != ESP_OK) {
+            vTaskDelay(pdMS_TO_TICKS(100));
+        }
+    }
+    s_keepalive_task = nullptr;
+    vTaskDelete(nullptr);
+}
+
+static void tts_keepalive_start(void)
+{
+    if (s_keepalive_task) return;
+    s_keepalive_run = true;
+    if (xTaskCreate(tts_keepalive_task, "clare_ka", 3072, nullptr, 4, &s_keepalive_task) != pdPASS) {
+        ESP_LOGW(TAG, "tts keep-alive task create failed");
+        s_keepalive_run = false;
+        s_keepalive_task = nullptr;
+    }
+}
+
+static void tts_keepalive_stop(void)
+{
+    s_keepalive_run = false;
+    for (int i = 0; i < 100 && s_keepalive_task; ++i) {
+        vTaskDelay(pdMS_TO_TICKS(20));
+    }
+    if (s_keepalive_task) {
+        ESP_LOGW(TAG, "tts keep-alive task did not stop in time");
+    }
 }
 #endif // CLARE_AUDIO_HAS_MP3
 
@@ -945,7 +1031,11 @@ extern "C" esp_err_t clare_audio_mp3_end(void)
         vTaskDelay(pdMS_TO_TICKS(20));
     }
     if (s_tts.task) {
-        ESP_LOGW(TAG, "tts drain still running after 4 s; leaving decoder to the task");
+        // Not a race: with a 1 MB ring a long answer legitimately needs more
+        // than 4 s to drain after done; the playback task owns the decoder
+        // and exits cleanly on its own (pit 12/14 semantics).  Demoted from
+        // a warning so it is not misread as a fault on long answers.
+        ESP_LOGI(TAG, "tts drain continues in background (long answer); decoder owned by task");
     } else if (s_audio.mp3_decoder) {
         // Safety net for task-creation-failure paths only.
         esp_audio_simple_dec_close(s_audio.mp3_decoder);
@@ -963,4 +1053,13 @@ extern "C" esp_err_t clare_audio_play_mp3(const uint8_t *data, size_t len)
     esp_err_t err = clare_audio_mp3_start();
     if (err != ESP_OK) return err;
     return clare_audio_mp3_write(data, len, true);
+}
+
+extern "C" bool clare_audio_mp3_is_active(void)
+{
+#if CLARE_AUDIO_HAS_MP3
+    return s_audio.mp3_active;
+#else
+    return false;
+#endif
 }

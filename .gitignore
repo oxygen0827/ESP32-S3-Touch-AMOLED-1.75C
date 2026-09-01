@@ -16,3 +16,4 @@ release-artifacts/
 releases/dist/
 releases/downloads/
 **/__pycache__/
+.DS_Store

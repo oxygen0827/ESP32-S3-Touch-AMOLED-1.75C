@@ -256,11 +256,18 @@ static void create_clare(void)
     lv_obj_set_style_text_font(s_status, &lv_font_montserrat_16, 0);
     lv_obj_set_width(s_status, 300);
     lv_label_set_long_mode(s_status, LV_LABEL_LONG_DOT);
+    // Pin the status to a fixed one-line slot [y=86, y=106]: a long status
+    // string ("Meeting ended - Ask Clare or refresh summary") truncated by
+    // LONG_DOT otherwise renders flush against the Wi-Fi line 6 px below it,
+    // which reads as overlapping on the round glass.
+    lv_obj_set_style_pad_all(s_status, 0, 0);
+    lv_obj_set_height(s_status, 20);
     lv_obj_align(s_status, LV_ALIGN_TOP_MID, 0, 86);
 
     s_clare_wifi = make_label(s_clare, "Wi-Fi: checking", 0x9EB2C9, LV_TEXT_ALIGN_CENTER);
     lv_obj_set_style_text_font(s_clare_wifi, &lv_font_montserrat_12, 0);
-    lv_obj_align(s_clare_wifi, LV_ALIGN_TOP_MID, 0, 110);
+    lv_obj_set_style_pad_all(s_clare_wifi, 0, 0);
+    lv_obj_align(s_clare_wifi, LV_ALIGN_TOP_MID, 0, 118);
 
     // Notes card: centered 330-wide, corners verified inside the glass.
     lv_obj_t *notes = lv_obj_create(s_clare);

@@ -1567,6 +1567,23 @@ extern "C" esp_err_t clare_net_transcribe_send_end(void)
     return err;
 }
 
+extern "C" esp_err_t clare_net_transcribe_flush(void)
+{
+    // Flush only the buffered audio tail (a regular audio message, same
+    // protocol) WITHOUT the {"type":"end"} signal: on the server, "end" marks
+    // the session ended and the host/Q&A channel then rejects it (403), which
+    // killed post-meeting questions' meeting context.
+    if (!take_audio_send_lock()) {
+        return ESP_ERR_TIMEOUT;
+    }
+    esp_err_t err = flush_transcribe_audio_batch();
+    if (err != ESP_OK) {
+        reset_transcribe_audio_batch();
+    }
+    give_audio_send_lock();
+    return err;
+}
+
 extern "C" esp_err_t clare_net_transcribe_disconnect(void)
 {
     return ws_cleanup(&s_transcribe);

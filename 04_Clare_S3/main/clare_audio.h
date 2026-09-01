@@ -103,6 +103,14 @@ esp_err_t clare_audio_mp3_write(const uint8_t *data, size_t len, bool end_of_str
 esp_err_t clare_audio_mp3_end(void);
 esp_err_t clare_audio_play_mp3(const uint8_t *data, size_t len);
 
+/**
+ * True while a TTS stream is open, i.e. the playback task is still draining
+ * the jitter ring (remains true for a while after mp3_end() signals eos).
+ * Used to keep the meeting mic feed paused until the spoken answer has
+ * actually finished playing.
+ */
+bool clare_audio_mp3_is_active(void);
+
 /* Compatibility names used by the original ws_meeting_demo pipeline. */
 static inline int clare_audio_recorder_read(void *dst, size_t bytes)
 {

@@ -46,6 +46,10 @@ static volatile bool s_meeting_active = false;
 static volatile bool s_transcribe_connected = false;
 static volatile bool s_host_connected = false;
 static volatile bool s_host_recording = false;
+// Set by the HOST_SESSION_REJECTED event (HTTP 403 on the host handshake):
+// distinguishes a genuinely invalid session from a transient connect failure,
+// so the Ask retry logic only discards the meeting session when it must.
+static volatile bool s_host_session_rejected = false;
 static volatile TickType_t s_host_answer_since = 0;  // !=0 while waiting for an answer
 static esp_timer_handle_t s_host_answer_timer = nullptr;
 static volatile bool s_audio_task_run = false;
@@ -168,6 +172,7 @@ static void net_event(const clare_net_event_t *event, void *)
         // is closed on HOST_DONE / stop paths instead.
         break;
     case CLARE_NET_EVENT_HOST_SESSION_REJECTED:
+        s_host_session_rejected = true;
         ui_status("Session expired - recreating");
         enqueue_action(Action::HandleHostRejected);
         break;
@@ -220,6 +225,24 @@ static void audio_task(void *)
             if (!s_host_connected) { vTaskDelay(pdMS_TO_TICKS(50)); continue; }
             err = clare_net_host_send_audio(s_audio_mono, sizeof(s_audio_mono));
         } else if (s_meeting_active) {
+            // Keep the meeting feed paused for the WHOLE Q&A — while the
+            // answer is being generated (s_host_answer_since) and while the
+            // TTS is still playing (mp3 active) — not just while the question
+            // is recorded.  The vocat reference (ws_session.c do_enter_host /
+            // do_exit_host) only resumes transcription when host mode exits,
+            // which is also what the comment above promises ("resumes when the
+            // answer flow ends").  Resuming right at end_of_speech streamed
+            // the question tail / room audio / our own TTS echo to the server
+            // while it was still generating the answer; the server took it as
+            // a barge-in and cut the answer's TTS short — the first Ask of a
+            // meeting then played only ~1.9 s (2 of ~7 TTS segments) before
+            // the server's done (logs/clare_s3_pit14_boot_20260831.log; the
+            // client provably consumed every one of the 10029 MP3 bytes it
+            // received, so the loss was upstream, not in the ring/decoder).
+            if (s_host_answer_since != 0 || clare_audio_mp3_is_active()) {
+                vTaskDelay(pdMS_TO_TICKS(50));
+                continue;
+            }
             // Transcribe channel down or reconnecting: idle (drop frames)
             // instead of spamming failed sends into the watchdog — the
             // supervisor owns recovery (vocat ws_session does the same).
@@ -277,6 +300,12 @@ static void start_meeting_impl(void *)
         s_host_connected = false;
         s_host_recording = false;
     }
+    // The previous meeting's transcribe channel may have been kept open for
+    // post-meeting Q&A (see stop_meeting_impl).  Tear it down before ending
+    // the old session; otherwise ws_connect() would refuse the new meeting's
+    // connect with INVALID_STATE (stale ctx->client).
+    (void)clare_net_transcribe_disconnect();
+    s_transcribe_connected = false;
     if (s_session_id[0]) {
         (void)clare_net_end_session(s_session_id);
         s_session_id[0] = 0;
@@ -316,10 +345,31 @@ static void stop_meeting_impl(void *)
     if (!s_meeting_active) return;
     stop_audio_task();
     s_meeting_active = false;
-    s_transcribe_connected = false;
+    // NOTE: s_transcribe_connected intentionally left as-is — the transcribe
+    // socket is kept OPEN (see below), so the flag keeps reflecting reality.
     (void)clare_audio_mp3_end();
     clare_ui_set_meeting_active(false);
-    clare_net_transcribe_send_end(); clare_net_transcribe_disconnect();
+    // Keep the meeting's server session ALIVE for post-meeting Q&A:
+    //  - no {"type":"end"} (server request_transcribe_stop + finalize ->
+    //    status "ended" -> host WS admission rejects with a 403);
+    //  - NO WS disconnect either.  An open transcribe channel pins the
+    //    session: the server's idle reaper skips sessions that still have a
+    //    WS attached (session_manager.cleanup_stale), and a deployment that
+    //    freezes/collects the instance on zero connections cannot do so
+    //    while a socket is open.  (A bare disconnect SHOULD also keep the
+    //    session per server source, but the 20260831 field test showed the
+    //    context was still lost afterwards, so keep the socket open — it is
+    //    the strongest firmware-side guarantee.)
+    //  The audio task is stopped, so the channel idles silently; the
+    //  server's rolling summary loop skips silently when no new transcript
+    //  lines arrive (summary_engine.run_once min_new_lines).  Only the
+    //  buffered audio tail is flushed (a regular audio message) so the
+    //  final words still get transcribed.  The channel is torn down on the
+    //  next Start (start_meeting_impl disconnects it and HTTP-ends the old
+    //  session); if the server/proxy kills the idle WSS meanwhile, the
+    //  TRANSCRIBE_DISCONNECTED event is ignored while !s_meeting_active and
+    //  the 30 min reaper becomes the fallback lifetime.
+    (void)clare_net_transcribe_flush();
     if (s_host_recording) {
         (void)clare_net_host_send_end_of_speech();
         s_host_recording = false;
@@ -402,7 +452,7 @@ static void handle_host_rejected_impl(void *)
     }
     start_audio_task();
     clare_ui_set_host_active(true);
-    ui_status("Ask Clare a question");
+    // Status is set by the HOST_CONNECTED event during connect (no duplicate).
 }
 
 static void toggle_host_impl(void *)
@@ -432,6 +482,8 @@ static void toggle_host_impl(void *)
         ESP_LOGW(TAG, "Abandoning stale Q&A (no answer for 30 s)");
         (void)clare_net_host_disconnect();
         s_host_connected = false;
+        s_host_answer_since = 0;  // the abandoned wait must not keep the meeting feed paused
+        if (s_host_answer_timer) esp_timer_stop(s_host_answer_timer);
         clare_ui_set_host_active(false);
     }
     clare_ui_reset_answer();
@@ -440,18 +492,46 @@ static void toggle_host_impl(void *)
     // Pause the meeting feed BEFORE the host WS handshake, not after: the
     // backend rejects a second concurrent audio stream with a 403, and the
     // handshake takes seconds during which the audio task is still running.
+    s_host_session_rejected = false;  // re-armed by HOST_SESSION_REJECTED during connect
     s_host_recording = true;
     if (clare_net_host_connect(s_session_id) != ESP_OK) {
         s_host_recording = false;
-        // The server asynchronously expires the session after Stop
-        // ({"type":"end"}), so the first post-meeting Ask can hit a 403
+        if (!s_host_session_rejected) {
+            // Transient failure (TLS/DNS/timeout, not a 403): the meeting
+            // session is still valid — retry the SAME session once instead
+            // of throwing away the meeting's transcript context by blindly
+            // recreating it.  (The old code recreated on ANY failure, which
+            // also silently split the context if an in-meeting Ask hit a
+            // transient connect error.)
+            ui_status("Reconnecting Clare...");
+            vTaskDelay(pdMS_TO_TICKS(1000));
+            s_host_session_rejected = false;
+            s_host_recording = true;
+            if (clare_net_host_connect(s_session_id) == ESP_OK) {
+                start_audio_task(); clare_ui_set_host_active(true);
+                return;
+            }
+            s_host_recording = false;
+            ui_status("Clare Q&A unavailable");
+            return;
+        }
+        // Genuine 403: the server expired the session (30 min idle reaper,
+        // HTTP /end at the next meeting start, or a server restart), so a
+        // late post-meeting Ask can still hit it
         // (logs/clare_s3_content_debug_20260831.log).  Recreate the session
         // inline and retry once instead of flashing "Q&A unavailable".
+        // Note the recreated session has no meeting context — it is only a
+        // fallback; the normal post-meeting Ask stays on the original
+        // session because stop_meeting_impl neither sends {"type":"end"}
+        // nor closes the transcribe socket.
         ui_status("Session expired - recreating");
         if (clare_net_create_session(CONFIG_CLARE_TOPIC, s_session_id, sizeof(s_session_id)) == ESP_OK) {
             s_host_recording = true;
+            s_host_session_rejected = false;
             if (clare_net_host_connect(s_session_id) == ESP_OK) {
-                start_audio_task(); clare_ui_set_host_active(true); ui_status("Ask Clare a question");
+                // Status is set by the HOST_CONNECTED event during connect;
+                // setting it again here logged "Ask Clare a question" twice.
+                start_audio_task(); clare_ui_set_host_active(true);
                 return;
             }
             s_host_recording = false;
@@ -459,11 +539,17 @@ static void toggle_host_impl(void *)
         ui_status("Clare Q&A unavailable");
         return;
     }
-    start_audio_task(); clare_ui_set_host_active(true); ui_status("Ask Clare a question");
+    start_audio_task(); clare_ui_set_host_active(true);
 }
 
 static void finish_host_impl(void *)
 {
+    // Single "answer flow ended" point: clear the waiting flag here too, not
+    // only in the HOST_DONE event — the 60 s answer watchdog reaches this
+    // function without any HOST_DONE, and a stale s_host_answer_since would
+    // keep the meeting mic feed paused forever (audio_task gates on it).
+    s_host_answer_since = 0;
+    if (s_host_answer_timer) esp_timer_stop(s_host_answer_timer);
     // Let the last sentence finish decoding before tearing the stream down.
     (void)clare_audio_mp3_end();
     s_host_recording = false;
@@ -635,7 +721,22 @@ static void action_task(void *)
         case Action::ToggleHost: toggle_host_impl(nullptr); break;
         case Action::RefreshSummary: refresh_summary_impl(nullptr); break;
         case Action::FinishHost: finish_host_impl(nullptr); break;
-        case Action::CleanupHost: (void)clare_net_host_disconnect(); break;
+        case Action::CleanupHost:
+            // A CleanupHost queued by a failed/closed host connection must
+            // NOT run once a NEW connection (or handshake) is already in
+            // place — it would destroy the fresh client.  Post-meeting Ask
+            // hit exactly that: 403 -> HOST_DISCONNECTED queued CleanupHost,
+            // toggle_host_impl's inline session-recreate then reconnected
+            // successfully, and the stale queued cleanup tore the new client
+            // down (audio sends -> INVALID_STATE err=259, server heard
+            // nothing, no answer until the 60 s watchdog;
+            // logs/clare_s3_issue3_20260831.log).  When a cleanup is really
+            // needed (stale handle after an error/disconnect) both flags are
+            // already false (pit 7), so gating loses nothing.
+            if (!s_host_connected && !s_host_recording) {
+                (void)clare_net_host_disconnect();
+            }
+            break;
 #if CONFIG_CLARE_BOOT_SELF_TEST
         case Action::BootNetworkSelfTest:
             vTaskDelay(pdMS_TO_TICKS(8000));

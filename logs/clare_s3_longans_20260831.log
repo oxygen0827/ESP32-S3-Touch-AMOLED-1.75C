@@ -1,0 +1,1074 @@
+ESP-ROM:esp32s3-20210327
+Build:Mar 27 2021
+rst:0x15 (USB_UART_CHIP_RESET),boot:0xb (SPI_FAST_FLASH_BOOT)
+Saved PC:0x40396b3e
+SPIWP:0xee
+mode:DIO, clock div:1
+load:0x3fce2820,len:0x16a4
+load:0x403c8700,len:0xe80
+load:0x403cb700,len:0x3188
+entry 0x403c8948
+I (24) boot: ESP-IDF v5.5.3 2nd stage bootloader
+I (24) boot: compile time Aug 31 2026 20:50:50
+I (25) boot: Multicore bootloader
+I (25) boot: chip revision: v0.2
+I (25) boot: efuse block revision: v1.3
+I (25) qio_mode: Enabling default flash chip QIO
+I (25) boot.esp32s3: Boot SPI Speed : 80MHz
+I (26) boot.esp32s3: SPI Mode       : QIO
+I (26) boot.esp32s3: SPI Flash Size : 32MB
+I (26) boot: Enabling RNG early entropy source...
+I (26) boot: Partition Table:
+I (26) boot: ## Label            Usage          Type ST Offset   Length
+I (27) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (27) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (27) boot:  2 factory          factory app      00 00 00010000 00600000
+I (28) boot:  3 storage          Unknown data     01 82 00610000 00300000
+I (28) boot: End of partition table
+I (28) esp_image: segment 0: paddr=00010020 vaddr=3c110020 size=135f1ch (1269532) map
+I (217) esp_image: segment 1: paddr=00145f44 vaddr=3fcb4400 size=057cch ( 22476) load
+I (222) esp_image: segment 2: paddr=0014b718 vaddr=40374000 size=04900h ( 18688) load
+I (225) esp_image: segment 3: paddr=00150020 vaddr=42000020 size=102ed4h (1060564) map
+I (383) esp_image: segment 4: paddr=00252efc vaddr=40378900 size=2ba10h (178704) load
+I (417) esp_image: segment 5: paddr=0027e914 vaddr=50000000 size=00020h (    32) load
+I (435) boot: Loaded app from partition at offset 0x10000
+I (435) boot: Disabling RNG early entropy source...
+I (436) octal_psram: vendor id    : 0x0d (AP)
+I (437) octal_psram: dev id       : 0x02 (generation 3)
+I (437) octal_psram: density      : 0x03 (64 Mbit)
+I (437) octal_psram: good-die     : 0x01 (Pass)
+I (437) octal_psram: Latency      : 0x01 (Fixed)
+I (437) octal_psram: VCC          : 0x01 (3V)
+I (438) octal_psram: SRF          : 0x01 (Fast Refresh)
+I (438) octal_psram: BurstType    : 0x01 (Hybrid Wrap)
+I (438) octal_psram: BurstLen     : 0x01 (32 Byte)
+I (438) octal_psram: Readlatency  : 0x02 (10 cycles@Fixed)
+I (439) octal_psram: DriveStrength: 0x00 (1/1)
+I (439) MSPI Timing: Enter psram timing tuning
+I (440) esp_psram: Found 8MB PSRAM device
+I (440) esp_psram: Speed: 80MHz
+I (513) mmu_psram: Read only data copied and mapped to SPIRAM
+I (585) mmu_psram: Instructions copied and mapped to SPIRAM
+I (585) cpu_start: Multicore app
+I (788) esp_psram: SPI SRAM memory test OK
+I (797) cpu_start: Pro cpu start user code
+I (797) cpu_start: cpu freq: 240000000 Hz
+I (797) app_init: Application information:
+I (797) app_init: Project name:     Clare_S3
+I (797) app_init: App version:      be83f43-dirty
+I (797) app_init: Compile time:     Aug 31 2026 22:46:58
+I (797) app_init: ELF file SHA256:  13b3fc53bb9c9099...
+I (797) app_init: ESP-IDF:          v5.5.3
+I (798) efuse_init: Min chip rev:     v0.0
+I (798) efuse_init: Max chip rev:     v0.99 
+I (798) efuse_init: Chip rev:         v0.2
+I (798) heap_init: Initializing. RAM available for dynamic allocation:
+I (798) heap_init: At 3FCBD318 len 0002C3F8 (176 KiB): RAM
+I (798) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM
+I (798) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM
+I (799) heap_init: At 600FE000 len 00001FE8 (7 KiB): RTCRAM
+I (799) esp_psram: Adding pool of 5801K of PSRAM memory to heap allocator
+I (799) esp_psram: Adding pool of 40K of PSRAM memory gap generated due to end address alignment of drom to the heap allocator
+I (800) spi_flash: detected chip: gd
+I (800) spi_flash: flash io: qio
+I (800) sleep_gpio: Configure to isolate all GPIO pins in sleep state
+I (800) sleep_gpio: Enable automatic switching of GPIO sleep configuration
+I (801) main_task: Started on CPU0
+I (802) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations
+I (802) main_task: Calling app_main()
+I (802) clare_s3: Clare S3 starting
+I (810) axp2101: Init PMU SUCCESS!
+I (816) DisplayPort: SPI BUS init
+I (816) DisplayPort: Install panel IO
+I (817) co5300: version: 2.1.0
+I (817) co5300_spi: LCD panel create success, version: 2.1.0
+W (977) co5300_spi: The 3Ah command has been used and will be overwritten by external initialization sequence
+I (2251) CST9217: Checkcode: 0x204ECACA
+I (2253) CST9217: Resolution X: 466, Y: 466
+I (2255) CST9217: Chip Type: 0x9217, ProjectID: 0x5734
+I (2255) esp_lvgl:adapter: LVGL adapter initialized successfully
+I (2258) esp_lvgl:touch: Touch input device registered successfully (IRQ mode: enabled)
+I (2288) esp_lvgl:adapter: LVGL task started successfully
+i2c: {sda: 15, scl: 14}
+i2s: {mclk: 16, bclk: 9, ws: 45, din: 10, dout: 8}
+out: {codec: ES8311, pa: 46, pa_gain: 6, use_mclk: 1}
+Codec 0 dir 2 type:1
+in: {codec: ES7210}
+Codec 1 dir 1 type:2
+I (2290) CODEC_INIT: in:1 out:1 port: 1
+I (2290) CODEC_INIT: Success to int i2c: 0
+I (2290) CODEC_INIT: Init i2s 0 type: 3 mclk:16 bclk:9 ws:45 din:10 dout:8
+I (2290) CODEC_INIT: tx:0x3c24966c rx:0x3c249828
+W (2290) i2s_tdm: the current mclk multiple is too small, adjust the mclk multiple to 384
+I (2291) CODEC_INIT: output init tdm ret 0
+W (2291) i2s_tdm: the current mclk multiple is too small, adjust the mclk multiple to 384
+I (2292) CODEC_INIT: Input init tdm ret 0
+I (2292) CODEC_INIT: Init i2s 0 ok
+I (2292) CODEC_INIT: Success to init i2s: 0
+I (2292) CODEC_INIT: Success to int i2c: 0
+I (2292) CODEC_INIT: Success to init i2s: 0
+I (2292) CODEC_INIT: Get out handle 0x3c24966c port 0
+I (2298) ES8311: Work in Slave mode
+I (2304) ES7210: Work in Slave mode
+I (2310) ES7210: Enable ES7210_INPUT_MIC1
+I (2313) ES7210: Enable ES7210_INPUT_MIC2
+I (2316) ES7210: Enable ES7210_INPUT_MIC3
+I (2319) ES7210: Enable ES7210_INPUT_MIC4
+I (2322) ES7210: Enable TDM mode
+I (2329) I2S_IF: channel mode 2 bits:16/16 channel:2 mask:3
+I (2329) I2S_IF: TDM Mode 1 bits:16/16 channel:2 sample_rate:16000 mask:3
+I (2344) Adev_Codec: Open codec device OK
+I (2345) I2S_IF: channel mode 2 bits:16/16 channel:2 mask:3
+I (2345) I2S_IF: TDM Mode 0 bits:16/16 channel:2 sample_rate:16000 mask:3
+I (2346) ES7210: Bits 8
+I (2353) ES7210: Enable ES7210_INPUT_MIC1
+I (2356) ES7210: Enable ES7210_INPUT_MIC2
+I (2359) ES7210: Enable ES7210_INPUT_MIC3
+I (2362) ES7210: Enable ES7210_INPUT_MIC4
+I (2365) ES7210: Enable TDM mode
+I (2371) ES7210: Unmuted
+I (2371) Adev_Codec: Open codec device OK
+I (2371) Adev_Codec: Input already open
+I (2371) Adev_Codec: Input already open
+I (2375) Adev_Codec: Input already open
+I (2375) Adev_Codec: Input already open
+I (2375) clare_audio: ready: 16000 Hz, 16-bit, 2 codec channels, mono network PCM
+I (2380) clare_audio: ALC ready: 16000 Hz mono PCM16, gain 6 dB
+I (2480) pp: pp rom version: e7ae62f
+I (2480) net80211: net80211 rom version: e7ae62f
+I (2482) wifi:wifi driver task: 3fce350c, prio:23, stack:6656, core=0
+I (2486) wifi:wifi firmware version: 4df78f2
+I (2486) wifi:wifi certification version: v7.0
+I (2486) wifi:config NVS flash: enabled
+I (2486) wifi:config nano formatting: disabled
+I (2486) wifi:Init data frame dynamic rx buffer num: 32
+I (2487) wifi:Init dynamic rx mgmt buffer num: 5
+I (2487) wifi:Init management short buffer num: 32
+I (2487) wifi:Init static tx buffer num: 16
+I (2488) wifi:Init tx cache buffer num: 32
+I (2488) wifi:Init static tx FG buffer num: 2
+I (2488) wifi:Init static rx buffer size: 1600
+I (2488) wifi:Init static rx buffer num: 16
+I (2488) wifi:Init dynamic rx buffer num: 32
+I (2489) wifi_init: rx ba win: 6
+I (2489) wifi_init: accept mbox: 6
+I (2489) wifi_init: tcpip mbox: 32
+I (2489) wifi_init: udp mbox: 6
+I (2489) wifi_init: tcp mbox: 10
+I (2490) wifi_init: tcp tx win: 65535
+I (2490) wifi_init: tcp rx win: 5760
+I (2490) wifi_init: tcp mss: 1440
+I (2490) wifi_init: WiFi/LWIP prefer SPIRAM
+W (2490) wifi:Password length matches WPA2 standards, authmode threshold changes from OPEN to WPA2
+I (2491) phy_init: phy_version 711,97bcf0a2,Aug 25 2025,19:04:10
+I (2519) wifi:mode : sta (10:20:ba:3d:34:b8)
+I (2520) wifi:enable tsf
+I (2522) clare_net: Wi-Fi protocols limited to 11b/g/n mask=0x07
+I (2522) wifi:Set ps type: 0, coexist: 0
+
+I (2523) clare_s3: Clare UI ready; touch the Clare tile
+I (2523) ESP_ES_PARSER: The version of es_parser is v1.0.1
+I (2526) wifi:new:<11,0>, old:<1,0>, ap:<255,255>, sta:<11,0>, prof:1, snd_ch_cfg:0x0
+I (2527) wifi:state: init -> auth (0xb0)
+I (2529) clare_s3: Boot chime playback err=0
+I (2529) main_task: Returned from app_main()
+I (2543) clare_audio: tts playback task started
+I (2544) clare_audio: tts first audio out (ring consumed 1024 bytes so far)
+I (2555) wifi:state: auth -> assoc (0x0)
+I (2572) wifi:state: assoc -> run (0x10)
+I (2629) wifi:connected with ZKY-GYLWLAP, aid = 3, channel 11, BW20, bssid = 02:55:b1:c6:fa:2e
+I (2629) wifi:security: WPA2-PSK, phy: bgn, rssi: -73
+I (2630) wifi:pm start, type: 0
+
+I (2631) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us
+I (2631) wifi:set rx beacon pti, rx_bcn_pti: 0, bcn_timeout: 25000, mt_pti: 0, mt_time: 10000
+I (2636) wifi:<ba-add>idx:0 (ifx:0, 02:55:b1:c6:fa:2e), tid:0, ssn:0, winSize:64
+I (2663) wifi:dp: 2, bi: 102400, li: 4, scale listen interval from 307200 us to 409600 us
+I (2664) wifi:AP's beacon interval = 102400 us, DTIM period = 2
+I (4643) esp_netif_handlers: sta ip: 192.168.239.171, mask: 255.255.240.0, gw: 192.168.235.1
+I (4643) clare_net: DHCP DNS main=223.5.5.5
+I (5810) clare_audio: tts playback task done: ring=26733 B pcm=160128 B
+I (10523) clare_s3: Boot network self-test begin
+I (10523) clare_net: Create session URL ready=1
+I (10523) clare_net: HTTP before init free8=5836519 largest8=5636096 free_internal=48355 largest_internal=30720
+I (10596) wifi:<ba-add>idx:1 (ifx:0, 02:55:b1:c6:fa:2e), tid:6, ssn:2, winSize:64
+I (11090) clare_net: HTTP response status=200 bytes=82 truncated=0
+I (11091) clare_net: HTTP after cleanup free8=5835579 largest8=5636096
+I (11092) clare_s3: Boot network self-test session err=0 (attempt 1/4)
+I (11093) clare_net: WS pre-start heap free8=5801695 largest8=5636096
+I (11094) websocket_client: Started
+I (11539) clare_net: WebSocket connected kind=0
+I (11539) clare_s3: Boot network self-test transcribe err=0
+I (12641) clare_net: WS pre-start heap free8=5801611 largest8=5636096
+I (12642) websocket_client: Started
+I (13117) clare_net: WebSocket connected kind=1
+I (13118) clare_s3: Ask Clare a question
+I (13118) clare_s3: Boot network self-test host err=0
+I (14220) clare_net: HTTP before init free8=5835235 largest8=5636096 free_internal=47895 largest_internal=30720
+I (14714) clare_net: HTTP response status=200 bytes=255 truncated=1
+I (14716) clare_net: HTTP after cleanup free8=5834967 largest8=5636096
+I (14717) clare_s3: Boot network self-test complete
+I (21114) clare_s3: Creating meeting session...
+I (21115) clare_net: Create session URL ready=1
+I (21115) clare_net: HTTP before init free8=5834427 largest8=5636096 free_internal=47895 largest_internal=30720
+I (21665) clare_net: HTTP response status=200 bytes=82 truncated=0
+I (21667) clare_net: HTTP after cleanup free8=5834787 largest8=5636096
+I (21678) clare_s3: Connecting transcription...
+I (21678) clare_net: WS pre-start heap free8=5799963 largest8=5636096
+I (21680) websocket_client: Started
+I (22143) clare_net: WebSocket connected kind=0
+I (22143) clare_s3: Listening - recording only
+I (22143) clare_s3: Listening - recording only
+I (22148) clare_s3: Audio stream started
+I (28001) clare_net: recv kind=0 type=transcript len=85
+I (28031) clare_net: recv kind=0 type=transcript len=85
+I (28057) clare_net: recv kind=0 type=transcript len=85
+I (28217) clare_net: recv kind=0 type=transcript len=91
+I (28243) clare_net: recv kind=0 type=transcript len=91
+I (28302) clare_net: recv kind=0 type=transcript len=91
+I (28629) clare_net: recv kind=0 type=transcript len=97
+I (28666) clare_net: recv kind=0 type=transcript len=97
+I (28701) clare_net: recv kind=0 type=transcript len=97
+I (28732) clare_net: recv kind=0 type=transcript len=97
+I (29023) clare_net: recv kind=0 type=transcript len=106
+I (29053) clare_net: recv kind=0 type=transcript len=106
+I (29086) clare_net: recv kind=0 type=transcript len=106
+I (29301) clare_net: recv kind=0 type=transcript len=112
+I (29327) clare_net: recv kind=0 type=transcript len=112
+I (29357) clare_net: recv kind=0 type=transcript len=112
+I (29509) clare_net: recv kind=0 type=transcript len=112
+I (29542) clare_net: recv kind=0 type=transcript len=112
+I (29591) clare_net: recv kind=0 type=transcript len=112
+I (29907) clare_net: recv kind=0 type=transcript len=121
+I (29933) clare_net: recv kind=0 type=transcript len=121
+I (29967) clare_net: recv kind=0 type=transcript len=121
+I (30148) clare_net: recv kind=0 type=transcript len=127
+I (30179) clare_net: recv kind=0 type=transcript len=127
+I (30208) clare_net: recv kind=0 type=transcript len=127
+I (30345) clare_net: recv kind=0 type=transcript len=127
+I (30533) clare_net: recv kind=0 type=transcript len=127
+I (30566) clare_net: recv kind=0 type=transcript len=127
+I (30597) clare_net: recv kind=0 type=transcript len=127
+I (30897) clare_net: recv kind=0 type=transcript len=145
+I (30929) clare_net: recv kind=0 type=transcript len=145
+I (30958) clare_net: recv kind=0 type=transcript len=145
+I (31109) clare_net: recv kind=0 type=transcript len=145
+I (31148) clare_net: recv kind=0 type=transcript len=145
+I (31191) clare_net: recv kind=0 type=transcript len=145
+I (31526) clare_net: recv kind=0 type=transcript len=151
+I (31553) clare_net: recv kind=0 type=transcript len=151
+I (31586) clare_net: recv kind=0 type=transcript len=151
+I (31818) clare_net: recv kind=0 type=transcript len=157
+I (31872) clare_net: recv kind=0 type=transcript len=157
+I (31881) clare_net: recv kind=0 type=transcript len=157
+I (31914) clare_net: recv kind=0 type=transcript len=157
+I (32088) clare_net: recv kind=0 type=transcript len=157
+I (32115) clare_net: recv kind=0 type=transcript len=157
+I (32192) clare_net: recv kind=0 type=transcript len=157
+I (32480) clare_net: recv kind=0 type=transcript len=169
+I (32510) clare_net: recv kind=0 type=transcript len=169
+I (32540) clare_net: recv kind=0 type=transcript len=169
+I (32788) clare_net: recv kind=0 type=transcript len=172
+I (32822) clare_net: recv kind=0 type=transcript len=172
+I (32851) clare_net: recv kind=0 type=transcript len=172
+I (33015) clare_net: recv kind=0 type=transcript len=187
+I (33049) clare_net: recv kind=0 type=transcript len=187
+I (33091) clare_net: recv kind=0 type=transcript len=187
+I (33341) clare_net: recv kind=0 type=transcript len=187
+I (33374) clare_net: recv kind=0 type=transcript len=187
+I (33409) clare_net: recv kind=0 type=transcript len=187
+I (33507) clare_net: recv kind=0 type=transcript len=187
+I (33791) clare_net: recv kind=0 type=transcript len=199
+I (33822) clare_net: recv kind=0 type=transcript len=199
+I (33853) clare_net: recv kind=0 type=transcript len=199
+I (34044) clare_net: recv kind=0 type=transcript len=205
+I (34073) clare_net: recv kind=0 type=transcript len=205
+I (34113) clare_net: recv kind=0 type=transcript len=205
+I (34319) clare_net: recv kind=0 type=transcript len=211
+I (34350) clare_net: recv kind=0 type=transcript len=211
+I (34398) clare_net: recv kind=0 type=transcript len=211
+I (34709) clare_net: recv kind=0 type=transcript len=220
+I (34742) clare_net: recv kind=0 type=transcript len=220
+I (34782) clare_net: recv kind=0 type=transcript len=220
+I (34896) clare_net: recv kind=0 type=transcript len=220
+I (34934) clare_net: recv kind=0 type=transcript len=220
+I (35056) clare_net: recv kind=0 type=transcript len=222
+I (36032) clare_net: recv kind=0 type=transcript len=79
+I (36060) clare_net: recv kind=0 type=transcript len=79
+I (36091) clare_net: recv kind=0 type=transcript len=79
+I (36348) clare_net: recv kind=0 type=transcript len=94
+I (36376) clare_net: recv kind=0 type=transcript len=94
+I (36405) clare_net: recv kind=0 type=transcript len=94
+I (36616) clare_net: recv kind=0 type=transcript len=103
+I (36645) clare_net: recv kind=0 type=transcript len=103
+I (36693) clare_net: recv kind=0 type=transcript len=103
+I (36902) clare_net: recv kind=0 type=transcript len=103
+I (36929) clare_net: recv kind=0 type=transcript len=103
+I (36991) clare_net: recv kind=0 type=transcript len=103
+I (37141) clare_net: recv kind=0 type=transcript len=103
+I (37188) clare_net: recv kind=0 type=transcript len=103
+I (37292) clare_net: recv kind=0 type=transcript len=103
+I (37397) clare_net: recv kind=0 type=transcript len=103
+I (37630) clare_net: recv kind=0 type=transcript len=103
+I (37661) clare_net: recv kind=0 type=transcript len=103
+I (37710) clare_net: recv kind=0 type=transcript len=103
+I (37898) clare_net: recv kind=0 type=transcript len=103
+I (37921) clare_net: recv kind=0 type=transcript len=106
+I (38014) clare_net: recv kind=0 type=transcript len=106
+I (38216) clare_net: recv kind=0 type=transcript len=109
+I (38232) clare_net: recv kind=0 type=transcript len=109
+I (38306) clare_net: recv kind=0 type=transcript len=109
+I (38484) clare_net: recv kind=0 type=transcript len=109
+I (38517) clare_net: recv kind=0 type=transcript len=109
+I (38618) clare_net: recv kind=0 type=transcript len=109
+I (38807) clare_net: recv kind=0 type=transcript len=115
+I (38839) clare_net: recv kind=0 type=transcript len=115
+I (38896) clare_net: recv kind=0 type=transcript len=115
+I (38984) clare_net: recv kind=0 type=transcript len=115
+I (39191) clare_net: recv kind=0 type=transcript len=121
+I (39217) clare_net: recv kind=0 type=transcript len=121
+I (39288) clare_net: recv kind=0 type=transcript len=121
+I (39476) clare_net: recv kind=0 type=transcript len=121
+I (39505) clare_net: recv kind=0 type=transcript len=121
+I (39587) clare_net: recv kind=0 type=transcript len=121
+I (39768) clare_net: recv kind=0 type=transcript len=121
+I (39802) clare_net: recv kind=0 type=transcript len=121
+I (39886) clare_net: recv kind=0 type=transcript len=121
+I (40079) clare_net: recv kind=0 type=transcript len=121
+I (40105) clare_net: recv kind=0 type=transcript len=121
+I (40180) clare_net: recv kind=0 type=transcript len=121
+I (40440) clare_net: recv kind=0 type=transcript len=136
+I (40469) clare_net: recv kind=0 type=transcript len=136
+I (40501) clare_net: recv kind=0 type=transcript len=136
+I (40588) clare_net: recv kind=0 type=transcript len=136
+I (41454) clare_net: recv kind=0 type=transcript len=142
+I (41456) clare_net: recv kind=0 type=transcript len=142
+I (41554) clare_net: recv kind=0 type=transcript len=142
+I (41926) clare_net: recv kind=0 type=transcript len=144
+I (42690) clare_net: recv kind=0 type=transcript len=82
+I (42717) clare_net: recv kind=0 type=transcript len=82
+I (43014) clare_net: recv kind=0 type=transcript len=82
+I (43027) clare_net: recv kind=0 type=transcript len=88
+I (43029) clare_net: recv kind=0 type=transcript len=88
+I (43031) clare_net: recv kind=0 type=transcript len=88
+I (43034) clare_net: recv kind=0 type=transcript len=88
+I (43235) clare_net: recv kind=0 type=transcript len=94
+I (43261) clare_net: recv kind=0 type=transcript len=94
+I (43293) clare_net: recv kind=0 type=transcript len=94
+I (43396) clare_net: recv kind=0 type=transcript len=104
+I (43429) clare_net: recv kind=0 type=transcript len=104
+I (43459) clare_net: recv kind=0 type=transcript len=104
+I (43624) clare_net: recv kind=0 type=transcript len=107
+I (43654) clare_net: recv kind=0 type=transcript len=107
+I (43691) clare_net: recv kind=0 type=transcript len=107
+I (43943) clare_net: recv kind=0 type=transcript len=122
+I (43972) clare_net: recv kind=0 type=transcript len=122
+I (44007) clare_net: recv kind=0 type=transcript len=122
+I (44157) clare_net: recv kind=0 type=transcript len=122
+I (44186) clare_net: recv kind=0 type=transcript len=122
+I (44295) clare_net: recv kind=0 type=transcript len=122
+I (44386) clare_net: recv kind=0 type=transcript len=122
+I (44595) clare_net: recv kind=0 type=transcript len=131
+I (44624) clare_net: recv kind=0 type=transcript len=131
+I (44687) clare_net: recv kind=0 type=transcript len=131
+I (45104) clare_net: recv kind=0 type=transcript len=136
+I (45106) clare_net: recv kind=0 type=transcript len=136
+I (45204) clare_net: recv kind=0 type=transcript len=136
+I (45364) clare_net: recv kind=0 type=transcript len=148
+I (45395) clare_net: recv kind=0 type=transcript len=148
+I (45428) clare_net: recv kind=0 type=transcript len=148
+I (45579) clare_net: recv kind=0 type=transcript len=151
+I (45609) clare_net: recv kind=0 type=transcript len=151
+I (45639) clare_net: recv kind=0 type=transcript len=151
+I (45763) clare_net: recv kind=0 type=transcript len=151
+I (45796) clare_net: recv kind=0 type=transcript len=151
+I (45887) clare_net: recv kind=0 type=transcript len=151
+I (45988) clare_net: recv kind=0 type=transcript len=151
+I (46215) clare_net: recv kind=0 type=transcript len=160
+I (46249) clare_net: recv kind=0 type=transcript len=160
+I (46291) clare_net: recv kind=0 type=transcript len=160
+I (46461) clare_net: recv kind=0 type=transcript len=160
+I (46497) clare_net: recv kind=0 type=transcript len=160
+I (46602) clare_net: recv kind=0 type=transcript len=160
+I (46786) clare_net: recv kind=0 type=transcript len=160
+I (46811) clare_net: recv kind=0 type=transcript len=160
+I (46894) clare_net: recv kind=0 type=transcript len=160
+I (47091) clare_net: recv kind=0 type=transcript len=160
+I (47122) clare_net: recv kind=0 type=transcript len=160
+I (47218) clare_net: recv kind=0 type=transcript len=160
+I (47387) clare_net: recv kind=0 type=transcript len=160
+I (47421) clare_net: recv kind=0 type=transcript len=163
+I (47491) clare_net: recv kind=0 type=transcript len=163
+I (47590) clare_net: recv kind=0 type=transcript len=163
+I (47840) clare_net: recv kind=0 type=transcript len=163
+I (47875) clare_net: recv kind=0 type=transcript len=163
+I (47905) clare_net: recv kind=0 type=transcript len=163
+I (48108) clare_net: recv kind=0 type=transcript len=166
+I (48140) clare_net: recv kind=0 type=transcript len=166
+I (48192) clare_net: recv kind=0 type=transcript len=166
+I (48413) clare_net: recv kind=0 type=transcript len=172
+I (48446) clare_net: recv kind=0 type=transcript len=172
+I (48500) clare_net: recv kind=0 type=transcript len=172
+I (48699) clare_net: recv kind=0 type=transcript len=181
+I (48728) clare_net: recv kind=0 type=transcript len=181
+I (48794) clare_net: recv kind=0 type=transcript len=181
+I (49038) clare_net: recv kind=0 type=transcript len=190
+I (49073) clare_net: recv kind=0 type=transcript len=190
+I (49117) clare_net: recv kind=0 type=transcript len=190
+I (49251) clare_net: recv kind=0 type=transcript len=190
+I (49597) clare_net: recv kind=0 type=transcript len=193
+I (49625) clare_net: recv kind=0 type=transcript len=193
+I (49660) clare_net: recv kind=0 type=transcript len=193
+I (49800) clare_net: recv kind=0 type=transcript len=193
+I (49831) clare_net: recv kind=0 type=transcript len=193
+I (49866) clare_net: recv kind=0 type=transcript len=193
+I (50048) clare_net: recv kind=0 type=transcript len=202
+I (50082) clare_net: recv kind=0 type=transcript len=202
+I (50117) clare_net: recv kind=0 type=transcript len=202
+I (50275) clare_net: recv kind=0 type=transcript len=202
+I (50336) clare_net: recv kind=0 type=transcript len=204
+I (51348) clare_net: recv kind=0 type=transcript len=82
+I (51379) clare_net: recv kind=0 type=transcript len=82
+I (51411) clare_net: recv kind=0 type=transcript len=82
+I (51626) clare_net: recv kind=0 type=transcript len=94
+I (51656) clare_net: recv kind=0 type=transcript len=94
+I (51691) clare_net: recv kind=0 type=transcript len=94
+I (51861) clare_net: recv kind=0 type=transcript len=100
+I (51891) clare_net: recv kind=0 type=transcript len=100
+I (52033) clare_net: recv kind=0 type=transcript len=100
+I (52091) clare_net: recv kind=0 type=transcript len=100
+I (52380) clare_net: recv kind=0 type=transcript len=103
+I (52382) clare_net: recv kind=0 type=transcript len=103
+I (52395) clare_net: recv kind=0 type=transcript len=103
+I (52611) clare_net: recv kind=0 type=transcript len=112
+I (52638) clare_net: recv kind=0 type=transcript len=112
+I (52697) clare_net: recv kind=0 type=transcript len=112
+I (52875) clare_net: recv kind=0 type=transcript len=112
+I (52909) clare_net: recv kind=0 type=transcript len=112
+I (52993) clare_net: recv kind=0 type=transcript len=112
+I (53175) clare_net: recv kind=0 type=transcript len=112
+I (53210) clare_net: recv kind=0 type=transcript len=112
+I (53292) clare_net: recv kind=0 type=transcript len=112
+I (53482) clare_net: recv kind=0 type=transcript len=115
+I (53514) clare_net: recv kind=0 type=transcript len=115
+I (53593) clare_net: recv kind=0 type=transcript len=115
+I (53686) clare_net: recv kind=0 type=transcript len=115
+I (53941) clare_net: recv kind=0 type=transcript len=124
+I (53975) clare_net: recv kind=0 type=transcript len=124
+I (53997) clare_net: recv kind=0 type=transcript len=124
+I (54128) clare_net: recv kind=0 type=transcript len=124
+I (54195) clare_net: recv kind=0 type=transcript len=124
+I (54290) clare_net: recv kind=0 type=transcript len=124
+I (54460) clare_net: recv kind=0 type=transcript len=124
+I (54502) clare_net: recv kind=0 type=transcript len=124
+I (54599) clare_net: recv kind=0 type=transcript len=124
+I (54822) clare_net: recv kind=0 type=transcript len=142
+I (54851) clare_net: recv kind=0 type=transcript len=142
+I (54886) clare_net: recv kind=0 type=transcript len=142
+I (55101) clare_net: recv kind=0 type=transcript len=148
+I (55131) clare_net: recv kind=0 type=transcript len=148
+I (55192) clare_net: recv kind=0 type=transcript len=148
+I (55303) clare_net: recv kind=0 type=transcript len=148
+I (55538) clare_net: recv kind=0 type=transcript len=154
+I (55572) clare_net: recv kind=0 type=transcript len=154
+I (55604) clare_net: recv kind=0 type=transcript len=154
+I (55803) clare_net: recv kind=0 type=transcript len=154
+I (55837) clare_net: recv kind=0 type=transcript len=154
+I (55889) clare_net: recv kind=0 type=transcript len=154
+I (56076) clare_net: recv kind=0 type=transcript len=154
+I (56133) clare_net: recv kind=0 type=transcript len=156
+I (57200) clare_net: recv kind=0 type=transcript len=82
+I (57233) clare_net: recv kind=0 type=transcript len=82
+I (57283) clare_net: recv kind=0 type=transcript len=82
+I (57513) clare_net: recv kind=0 type=transcript len=88
+I (57544) clare_net: recv kind=0 type=transcript len=88
+I (57582) clare_net: recv kind=0 type=transcript len=88
+I (57810) clare_net: recv kind=0 type=transcript len=100
+I (57841) clare_net: recv kind=0 type=transcript len=100
+I (57880) clare_net: recv kind=0 type=transcript len=100
+I (57994) clare_net: recv kind=0 type=transcript len=100
+I (58186) clare_net: recv kind=0 type=transcript len=100
+I (58218) clare_net: recv kind=0 type=transcript len=100
+I (58299) clare_net: recv kind=0 type=transcript len=100
+I (58518) clare_net: recv kind=0 type=transcript len=100
+I (58548) clare_net: recv kind=0 type=transcript len=100
+I (58605) clare_net: recv kind=0 type=transcript len=100
+I (58900) clare_net: recv kind=0 type=transcript len=106
+I (58923) clare_net: recv kind=0 type=transcript len=106
+I (58954) clare_net: recv kind=0 type=transcript len=106
+I (59155) clare_net: recv kind=0 type=transcript len=118
+I (59187) clare_net: recv kind=0 type=transcript len=118
+I (59219) clare_net: recv kind=0 type=transcript len=118
+I (59400) clare_net: recv kind=0 type=transcript len=118
+I (59436) clare_net: recv kind=0 type=transcript len=118
+I (59530) clare_net: recv kind=0 type=transcript len=118
+I (59602) clare_net: recv kind=0 type=transcript len=118
+I (59771) clare_net: recv kind=0 type=transcript len=118
+I (59807) clare_net: recv kind=0 type=transcript len=118
+I (59944) clare_net: recv kind=0 type=transcript len=118
+I (60069) clare_net: recv kind=0 type=transcript len=118
+I (60098) clare_net: recv kind=0 type=transcript len=118
+I (60235) clare_net: recv kind=0 type=transcript len=118
+I (60382) clare_net: recv kind=0 type=transcript len=127
+I (60412) clare_net: recv kind=0 type=transcript len=127
+I (60497) clare_net: recv kind=0 type=transcript len=127
+I (60835) clare_net: recv kind=0 type=transcript len=139
+I (60867) clare_net: recv kind=0 type=transcript len=139
+I (60908) clare_net: recv kind=0 type=transcript len=139
+I (61153) clare_net: recv kind=0 type=transcript len=142
+I (61192) clare_net: recv kind=0 type=transcript len=142
+I (61225) clare_net: recv kind=0 type=transcript len=142
+I (61257) clare_net: recv kind=0 type=transcript len=142
+I (61503) clare_net: recv kind=0 type=transcript len=154
+I (61533) clare_net: recv kind=0 type=transcript len=154
+I (61564) clare_net: recv kind=0 type=transcript len=154
+I (61732) clare_net: recv kind=0 type=transcript len=160
+I (61765) clare_net: recv kind=0 type=transcript len=160
+I (61797) clare_net: recv kind=0 type=transcript len=160
+I (62024) clare_net: recv kind=0 type=transcript len=169
+I (62057) clare_net: recv kind=0 type=transcript len=169
+I (62106) clare_net: recv kind=0 type=transcript len=169
+I (62308) clare_net: recv kind=0 type=transcript len=172
+I (62338) clare_net: recv kind=0 type=transcript len=172
+I (62392) clare_net: recv kind=0 type=transcript len=172
+I (62702) clare_net: recv kind=0 type=transcript len=175
+I (62737) clare_net: recv kind=0 type=transcript len=175
+I (62781) clare_net: recv kind=0 type=transcript len=175
+I (62807) clare_net: recv kind=0 type=transcript len=175
+I (63008) clare_net: recv kind=0 type=transcript len=175
+I (63040) clare_net: recv kind=0 type=transcript len=175
+I (63091) clare_net: recv kind=0 type=transcript len=175
+I (63356) clare_net: recv kind=0 type=transcript len=175
+I (63358) clare_net: recv kind=0 type=transcript len=175
+I (63478) clare_net: recv kind=0 type=transcript len=175
+I (63731) clare_net: recv kind=0 type=transcript len=181
+I (63766) clare_net: recv kind=0 type=transcript len=181
+I (63808) clare_net: recv kind=0 type=transcript len=181
+I (63966) clare_net: recv kind=0 type=transcript len=187
+I (63996) clare_net: recv kind=0 type=transcript len=187
+I (64027) clare_net: recv kind=0 type=transcript len=187
+I (64182) clare_net: recv kind=0 type=transcript len=193
+I (64217) clare_net: recv kind=0 type=transcript len=193
+I (64295) clare_net: recv kind=0 type=transcript len=193
+I (64399) clare_net: recv kind=0 type=transcript len=193
+I (64586) clare_net: recv kind=0 type=transcript len=193
+I (64615) clare_net: recv kind=0 type=transcript len=193
+I (64700) clare_net: recv kind=0 type=transcript len=193
+I (64860) clare_net: recv kind=0 type=transcript len=193
+I (64896) clare_net: recv kind=0 type=transcript len=193
+I (65042) clare_net: recv kind=0 type=transcript len=193
+I (65180) clare_net: recv kind=0 type=transcript len=193
+I (65217) clare_net: recv kind=0 type=transcript len=193
+I (65295) clare_net: recv kind=0 type=transcript len=193
+I (65506) clare_net: recv kind=0 type=transcript len=199
+I (65542) clare_net: recv kind=0 type=transcript len=199
+I (65596) clare_net: recv kind=0 type=transcript len=199
+I (65775) clare_net: recv kind=0 type=transcript len=199
+I (65807) clare_net: recv kind=0 type=transcript len=199
+I (65893) clare_net: recv kind=0 type=transcript len=199
+I (65987) clare_net: recv kind=0 type=transcript len=199
+I (66182) clare_net: recv kind=0 type=transcript len=205
+I (66215) clare_net: recv kind=0 type=transcript len=205
+I (66292) clare_net: recv kind=0 type=transcript len=205
+I (66602) clare_net: recv kind=0 type=transcript len=214
+I (66634) clare_net: recv kind=0 type=transcript len=214
+I (66676) clare_net: recv kind=0 type=transcript len=214
+I (66824) clare_net: recv kind=0 type=transcript len=223
+I (66859) clare_net: recv kind=0 type=transcript len=223
+I (66894) clare_net: recv kind=0 type=transcript len=223
+I (67099) clare_net: recv kind=0 type=transcript len=223
+I (67134) clare_net: recv kind=0 type=transcript len=223
+I (67229) clare_net: recv kind=0 type=transcript len=223
+I (67416) clare_net: recv kind=0 type=transcript len=226
+I (67450) clare_net: recv kind=0 type=transcript len=226
+I (67499) clare_net: recv kind=0 type=transcript len=226
+I (67595) clare_net: recv kind=0 type=transcript len=226
+I (67918) clare_net: recv kind=0 type=transcript len=235
+I (67955) clare_net: recv kind=0 type=transcript len=235
+I (67991) clare_net: recv kind=0 type=transcript len=235
+I (68190) clare_net: recv kind=0 type=transcript len=244
+I (68226) clare_net: recv kind=0 type=transcript len=244
+I (68265) clare_net: recv kind=0 type=transcript len=244
+I (68504) clare_net: recv kind=0 type=transcript len=259
+I (68540) clare_net: recv kind=0 type=transcript len=259
+I (68577) clare_net: recv kind=0 type=transcript len=259
+I (68760) clare_net: recv kind=0 type=transcript len=268
+I (68797) clare_net: recv kind=0 type=transcript len=268
+I (68836) clare_net: recv kind=0 type=transcript len=268
+I (68949) clare_net: recv kind=0 type=transcript len=268
+I (69004) clare_net: recv kind=0 type=transcript len=268
+I (69106) clare_net: recv kind=0 type=transcript len=268
+I (69236) clare_net: recv kind=0 type=transcript len=270
+I (70102) clare_net: recv kind=0 type=transcript len=82
+I (70135) clare_net: recv kind=0 type=transcript len=82
+I (70190) clare_net: recv kind=0 type=transcript len=82
+I (70392) clare_net: recv kind=0 type=transcript len=88
+I (70421) clare_net: recv kind=0 type=transcript len=88
+I (70489) clare_net: recv kind=0 type=transcript len=88
+I (70589) clare_net: recv kind=0 type=transcript len=88
+I (70802) clare_net: recv kind=0 type=transcript len=97
+I (70835) clare_net: recv kind=0 type=transcript len=97
+I (70896) clare_net: recv kind=0 type=transcript len=97
+I (71160) clare_net: recv kind=0 type=transcript len=100
+I (71194) clare_net: recv kind=0 type=transcript len=100
+I (71219) clare_net: recv kind=0 type=transcript len=100
+I (71429) clare_net: recv kind=0 type=transcript len=106
+I (71463) clare_net: recv kind=0 type=transcript len=106
+I (71494) clare_net: recv kind=0 type=transcript len=106
+I (71827) clare_net: recv kind=0 type=transcript len=106
+I (71858) clare_net: recv kind=0 type=transcript len=108
+I (73515) clare_net: recv kind=0 type=transcript len=82
+I (73543) clare_net: recv kind=0 type=transcript len=82
+I (73593) clare_net: recv kind=0 type=transcript len=82
+I (73695) clare_net: recv kind=0 type=transcript len=82
+I (73885) clare_net: recv kind=0 type=transcript len=88
+I (73918) clare_net: recv kind=0 type=transcript len=88
+I (73998) clare_net: recv kind=0 type=transcript len=88
+I (74205) clare_net: recv kind=0 type=transcript len=94
+I (74236) clare_net: recv kind=0 type=transcript len=94
+I (74313) clare_net: recv kind=0 type=transcript len=94
+I (74544) clare_net: recv kind=0 type=transcript len=94
+I (74576) clare_net: recv kind=0 type=transcript len=94
+I (74606) clare_net: recv kind=0 type=transcript len=94
+I (74817) clare_net: recv kind=0 type=transcript len=100
+I (74852) clare_net: recv kind=0 type=transcript len=100
+I (74896) clare_net: recv kind=0 type=transcript len=100
+I (75132) clare_net: recv kind=0 type=transcript len=109
+I (75163) clare_net: recv kind=0 type=transcript len=109
+I (75199) clare_net: recv kind=0 type=transcript len=109
+I (75288) clare_net: recv kind=0 type=transcript len=109
+I (75456) clare_net: recv kind=0 type=transcript len=109
+I (75498) clare_net: recv kind=0 type=transcript len=109
+I (75638) clare_net: recv kind=0 type=transcript len=109
+I (75809) clare_net: recv kind=0 type=transcript len=115
+I (75838) clare_net: recv kind=0 type=transcript len=115
+I (75892) clare_net: recv kind=0 type=transcript len=115
+I (76136) clare_net: recv kind=0 type=transcript len=121
+I (76167) clare_net: recv kind=0 type=transcript len=121
+I (76201) clare_net: recv kind=0 type=transcript len=121
+I (76413) clare_net: recv kind=0 type=transcript len=130
+I (76443) clare_net: recv kind=0 type=transcript len=130
+I (76490) clare_net: recv kind=0 type=transcript len=130
+I (76723) clare_net: recv kind=0 type=transcript len=130
+I (76743) clare_net: recv kind=0 type=transcript len=130
+I (76789) clare_net: recv kind=0 type=transcript len=130
+I (76893) clare_net: recv kind=0 type=transcript len=130
+I (77060) clare_net: recv kind=0 type=transcript len=133
+I (77091) clare_net: recv kind=0 type=transcript len=133
+I (77235) clare_net: recv kind=0 type=transcript len=133
+I (77390) clare_net: recv kind=0 type=transcript len=142
+I (77420) clare_net: recv kind=0 type=transcript len=142
+I (77499) clare_net: recv kind=0 type=transcript len=142
+I (78106) clare_net: recv kind=0 type=transcript len=145
+I (78154) clare_net: recv kind=0 type=transcript len=145
+I (78169) clare_net: recv kind=0 type=transcript len=145
+I (78354) clare_net: recv kind=0 type=transcript len=148
+I (78387) clare_net: recv kind=0 type=transcript len=148
+I (78421) clare_net: recv kind=0 type=transcript len=148
+I (78537) clare_net: recv kind=0 type=transcript len=148
+I (78563) clare_net: recv kind=0 type=transcript len=148
+I (78594) clare_net: recv kind=0 type=transcript len=148
+I (78628) clare_net: recv kind=0 type=transcript len=148
+I (78769) clare_net: recv kind=0 type=transcript len=148
+I (78827) clare_net: recv kind=0 type=transcript len=150
+I (79633) clare_net: recv kind=0 type=transcript len=82
+I (79667) clare_net: recv kind=0 type=transcript len=82
+I (79700) clare_net: recv kind=0 type=transcript len=82
+I (79911) clare_net: recv kind=0 type=transcript len=85
+I (79942) clare_net: recv kind=0 type=transcript len=85
+I (79997) clare_net: recv kind=0 type=transcript len=85
+I (80133) clare_net: recv kind=0 type=transcript len=85
+I (80284) clare_net: recv kind=0 type=transcript len=100
+I (80313) clare_net: recv kind=0 type=transcript len=100
+I (80399) clare_net: recv kind=0 type=transcript len=100
+I (80663) clare_net: recv kind=0 type=transcript len=109
+I (80694) clare_net: recv kind=0 type=transcript len=109
+I (80732) clare_net: recv kind=0 type=transcript len=109
+I (80888) clare_net: recv kind=0 type=transcript len=118
+I (80928) clare_net: recv kind=0 type=transcript len=118
+I (81026) clare_net: recv kind=0 type=transcript len=118
+I (81226) clare_net: recv kind=0 type=transcript len=121
+I (81261) clare_net: recv kind=0 type=transcript len=121
+I (81302) clare_net: recv kind=0 type=transcript len=121
+I (81582) clare_net: recv kind=0 type=transcript len=128
+I (81613) clare_net: recv kind=0 type=transcript len=128
+I (81645) clare_net: recv kind=0 type=transcript len=128
+I (81698) clare_net: recv kind=0 type=transcript len=128
+I (82003) clare_net: recv kind=0 type=transcript len=140
+I (82039) clare_net: recv kind=0 type=transcript len=140
+I (82072) clare_net: recv kind=0 type=transcript len=140
+I (82212) clare_net: recv kind=0 type=transcript len=140
+I (82247) clare_net: recv kind=0 type=transcript len=140
+I (82299) clare_net: recv kind=0 type=transcript len=140
+I (82533) clare_net: recv kind=0 type=transcript len=149
+I (82567) clare_net: recv kind=0 type=transcript len=149
+I (82604) clare_net: recv kind=0 type=transcript len=149
+I (82863) clare_net: recv kind=0 type=transcript len=155
+I (82882) clare_net: recv kind=0 type=transcript len=155
+I (82920) clare_net: recv kind=0 type=transcript len=155
+I (83147) clare_net: recv kind=0 type=transcript len=161
+I (83183) clare_net: recv kind=0 type=transcript len=161
+I (83218) clare_net: recv kind=0 type=transcript len=161
+I (83303) clare_net: recv kind=0 type=transcript len=161
+I (83516) clare_net: recv kind=0 type=transcript len=164
+I (83555) clare_net: recv kind=0 type=transcript len=164
+I (83598) clare_net: recv kind=0 type=transcript len=164
+I (83761) clare_net: recv kind=0 type=transcript len=164
+I (83931) clare_net: recv kind=0 type=transcript len=166
+I (84725) clare_net: recv kind=0 type=transcript len=82
+I (84758) clare_net: recv kind=0 type=transcript len=82
+I (84798) clare_net: recv kind=0 type=transcript len=82
+I (84982) clare_net: recv kind=0 type=transcript len=88
+I (85011) clare_net: recv kind=0 type=transcript len=88
+I (85095) clare_net: recv kind=0 type=transcript len=88
+I (85214) clare_net: recv kind=0 type=transcript len=90
+I (85621) clare_s3: Connecting Clare...
+I (85622) clare_net: WS pre-start heap free8=5712999 largest8=5636096
+I (85624) websocket_client: Started
+I (86110) clare_net: WebSocket connected kind=1
+I (86110) clare_s3: Ask Clare a question
+I (89691) clare_s3: Clare is answering...
+I (91088) clare_net: recv kind=1 type=transcription len=76
+I (91088) clare_net: host transcription peek=嗯，告诉我，我今天做了什么？
+I (91090) clare_s3: Question received
+I (93672) clare_net: recv kind=1 type=answer_text len=45
+I (93672) clare_net: host answer_text peek=
+I (93673) clare_net: recv kind=1 type=answer_text len=54
+I (93673) clare_net: host answer_text peek=你今天
+I (93674) clare_s3: answer_feed append cur=55 clen=9 peek=你今天
+I (93675) clare_net: recv kind=1 type=answer_text len=54
+I (93675) clare_net: host answer_text peek=下午和
+I (93675) clare_s3: answer_feed append cur=64 clen=9 peek=下午和
+I (93677) clare_net: recv kind=1 type=answer_text len=54
+I (93677) clare_net: host answer_text peek=卫生姐
+I (93677) clare_s3: answer_feed append cur=73 clen=9 peek=卫生姐
+I (93962) clare_net: recv kind=1 type=answer_text len=60
+I (93962) clare_net: host answer_text peek=讨论了后续
+I (93962) clare_s3: answer_feed append cur=82 clen=15 peek=讨论了后续
+I (93964) clare_net: recv kind=1 type=answer_text len=84
+I (93964) clare_net: host answer_text peek=工作方案，确认了最终目标。
+I (93964) clare_s3: answer_feed append cur=97 clen=39 peek=工作方案，确认了最终目标。
+I (93970) clare_net: recv kind=1 type=answer_text len=66
+I (93970) clare_net: host answer_text peek=晚上去公司开发
+I (93970) clare_s3: answer_feed append cur=136 clen=21 peek=晚上去公司开发
+I (93976) clare_net: recv kind=1 type=answer_text len=69
+I (93976) clare_net: host answer_text peek=熊老师的项目，还
+I (93977) clare_s3: answer_feed append cur=157 clen=24 peek=熊老师的项目，还
+I (94089) clare_net: recv kind=1 type=answer_text len=72
+I (94089) clare_net: host answer_text peek=拿了快递但交了滞留
+I (94089) clare_s3: answer_feed append cur=181 clen=27 peek=拿了快递但交了滞留
+I (94091) clare_net: recv kind=1 type=answer_text len=51
+I (94092) clare_net: host answer_text peek=费。
+I (94092) clare_s3: answer_feed append cur=208 clen=6 peek=费。
+I (94171) clare_net: recv kind=1 type=answer_text len=45
+I (94171) clare_net: host answer_text peek=
+I (94179) clare_net: recv kind=1 type=answer_text len=44
+I (94179) clare_net: host answer_text peek=
+I (94231) ESP_ES_PARSER: The version of es_parser is v1.0.1
+I (94231) clare_net: tts stream begin expected=7517
+I (94259) clare_net: tts stream end
+I (94694) clare_net: tts stream begin expected=8481
+I (94711) clare_audio: tts playback task started
+I (94712) clare_audio: tts first audio out (ring consumed 1024 bytes so far)
+I (94870) clare_net: tts stream end
+I (95032) clare_net: tts stream begin expected=8737
+I (95350) clare_net: tts stream end
+I (95497) clare_net: tts stream begin expected=8481
+I (95536) clare_net: tts stream end
+I (95746) clare_net: tts stream begin expected=5921
+I (95851) clare_net: tts stream end
+I (96156) clare_net: tts stream begin expected=7261
+I (96515) clare_net: tts stream end
+I (96519) clare_net: tts stream begin expected=8481
+I (96650) clare_net: tts stream end
+I (96762) clare_net: tts stream begin expected=7261
+I (96858) clare_net: tts stream end
+I (97034) clare_net: tts stream begin expected=8737
+I (97092) clare_net: tts stream end
+I (97569) clare_net: tts stream begin expected=8481
+I (97880) clare_net: tts stream end
+I (97893) clare_net: tts stream begin expected=8737
+I (98016) clare_net: tts stream end
+I (98101) clare_net: tts stream begin expected=8481
+I (98594) clare_net: tts stream end
+I (98597) clare_net: tts stream begin expected=8481
+I (98793) clare_net: tts stream end
+I (98818) clare_net: tts stream begin expected=5921
+I (99108) clare_net: tts stream end
+I (99109) clare_net: recv kind=1 type=done len=15
+W (103110) clare_audio: tts drain still running after 4 s; leaving decoder to the task
+I (103216) clare_s3: Listening - recording only
+I (104960) clare_audio: tts playback task done: ring=82887 B pcm=495360 B
+I (148456) clare_s3: Connecting Clare...
+I (148457) clare_net: WS pre-start heap free8=5705675 largest8=5505024
+I (148458) websocket_client: Started
+I (148927) clare_net: WebSocket connected kind=1
+I (148927) clare_s3: Ask Clare a question
+I (157995) clare_s3: Clare is answering...
+I (158174) clare_net: recv kind=1 type=transcription len=175
+I (158174) clare_net: host transcription peek=然后总结一下我明天要干什么，然后再回复一
+I (158177) clare_s3: Question received
+I (161136) clare_net: recv kind=1 type=answer_text len=45
+I (161136) clare_net: host answer_text peek=
+I (163021) clare_net: recv kind=1 type=answer_text len=54
+I (163022) clare_net: host answer_text peek=你今天
+I (163022) clare_s3: answer_feed append cur=154 clen=9 peek=你今天
+I (163024) clare_net: recv kind=1 type=answer_text len=51
+I (163024) clare_net: host answer_text peek=下午
+I (163024) clare_s3: answer_feed append cur=163 clen=6 peek=下午
+I (163026) clare_net: recv kind=1 type=answer_text len=48
+I (163026) clare_net: host answer_text peek=和
+I (163026) clare_s3: answer_feed append cur=169 clen=3 peek=和
+I (163374) clare_net: recv kind=1 type=answer_text len=51
+I (163374) clare_net: host answer_text peek=卫生
+I (163375) clare_s3: answer_feed append cur=172 clen=6 peek=卫生
+I (163377) clare_net: recv kind=1 type=answer_text len=48
+I (163377) clare_net: host answer_text peek=姐
+I (163377) clare_s3: answer_feed append cur=178 clen=3 peek=姐
+I (164167) clare_net: recv kind=1 type=answer_text len=51
+I (164167) clare_net: host answer_text peek=确认
+I (164167) clare_s3: answer_feed append cur=181 clen=6 peek=确认
+I (164169) clare_net: recv kind=1 type=answer_text len=48
+I (164169) clare_net: host answer_text peek=了
+I (164169) clare_s3: answer_feed append cur=187 clen=3 peek=了
+I (164186) clare_net: recv kind=1 type=answer_text len=63
+I (164186) clare_net: host answer_text peek=后续工作方案
+I (164186) clare_s3: answer_feed append cur=190 clen=18 peek=后续工作方案
+I (164190) clare_net: recv kind=1 type=answer_text len=54
+I (164190) clare_net: host answer_text peek=和最终
+I (164190) clare_s3: answer_feed append cur=208 clen=9 peek=和最终
+I (164192) clare_net: recv kind=1 type=answer_text len=51
+I (164192) clare_net: host answer_text peek=目标
+I (164192) clare_s3: answer_feed append cur=217 clen=6 peek=目标
+I (164352) clare_net: recv kind=1 type=answer_text len=54
+I (164353) clare_net: host answer_text peek=，晚上
+I (164353) clare_s3: answer_feed append cur=223 clen=9 peek=，晚上
+I (164355) clare_net: recv kind=1 type=answer_text len=48
+I (164355) clare_net: host answer_text peek=去
+I (164356) clare_s3: answer_feed append cur=232 clen=3 peek=去
+I (164358) clare_net: recv kind=1 type=answer_text len=51
+I (164358) clare_net: host answer_text peek=公司
+I (164358) clare_s3: answer_feed append cur=235 clen=6 peek=公司
+I (164378) clare_net: recv kind=1 type=answer_text len=51
+I (164378) clare_net: host answer_text peek=开发
+I (164378) clare_s3: answer_feed append cur=241 clen=6 peek=开发
+I (164381) clare_net: recv kind=1 type=answer_text len=57
+I (164381) clare_net: host answer_text peek=熊老师的
+I (164381) clare_s3: answer_feed append cur=247 clen=12 peek=熊老师的
+I (164387) clare_net: recv kind=1 type=answer_text len=54
+I (164387) clare_net: host answer_text peek=项目，
+I (164388) clare_s3: answer_feed append cur=259 clen=9 peek=项目，
+I (164391) clare_net: recv kind=1 type=answer_text len=48
+I (164391) clare_net: host answer_text peek=还
+I (164392) clare_s3: answer_feed append cur=268 clen=3 peek=还
+I (164394) clare_net: recv kind=1 type=answer_text len=57
+I (164394) clare_net: host answer_text peek=拿了快递
+I (164394) clare_s3: answer_feed append cur=271 clen=12 peek=拿了快递
+I (164397) clare_net: recv kind=1 type=answer_text len=51
+I (164397) clare_net: host answer_text peek=交了
+I (164397) clare_s3: answer_feed append cur=283 clen=6 peek=交了
+I (164400) clare_net: recv kind=1 type=answer_text len=51
+I (164400) clare_net: host answer_text peek=滞留
+I (164400) clare_s3: answer_feed append cur=289 clen=6 peek=滞留
+I (164403) clare_net: recv kind=1 type=answer_text len=48
+I (164403) clare_net: host answer_text peek=费
+I (164404) clare_s3: answer_feed append cur=295 clen=3 peek=费
+I (164406) clare_net: recv kind=1 type=answer_text len=54
+I (164406) clare_net: host answer_text peek=。明天
+I (164407) clare_s3: answer_feed append cur=298 clen=9 peek=。明天
+I (164409) clare_net: recv kind=1 type=answer_text len=51
+I (164410) clare_net: host answer_text peek=早上
+I (164410) clare_s3: answer_feed append cur=307 clen=6 peek=早上
+I (164416) clare_net: recv kind=1 type=answer_text len=51
+I (164416) clare_net: host answer_text peek=先去
+I (164416) clare_s3: answer_feed append cur=313 clen=6 peek=先去
+I (164420) clare_net: recv kind=1 type=answer_text len=51
+I (164420) clare_net: host answer_text peek=科研
+I (164421) clare_s3: answer_feed append cur=319 clen=6 peek=科研
+I (164423) clare_net: recv kind=1 type=answer_text len=51
+I (164424) clare_net: host answer_text peek=中心
+I (164424) clare_s3: answer_feed append cur=325 clen=6 peek=中心
+I (164428) clare_net: recv kind=1 type=answer_text len=51
+I (164429) clare_net: host answer_text peek=公园
+I (164429) clare_s3: answer_feed append cur=331 clen=6 peek=公园
+I (164432) clare_net: recv kind=1 type=answer_text len=51
+I (164432) clare_net: host answer_text peek=办门
+I (164432) clare_s3: answer_feed append cur=337 clen=6 peek=办门
+I (164435) clare_net: recv kind=1 type=answer_text len=48
+I (164435) clare_net: host answer_text peek=禁
+I (164435) clare_s3: answer_feed append cur=343 clen=3 peek=禁
+I (164438) clare_net: recv kind=1 type=answer_text len=48
+I (164439) clare_net: host answer_text peek=，
+I (164439) clare_s3: answer_feed append cur=346 clen=3 peek=，
+I (164442) clare_net: recv kind=1 type=answer_text len=51
+I (164442) clare_net: host answer_text peek=然后
+I (164442) clare_s3: answer_feed append cur=349 clen=6 peek=然后
+I (164445) clare_net: recv kind=1 type=answer_text len=57
+I (164445) clare_net: host answer_text peek=到实验室
+I (164446) clare_s3: answer_feed append cur=355 clen=12 peek=到实验室
+I (164452) clare_net: recv kind=1 type=answer_text len=51
+I (164452) clare_net: host answer_text peek=下载
+I (164453) clare_s3: answer_feed append cur=367 clen=6 peek=下载
+I (164519) clare_net: recv kind=1 type=answer_text len=51
+I (164519) clare_net: host answer_text peek=尾巴
+I (164520) clare_s3: answer_feed append cur=373 clen=6 peek=尾巴
+I (164526) clare_net: recv kind=1 type=answer_text len=54
+I (164526) clare_net: host answer_text peek=抖软件
+I (164526) clare_s3: answer_feed append cur=379 clen=9 peek=抖软件
+I (164529) clare_net: recv kind=1 type=answer_text len=54
+I (164530) clare_net: host answer_text peek=，继续
+I (164530) clare_s3: answer_feed append cur=388 clen=9 peek=，继续
+I (164587) clare_net: recv kind=1 type=answer_text len=51
+I (164587) clare_net: host answer_text peek=学习
+I (164587) clare_s3: answer_feed append cur=397 clen=6 peek=学习
+I (164623) ESP_ES_PARSER: The version of es_parser is v1.0.1
+I (164623) clare_net: tts stream begin expected=7517
+I (164653) clare_net: tts stream end
+I (164660) clare_net: recv kind=1 type=answer_text len=48
+I (164661) clare_net: host answer_text peek=。
+I (164661) clare_s3: answer_feed append cur=403 clen=3 peek=。
+I (164973) clare_net: tts stream begin expected=8481
+I (165004) clare_audio: tts playback task started
+I (165006) clare_audio: tts first audio out (ring consumed 1024 bytes so far)
+I (165009) clare_net: tts stream end
+I (165323) clare_net: tts stream begin expected=8737
+I (165358) clare_net: tts stream end
+I (165379) clare_net: recv kind=1 type=answer_text len=44
+I (165379) clare_net: host answer_text peek=
+I (165675) clare_net: tts stream begin expected=8481
+I (165709) clare_net: tts stream end
+I (166023) clare_net: tts stream begin expected=6689
+I (166048) clare_net: tts stream end
+I (166373) clare_net: tts stream begin expected=6493
+I (166398) clare_net: tts stream end
+I (166725) clare_net: tts stream begin expected=8481
+I (166758) clare_net: tts stream end
+I (167074) clare_net: tts stream begin expected=8737
+I (167109) clare_net: tts stream end
+I (167427) clare_net: tts stream begin expected=8481
+I (167467) clare_net: tts stream end
+I (167774) clare_net: tts stream begin expected=8481
+I (167808) clare_net: tts stream end
+I (168126) clare_net: tts stream begin expected=5665
+I (168147) clare_net: tts stream end
+I (168477) clare_net: tts stream begin expected=7773
+I (168507) clare_net: tts stream end
+I (168827) clare_net: tts stream begin expected=8737
+I (168862) clare_net: tts stream end
+I (168927) clare_net: recv kind=1 type=ping len=15
+I (169179) clare_net: tts stream begin expected=8481
+I (169214) clare_net: tts stream end
+I (169527) clare_net: tts stream begin expected=8737
+I (169562) clare_net: tts stream end
+I (169879) clare_net: tts stream begin expected=8481
+I (169923) clare_net: tts stream end
+I (170229) clare_net: tts stream begin expected=8481
+I (170262) clare_net: tts stream end
+I (170580) clare_net: tts stream begin expected=8481
+I (170614) clare_net: tts stream end
+I (170932) clare_net: tts stream begin expected=8737
+I (170966) clare_net: tts stream end
+I (171281) clare_net: tts stream begin expected=5921
+I (171305) clare_net: tts stream end
+I (171306) clare_net: recv kind=1 type=done len=15
+W (175307) clare_audio: tts drain still running after 4 s; leaving decoder to the task
+I (175412) clare_s3: Listening - recording only
+I (179810) clare_audio: tts playback task done: ring=119559 B pcm=714240 B
+I (226811) clare_s3: Meeting ended - Ask Clare or refresh summary
+I (230355) clare_s3: Connecting Clare...
+I (230356) clare_net: WS pre-start heap free8=5800603 largest8=5505024
+I (230357) websocket_client: Started
+E (230817) transport_ws: Sec-WebSocket-Accept not found
+E (230817) websocket_client: esp_transport_connect() failed with -1, transport_error=ESP_OK, tls_error_code=0, tls_flags=0, esp_ws_handshake_status_code=403, errno=119
+W (230818) clare_net: WS ERR heap free8=5754751 largest8=5505024
+W (230818) clare_net: WS ERR detail kind=1 stack_err=0x3fcf2ad0 flags=0x3fcf2ab0 type=0 errno=1007804868
+W (230818) clare_net: WebSocket error kind=1 err=1027424633 status=403
+W (230818) clare_net: WebSocket connect timeout kind=1 bits=0x2
+I (230819) clare_s3: Session expired - recreating
+I (230820) clare_net: WebSocket disconnected kind=1 event=2 close=0 type=1 errno=0
+I (230921) clare_s3: Session expired - recreating
+I (230921) clare_net: Create session URL ready=1
+I (230921) clare_net: HTTP before init free8=5834787 largest8=5505024 free_internal=47895 largest_internal=30720
+I (231426) clare_net: HTTP response status=200 bytes=82 truncated=0
+I (231428) clare_net: HTTP after cleanup free8=5834963 largest8=5505024
+I (231430) clare_net: WS pre-start heap free8=5801135 largest8=5505024
+I (231431) websocket_client: Started
+I (231875) clare_net: WebSocket connected kind=1
+I (231876) clare_s3: Ask Clare a question
+I (231876) clare_s3: Audio stream started
+I (240831) clare_s3: Clare is answering...
+I (240954) clare_net: recv kind=1 type=transcription len=145
+I (240954) clare_net: host transcription peek=总结一下我刚刚那段话的内容吧？就包括我今
+I (240958) clare_s3: Question received
+I (243044) clare_net: recv kind=1 type=answer_text len=45
+I (243044) clare_net: host answer_text peek=
+I (243047) clare_net: recv kind=1 type=answer_text len=48
+I (243047) clare_net: host answer_text peek=您
+I (243048) clare_s3: answer_feed append cur=124 clen=3 peek=您
+I (243100) clare_net: recv kind=1 type=answer_text len=57
+I (243100) clare_net: host answer_text peek=刚才提到
+I (243100) clare_s3: answer_feed append cur=127 clen=12 peek=刚才提到
+I (243140) clare_net: recv kind=1 type=answer_text len=54
+I (243140) clare_net: host answer_text peek=今天能
+I (243140) clare_s3: answer_feed append cur=139 clen=9 peek=今天能
+I (243182) clare_net: recv kind=1 type=answer_text len=57
+I (243182) clare_net: host answer_text peek=完成的是
+I (243182) clare_s3: answer_feed append cur=148 clen=12 peek=完成的是
+I (243315) clare_net: recv kind=1 type=answer_text len=72
+I (243315) clare_net: host answer_text peek=整理会议纪要并发送
+I (243315) clare_s3: answer_feed append cur=160 clen=27 peek=整理会议纪要并发送
+I (243368) clare_net: recv kind=1 type=answer_text len=69
+I (243369) clare_net: host answer_text peek=给参会人员，明天
+I (243369) clare_s3: answer_feed append cur=187 clen=24 peek=给参会人员，明天
+I (243474) clare_net: recv kind=1 type=answer_text len=66
+I (243474) clare_net: host answer_text peek=需要跟进各负责
+I (243474) clare_s3: answer_feed append cur=211 clen=21 peek=需要跟进各负责
+I (243569) clare_net: recv kind=1 type=answer_text len=66
+I (243569) clare_net: host answer_text peek=人的任务进度并
+I (243569) clare_s3: answer_feed append cur=232 clen=21 peek=人的任务进度并
+I (243638) ESP_ES_PARSER: The version of es_parser is v1.0.1
+I (243638) clare_net: tts stream begin expected=7517
+I (243667) clare_net: tts stream end
+I (243696) clare_net: recv kind=1 type=answer_text len=72
+I (243697) clare_net: host answer_text peek=安排下一次讨论时间
+I (243697) clare_s3: answer_feed append cur=253 clen=27 peek=安排下一次讨论时间
+I (243732) clare_net: recv kind=1 type=answer_text len=48
+I (243732) clare_net: host answer_text peek=。
+I (243732) clare_s3: answer_feed append cur=280 clen=3 peek=。
+I (243754) clare_net: recv kind=1 type=answer_text len=45
+I (243754) clare_net: host answer_text peek=
+I (243773) clare_net: recv kind=1 type=answer_text len=44
+I (243773) clare_net: host answer_text peek=
+I (243973) clare_net: tts stream begin expected=8481
+I (243998) clare_audio: tts playback task started
+I (244000) clare_audio: tts first audio out (ring consumed 1024 bytes so far)
+I (244008) clare_net: tts stream end
+I (244327) clare_net: tts stream begin expected=7969
+I (244360) clare_net: tts stream end
+I (244674) clare_net: tts stream begin expected=9249
+I (244724) clare_net: tts stream end
+I (245026) clare_net: tts stream begin expected=8481
+I (245060) clare_net: tts stream end
+I (245376) clare_net: tts stream begin expected=8481
+I (245410) clare_net: tts stream end
+I (245726) clare_net: tts stream begin expected=5921
+I (245749) clare_net: tts stream end
+I (246077) clare_net: tts stream begin expected=7517
+I (246110) clare_net: tts stream end
+I (246430) clare_net: tts stream begin expected=8481
+I (246473) clare_net: tts stream end
+I (246776) clare_net: tts stream begin expected=8737
+I (246812) clare_net: tts stream end
+I (247129) clare_net: tts stream begin expected=8481
+I (247162) clare_net: tts stream end
+I (247480) clare_net: tts stream begin expected=8481
+I (247515) clare_net: tts stream end
+I (247831) clare_net: tts stream begin expected=7457
+I (247860) clare_net: tts stream end
+I (247860) clare_net: tts stream begin expected=5153
+I (248118) clare_net: tts stream end
+I (248120) clare_net: recv kind=1 type=done len=15
+I (251877) clare_net: recv kind=1 type=ping len=15
+W (252121) clare_audio: tts drain still running after 4 s; leaving decoder to the task
+I (252982) clare_s3: Answer ready
+I (254195) clare_audio: tts playback task done: ring=82458 B pcm=493056 B

@@ -102,6 +102,9 @@ esp_err_t clare_net_format_understanding(const char *json,
 esp_err_t clare_net_transcribe_connect(const char *session_id);
 esp_err_t clare_net_transcribe_send_audio(const void *pcm, size_t pcm_len);
 esp_err_t clare_net_transcribe_send_end(void);
+// Flush the buffered audio tail without ending the server session (used at
+// meeting stop so post-meeting Q&A keeps the meeting context).
+esp_err_t clare_net_transcribe_flush(void);
 esp_err_t clare_net_transcribe_disconnect(void);
 
 // Optional host/Q&A WebSocket.  This channel uses the documented JSON
