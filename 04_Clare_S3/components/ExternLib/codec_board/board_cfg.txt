@@ -25,3 +25,9 @@ i2c: {sda: 15, scl: 14}
 i2s: {mclk: 16, bclk: 9, ws: 45, din: 10, dout: 8}
 out: {codec: ES8311, pa: 46, pa_gain: 6, use_mclk: 1}
 in: {codec: ES7210}
+
+Board: S3_AMOLED_2_16
+i2c: {sda: 15, scl: 14}
+i2s: {mclk: 42, bclk: 9, ws: 45, din: 10, dout: 8}
+out: {codec: ES8311, pa: 46, pa_gain: 6, use_mclk: 1}
+in: {codec: ES7210}

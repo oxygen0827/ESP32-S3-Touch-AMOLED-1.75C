@@ -410,10 +410,6 @@ static esp_err_t http_perform(const char *url,
                  static_cast<int>(err), *status_code, tls_error, tls_flags);
     }
     esp_http_client_cleanup(client);
-    // TEMP DIAGNOSTIC: heap state after HTTP teardown (remove after use)
-    ESP_LOGI(TAG, "HTTP after cleanup free8=%u largest8=%u",
-             static_cast<unsigned>(heap_caps_get_free_size(MALLOC_CAP_8BIT)),
-             static_cast<unsigned>(heap_caps_get_largest_free_block(MALLOC_CAP_8BIT)));
     if (response_truncated) {
         *response_truncated = response.truncated;
     }
@@ -606,11 +602,11 @@ static void dispatch_ws_json(WsContext *ctx, const char *payload, size_t payload
         cJSON_Delete(root);
         return;
     }
-    // DIAG: mirror the reference's "recv %s (len=%d)" trace.
+    // Keep a compact protocol trace for field diagnostics.
     ESP_LOGI(TAG, "recv kind=%d type=%s len=%u", static_cast<int>(ctx->kind),
              type, static_cast<unsigned>(payload_len));
     if (strcmp(type, "error") == 0) {
-        // DIAG: log server-side error messages (was intentionally silent).
+        // Surface server-side errors without logging response bodies.
         cJSON *message_item = cJSON_GetObjectItemCaseSensitive(root, "message");
         const char *message = cJSON_IsString(message_item) ? message_item->valuestring : "";
         ESP_LOGW(TAG, "server error msg kind=%d: %s", static_cast<int>(ctx->kind), message);
@@ -618,23 +614,31 @@ static void dispatch_ws_json(WsContext *ctx, const char *payload, size_t payload
     } else if (ctx->kind == WsKind::Transcribe &&
         (strcmp(type, "transcript") == 0 || strcmp(type, "transcription") == 0 ||
          strcmp(type, "transcript_update") == 0 || strcmp(type, "partial_transcript") == 0 ||
-         strcmp(type, "final_transcript") == 0)) {
-        // Live transcription display is intentionally disabled: the
-        // transcribe channel is send-only, matching the stable vocat
-        // reference (transcribe_ws.c never reads).  The rx->UI path was the
-        // source of the glyph-NULL panic and added rx work in the latency
-        // critical client task.  Transcripts and the final summary are
-        // fetched over HTTP (clare_net_get_understanding).
+         strcmp(type, "final_transcript") == 0 ||
+         strcmp(type, "recognition_result") == 0 || strcmp(type, "asr_result") == 0)) {
+        // Doubao ASR sends partial and final recognition results on the same
+        // socket as the audio upload. Forward both to the UI immediately;
+        // the UI keeps partial text separate so a revised hypothesis does
+        // not duplicate words in the committed transcript.
+        static const char *const final_names[] = {"is_final", "final", "isFinal", "finished"};
+        bool is_final = strcmp(type, "final_transcript") == 0 ||
+                        json_bool_field(root, final_names,
+                                        sizeof(final_names) / sizeof(final_names[0]));
+        const char *text = json_text_field(root);
+        if (text[0]) {
+            ESP_LOGI(TAG, "transcript %s peek=%.60s", is_final ? "final" : "partial", text);
+            emit_event(CLARE_NET_EVENT_TRANSCRIPT, text, nullptr, 0, is_final);
+        }
     } else if (ctx->kind == WsKind::Host) {
         if (strcmp(type, "transcription") == 0 || strcmp(type, "transcript") == 0) {
             static const char *const host_final_names[] = {"is_final", "final"};
-            ESP_LOGI(TAG, "host transcription peek=%.60s", json_text_field(root));  // TEMP DIAG
+            ESP_LOGI(TAG, "host transcription peek=%.60s", json_text_field(root));
             emit_event(CLARE_NET_EVENT_HOST_TRANSCRIPTION, json_text_field(root), nullptr, 0,
                        json_bool_field(root, host_final_names,
                                        sizeof(host_final_names) / sizeof(host_final_names[0])));
         } else if (strcmp(type, "answer_text") == 0 || strcmp(type, "answer_delta") == 0 ||
                    strcmp(type, "text_delta") == 0) {
-            ESP_LOGI(TAG, "host answer_text peek=%.60s", json_text_field(root));  // TEMP DIAG
+            ESP_LOGI(TAG, "host answer_text peek=%.60s", json_text_field(root));
             static const char *const done_names[] = {"done", "is_final", "final"};
             emit_event(CLARE_NET_EVENT_HOST_ANSWER_TEXT, json_text_field(root), nullptr, 0,
                        json_bool_field(root, done_names, sizeof(done_names) / sizeof(done_names[0])),
@@ -740,10 +744,6 @@ static void ws_event_handler(void *arg, esp_event_base_t, int32_t event_id, void
         return;
     }
     if (event_id == WEBSOCKET_EVENT_ERROR) {
-        // TEMP DIAGNOSTIC: heap state at handshake failure (remove after use)
-        ESP_LOGW(TAG, "WS ERR heap free8=%u largest8=%u",
-                 static_cast<unsigned>(heap_caps_get_free_size(MALLOC_CAP_8BIT)),
-                 static_cast<unsigned>(heap_caps_get_largest_free_block(MALLOC_CAP_8BIT)));
         esp_err_t err = ESP_FAIL;
         int status = 0;
         if (event_data) {
@@ -753,8 +753,6 @@ static void ws_event_handler(void *arg, esp_event_base_t, int32_t event_id, void
                 err = ESP_FAIL;
             }
             status = data->error_handle.esp_ws_handshake_status_code;
-            // TEMP DIAGNOSTIC: full error detail for the WSS failure hunt
-            // (remove after use)
             ESP_LOGW(TAG, "WS ERR detail kind=%d stack_err=0x%x flags=0x%x type=%d errno=%d",
                      static_cast<int>(ctx->kind),
                      data->error_handle.esp_tls_stack_err,
@@ -836,7 +834,7 @@ static void ws_event_handler(void *arg, esp_event_base_t, int32_t event_id, void
                 offset = ctx->probe_len;
             } else {
                 offset = kTtsPrefixLen;
-                // DIAG: confirm TTS audio messages actually arrive.
+                // Confirm that the streaming audio envelope was recognized.
                 ESP_LOGI(TAG, "tts stream begin expected=%u",
                          static_cast<unsigned>(expected));
             }
@@ -856,7 +854,7 @@ static void ws_event_handler(void *arg, esp_event_base_t, int32_t event_id, void
         ctx->rx_expected = expected;
     }
     if (expected > WS_RX_MAX || offset > WS_RX_MAX || frame_len > WS_RX_MAX - offset) {
-        // DIAG: an oversized non-TTS message usually means the TTS prefix
+        // An oversized non-TTS message usually means the TTS prefix
         // probe failed to recognise a new server audio format — log a peek.
         ESP_LOGW(TAG, "rx oversize kind=%d expected=%u offset=%u frame=%u peek=%.60s",
                  static_cast<int>(ctx->kind), static_cast<unsigned>(expected),
@@ -1128,10 +1126,6 @@ static esp_err_t ws_connect(WsContext *ctx, const char *session_id)
         err = ESP_ERR_TIMEOUT;
     }
     if (err == ESP_OK) {
-        // TEMP DIAGNOSTIC: heap state before WS start (remove after use)
-        ESP_LOGI(TAG, "WS pre-start heap free8=%u largest8=%u",
-                 static_cast<unsigned>(heap_caps_get_free_size(MALLOC_CAP_8BIT)),
-                 static_cast<unsigned>(heap_caps_get_largest_free_block(MALLOC_CAP_8BIT)));
         err = esp_websocket_client_start(client);
     }
     if (err != ESP_OK) {

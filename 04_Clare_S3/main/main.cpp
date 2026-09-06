@@ -116,8 +116,7 @@ static void host_answer_feed(const char *chunk)
         strlcpy(s_host_answer_text, chunk, sizeof(s_host_answer_text));
         action = "overflow-replace";
     }
-    // TEMP DIAG: sentence-drop hunt - what arrived vs what we did with it.
-    ESP_LOGI(TAG, "answer_feed %s cur=%u clen=%u peek=%.48s", action,
+    ESP_LOGI(TAG, "Answer text feed %s cur=%u chunk=%u peek=%.48s", action,
              static_cast<unsigned>(cur), static_cast<unsigned>(clen), chunk);
     clare_ui_set_answer(s_host_answer_text);
 }
@@ -132,7 +131,7 @@ static void net_event(const clare_net_event_t *event, void *)
     case CLARE_NET_EVENT_WIFI_FAILED: clare_ui_set_wifi("Wi-Fi: failed"); break;
     case CLARE_NET_EVENT_TRANSCRIBE_CONNECTED:
         s_transcribe_connected = true;
-        if (s_meeting_active) ui_status("Listening - recording only");
+        if (s_meeting_active) ui_status("Listening - live transcription");
         break;
     case CLARE_NET_EVENT_TRANSCRIBE_DISCONNECTED:
         s_transcribe_connected = false;
@@ -331,12 +330,10 @@ static void start_meeting_impl(void *)
         s_session_id[0] = 0;
         return;
     }
-    ui_status("Listening - recording only");
+    ui_status("Listening - live transcription");
     clare_ui_reset_transcript();
     clare_ui_reset_answer();
-    // Live transcription is disabled (send-only transcribe channel, like the
-    // stable vocat reference); the summary is shown after the meeting ends.
-    clare_ui_set_transcript("录音中… 转写与总结将在会议结束后生成。");
+    clare_ui_set_transcript("Listening - live transcription will appear here.");
     start_audio_task();
 }
 
@@ -393,7 +390,7 @@ static void handle_meeting_disconnect_impl(void *)
         ui_status("Reconnecting transcription...");
         vTaskDelay(pdMS_TO_TICKS(1000 * attempt));
         if (clare_net_transcribe_connect(s_session_id) == ESP_OK) {
-            ui_status("Listening - recording only");
+            ui_status("Listening - live transcription");
             return;
         }
     }
@@ -401,7 +398,7 @@ static void handle_meeting_disconnect_impl(void *)
     ui_status("Recreating meeting session...");
     if (clare_net_create_session(CONFIG_CLARE_TOPIC, s_session_id, sizeof(s_session_id)) == ESP_OK &&
         clare_net_transcribe_connect(s_session_id) == ESP_OK) {
-        ui_status("Listening - recording only");
+        ui_status("Listening - live transcription");
         return;
     }
     if (!s_meeting_active) return;
@@ -459,10 +456,16 @@ static void toggle_host_impl(void *)
 {
     if (!s_session_id[0]) { ui_status("Start a meeting first"); return; }
     if (s_host_recording) {
-        (void)clare_net_host_send_end_of_speech();
+        esp_err_t send_err = clare_net_host_send_end_of_speech();
         s_host_recording = false;
         if (!s_meeting_active) stop_audio_task();
-        clare_ui_set_host_active(false); ui_status("Clare is answering...");
+        clare_ui_set_host_active(false);
+        if (send_err != ESP_OK) {
+            ESP_LOGW(TAG, "Ask send failed err=%d", static_cast<int>(send_err));
+            ui_status("Ask send failed - tap Ask to retry");
+            return;
+        }
+        ui_status("Clare is answering...");
         s_host_answer_since = xTaskGetTickCount();
         if (s_host_answer_timer) {
             esp_timer_stop(s_host_answer_timer);
@@ -557,7 +560,22 @@ static void finish_host_impl(void *)
     if (s_host_connected) (void)clare_net_host_disconnect();
     s_host_connected = false;
     clare_ui_set_host_active(false);
-    ui_status(s_meeting_active ? "Listening - recording only" : "Answer ready");
+    if (s_meeting_active) {
+        // The server can leave the old ASR stream connected but finalized
+        // after host Q&A. Recreate it unconditionally so the next utterance
+        // is attached to a fresh live recognition stream, rather than being
+        // captured locally with no transcript events.
+        ui_status("Resuming live transcription...");
+        (void)clare_net_transcribe_disconnect();
+        s_transcribe_connected = false;
+        vTaskDelay(pdMS_TO_TICKS(100));
+        if (clare_net_transcribe_connect(s_session_id) == ESP_OK) {
+            s_transcribe_connected = true;
+        } else {
+            ui_status("Transcription reconnect failed - retrying...");
+        }
+    }
+    ui_status(s_meeting_active ? "Listening - live transcription" : "Answer ready");
 }
 
 static void refresh_summary_impl(void *)
@@ -779,11 +797,11 @@ extern "C" void app_main(void)
     ESP_ERROR_CHECK(ret);
 
     Custom_PmicPortInit(&s_i2c, 0x34);
-    // 1.75C defaults: CO5300 466x466, QSPI on the pins from user_config.h.
+    // 2.16 defaults: CO5300 480x480, QSPI on the pins from user_config.h.
     s_display = new DisplayPort(s_i2c);
     s_display->DisplayPort_TouchInit();
     Lvgl_PortInit(*s_display);
-    s_codec = new CodecPort(s_i2c, "S3_AMOLED_1_75C");
+    s_codec = new CodecPort(s_i2c, "S3_AMOLED_2_16");
     s_codec->CodecPort_SetInfo("es8311 & es7210", 1, 16000, 2, 16);
     // NOTE: esp_codec_dev maps >100 into extra DAC gain on the ES8311.
     s_codec->CodecPort_SetSpeakerVol(130);

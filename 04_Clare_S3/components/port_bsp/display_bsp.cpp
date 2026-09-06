@@ -6,10 +6,10 @@
 #include "esp_lcd_co5300.h"
 #include "power_bsp.h"
 
-// CO5300 vendor init sequence for the 1.75C panel (QSPI mode, 466x466).
-// Mirrors the XiaoZhi board package for this exact board
-// (esp32-s3-touch-amoled-1.75.cc, BOARD_TYPE_WAVESHARE_ESP32_S3_TOUCH_AMOLED_1_75C).
+// CO5300 vendor init sequence for the Waveshare 2.16 panel (QSPI, 480x480).
+// The 2.16 panel has no column gap: its address window covers 0..479.
 static const co5300_lcd_init_cmd_t lcd_init_cmds[] = {
+    {0x11, NULL, 0, 600},
     // set display to qspi mode
     {0xFE, (uint8_t[]){0x20}, 1, 0},
     {0x19, (uint8_t[]){0x10}, 1, 0},
@@ -21,10 +21,10 @@ static const co5300_lcd_init_cmd_t lcd_init_cmds[] = {
     {0x53, (uint8_t[]){0x20}, 1, 0},
     {0x51, (uint8_t[]){0xFF}, 1, 0},
     {0x63, (uint8_t[]){0xFF}, 1, 0},
-    {0x2A, (uint8_t[]){0x00, 0x06, 0x01, 0xD7}, 4, 0},
-    {0x2B, (uint8_t[]){0x00, 0x00, 0x01, 0xD1}, 4, 600},
-    {0x11, NULL, 0, 600},
-    {0x29, NULL, 0, 0},
+    {0x2A, (uint8_t[]){0x00, 0x00, 0x01, 0xDF}, 4, 0},
+    {0x2B, (uint8_t[]){0x00, 0x00, 0x01, 0xDF}, 4, 0},
+    {0x36, (uint8_t[]){0xA0}, 1, 0},
+    {0x29, NULL, 0, 600},
 };
 
 DisplayPort::DisplayPort(I2cMasterBus &i2cbus, int width, int height, int scl, int d0, int d1, int d2, int d3, int cs, int tp_int, int tp_reset, int lcd_rst, spi_host_device_t spihost) :
@@ -69,8 +69,7 @@ tp_reset_(tp_reset)
     vendor_config.flags.use_qspi_interface = 1;
 
 	esp_lcd_panel_dev_config_t panel_config = {};
-    // 1.75C wires the panel reset to a plain GPIO (no PMIC LDO toggle like
-    // the C6 2.16 board); let the driver pulse it.
+    // The 2.16 panel reset is wired to GPIO39; let the driver pulse it.
     panel_config.reset_gpio_num = (gpio_num_t)lcd_rst_;
     panel_config.rgb_ele_order = LCD_RGB_ELEMENT_ORDER_RGB;
     panel_config.bits_per_pixel = 16;
@@ -79,8 +78,8 @@ tp_reset_(tp_reset)
 	ESP_ERROR_CHECK(esp_lcd_new_panel_co5300(io_handle, &panel_config, &panel_handle));
     ESP_ERROR_CHECK(esp_lcd_panel_reset(panel_handle));
     ESP_ERROR_CHECK(esp_lcd_panel_init(panel_handle));
-    // Column window starts at 6 in the vendor init (0x2A: 6..471).
-    ESP_ERROR_CHECK(esp_lcd_panel_set_gap(panel_handle, 0x06, 0));
+    // The vendor init already addresses the full physical panel.
+    ESP_ERROR_CHECK(esp_lcd_panel_set_gap(panel_handle, 0, 0));
     ESP_ERROR_CHECK(esp_lcd_panel_invert_color(panel_handle, false));
     ESP_ERROR_CHECK(esp_lcd_panel_disp_on_off(panel_handle, true));
 }
@@ -90,8 +89,10 @@ DisplayPort::~DisplayPort() {
 
 void DisplayPort::DisplayPort_TouchInit(void) {
     const esp_lcd_touch_config_t tp_cfg = {
-        // CST9217 reports coordinates in [0, width-1]; mirrors match the
-        // proven XiaoZhi settings for this board.
+        // The 2.16 board's touch controller is mounted with its axes rotated
+        // relative to the LCD. These flags match the Waveshare 2.16 BSP and
+        // are required for bottom controls (Start/Stop/Ask) to land on the
+        // corresponding LVGL objects.
         .x_max = (uint16_t)(width_ - 1),
         .y_max = (uint16_t)(height_ - 1),
         .rst_gpio_num = (gpio_num_t)tp_reset_,
@@ -101,8 +102,8 @@ void DisplayPort::DisplayPort_TouchInit(void) {
             .interrupt = 0,
         },
         .flags = {
-            .swap_xy = 0,
-            .mirror_x = 1,
+            .swap_xy = 1,
+            .mirror_x = 0,
             .mirror_y = 1,
         },
     };

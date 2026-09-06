@@ -171,10 +171,13 @@ static esp_err_t allocate_buffers()
     const size_t frame_bytes = static_cast<size_t>(s_audio.channels) * bytes_per_sample();
     s_audio.capture_raw_bytes = kMaxFramesPerIo * frame_bytes;
     s_audio.playback_raw_bytes = kMaxFramesPerIo * frame_bytes;
+    // CPU-only staging buffers (codec driver memcpys to/from its own I2S DMA
+    // buffers) — keep them in PSRAM so internal RAM stays available for
+    // TLS/AES DMA allocations (pit 20: esp-aes alloc failure killed host WS).
     s_audio.capture_raw = static_cast<uint8_t *>(heap_caps_malloc(
-        s_audio.capture_raw_bytes, MALLOC_CAP_8BIT));
+        s_audio.capture_raw_bytes, MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT));
     s_audio.playback_raw = static_cast<uint8_t *>(heap_caps_malloc(
-        s_audio.playback_raw_bytes, MALLOC_CAP_8BIT));
+        s_audio.playback_raw_bytes, MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT));
     if (!s_audio.capture_raw || !s_audio.playback_raw) {
         release_buffers();
         return ESP_ERR_NO_MEM;
@@ -182,7 +185,7 @@ static esp_err_t allocate_buffers()
 #if CLARE_AUDIO_HAS_MP3
     s_audio.mp3_out_bytes = 16U * 1024U;
     s_audio.mp3_out = static_cast<uint8_t *>(heap_caps_malloc(
-        s_audio.mp3_out_bytes, MALLOC_CAP_8BIT));
+        s_audio.mp3_out_bytes, MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT));
     if (!s_audio.mp3_out) {
         release_buffers();
         return ESP_ERR_NO_MEM;
@@ -293,7 +296,7 @@ static esp_err_t mp3_write_decoded_locked(const uint8_t *pcm, size_t pcm_bytes,
     const size_t input_frames = pcm_bytes / (sizeof(int16_t) * info.channel);
     if (input_frames == 0) return ESP_OK;
     int16_t *mono = static_cast<int16_t *>(heap_caps_malloc(
-        input_frames * sizeof(int16_t), MALLOC_CAP_8BIT));
+        input_frames * sizeof(int16_t), MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT));
     if (!mono) return ESP_ERR_NO_MEM;
     const int16_t *samples = reinterpret_cast<const int16_t *>(pcm);
     for (size_t i = 0; i < input_frames; ++i) {
@@ -313,7 +316,7 @@ static esp_err_t mp3_write_decoded_locked(const uint8_t *pcm, size_t pcm_bytes,
         const size_t output_capacity = (input_frames * CLARE_AUDIO_SAMPLE_RATE + info.sample_rate - 1U) /
                                        info.sample_rate + 2U;
         int16_t *resampled = static_cast<int16_t *>(heap_caps_malloc(
-            output_capacity * sizeof(int16_t), MALLOC_CAP_8BIT));
+            output_capacity * sizeof(int16_t), MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT));
         if (!resampled) {
             heap_caps_free(mono);
             return ESP_ERR_NO_MEM;
@@ -759,7 +762,7 @@ static void tts_play_task(void *)
     bool stream_open = true;
     size_t pending = 0;          // unconsumed tail carried to the next feed
     int consecutive_errors = 0;  // decode resets without a successful frame
-    // DIAG (first-sentence-missing hunt): byte/frame accounting per stream.
+    // Keep per-stream byte accounting so playback truncation is visible in logs.
     uint32_t stat_ring_bytes = 0;
     uint32_t stat_pcm_bytes = 0;
     uint32_t stat_t0 = 0;
@@ -806,7 +809,7 @@ static void tts_play_task(void *)
             esp_audio_err_t err = esp_audio_simple_dec_process(s_audio.mp3_decoder, &raw, &frame);
             if (err == ESP_AUDIO_ERR_BUFF_NOT_ENOUGH && frame.needed_size > frame.len) {
                 uint8_t *new_buf = static_cast<uint8_t *>(heap_caps_realloc(
-                    s_audio.mp3_out, frame.needed_size, MALLOC_CAP_8BIT));
+                    s_audio.mp3_out, frame.needed_size, MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT));
                 if (!new_buf) { stream_open = false; break; }
                 s_audio.mp3_out = new_buf;
                 s_audio.mp3_out_bytes = frame.needed_size;

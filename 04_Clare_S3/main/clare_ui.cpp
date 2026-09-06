@@ -13,20 +13,11 @@
 LV_FONT_DECLARE(lv_font_clare_cjk_16);
 
 /*
- * Round-screen UI (466x466 CO5300 AMOLED, physical circle radius 233).
+ * 480x480 CO5300 AMOLED UI. Keep all page backgrounds opaque so the full
+ * physical panel is covered even while a page is being switched.
  *
- * Design rules for the round glass (do not regress to the C6 square layout):
- *  - Anything important must sit inside the inscribed square (330x330 centered,
- *    i.e. x/y in [68, 398]) or on the vertical center axis where the chord is
- *    widest. Rectangular header bars and corner-anchored grids get clipped.
- *  - Status text rides the top center chord (short, single line).
- *  - Primary actions are circles/pills clustered around the bottom center;
- *    a circle's lowest point is at its center-x, so round buttons can sit
- *    lower than a rectangle of the same width.
- *  - Scrollable content lives in a centered 330-wide card whose corners were
- *    verified to fall inside the glass (corner (68,140): r=189 < 233).
- * Reference: XiaoZhi board package for this panel pads its status bar 10% from
- * each side and centers all primary content the same way.
+ * The display is square with rounded physical corners, so use a generous
+ * centered content column while leaving a small, consistent edge margin.
  */
 
 namespace {
@@ -41,8 +32,8 @@ enum class Action : uint8_t {
     OpenDemo,
 };
 
-constexpr int kScreenSize = 466;
-constexpr int kContentWidth = 330;   // inscribed-square width of the round glass
+constexpr int kScreenSize = 480;
+constexpr int kContentWidth = 392;
 
 clare_ui_callbacks_t s_callbacks = {};
 lv_obj_t *s_screen = nullptr;
@@ -195,16 +186,16 @@ static void create_home(void)
 {
     s_home = make_page(0x101722);
 
-    // Wi-Fi status on the top center chord; short single line only.
+    // Keep status inside the rounded-corner safe area.
     s_wifi = make_label(s_home, "Wi-Fi: checking", 0x9EB2C9, LV_TEXT_ALIGN_CENTER);
     lv_obj_set_style_text_font(s_wifi, &lv_font_montserrat_16, 0);
-    lv_obj_set_width(s_wifi, 260);
+    lv_obj_set_width(s_wifi, 340);
     lv_label_set_long_mode(s_wifi, LV_LABEL_LONG_DOT);
     lv_obj_align(s_wifi, LV_ALIGN_TOP_MID, 0, 56);
 
     // One big circular Clare tile, centered on the glass.
     lv_obj_t *clare_btn = lv_button_create(s_home);
-    lv_obj_set_size(clare_btn, 200, 200);
+    lv_obj_set_size(clare_btn, 220, 220);
     lv_obj_set_style_radius(clare_btn, LV_RADIUS_CIRCLE, 0);
     lv_obj_set_style_bg_color(clare_btn, color(0x1B3851), 0);
     lv_obj_set_style_bg_color(clare_btn, color(0x26506F), LV_STATE_PRESSED);
@@ -212,7 +203,7 @@ static void create_home(void)
     lv_obj_set_style_border_color(clare_btn, color(0x3B89B4), 0);
     lv_obj_set_style_border_opa(clare_btn, LV_OPA_70, 0);
     lv_obj_set_style_shadow_width(clare_btn, 0, 0);
-    lv_obj_align(clare_btn, LV_ALIGN_CENTER, 0, -8);
+    lv_obj_align(clare_btn, LV_ALIGN_CENTER, 0, -4);
     lv_obj_set_flex_flow(clare_btn, LV_FLEX_FLOW_COLUMN);
     lv_obj_set_flex_align(clare_btn, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER,
                           LV_FLEX_ALIGN_CENTER);
@@ -239,7 +230,7 @@ static void create_home(void)
                                        150, 44, false, 0x202B3B);
     lv_obj_set_style_border_width(demo, 1, 0);
     lv_obj_set_style_border_color(demo, color(0x394B63), 0);
-    lv_obj_align(demo, LV_ALIGN_BOTTOM_MID, 0, -56);
+    lv_obj_align(demo, LV_ALIGN_BOTTOM_MID, 0, -42);
 }
 
 static void create_clare(void)
@@ -254,7 +245,7 @@ static void create_clare(void)
 
     s_status = make_label(s_clare, "Ready when you are", 0x8ED1B2, LV_TEXT_ALIGN_CENTER);
     lv_obj_set_style_text_font(s_status, &lv_font_montserrat_16, 0);
-    lv_obj_set_width(s_status, 300);
+    lv_obj_set_width(s_status, 360);
     lv_label_set_long_mode(s_status, LV_LABEL_LONG_DOT);
     // Pin the status to a fixed one-line slot [y=86, y=106]: a long status
     // string ("Meeting ended - Ask Clare or refresh summary") truncated by
@@ -262,17 +253,17 @@ static void create_clare(void)
     // which reads as overlapping on the round glass.
     lv_obj_set_style_pad_all(s_status, 0, 0);
     lv_obj_set_height(s_status, 20);
-    lv_obj_align(s_status, LV_ALIGN_TOP_MID, 0, 86);
+    lv_obj_align(s_status, LV_ALIGN_TOP_MID, 0, 84);
 
     s_clare_wifi = make_label(s_clare, "Wi-Fi: checking", 0x9EB2C9, LV_TEXT_ALIGN_CENTER);
     lv_obj_set_style_text_font(s_clare_wifi, &lv_font_montserrat_12, 0);
     lv_obj_set_style_pad_all(s_clare_wifi, 0, 0);
-    lv_obj_align(s_clare_wifi, LV_ALIGN_TOP_MID, 0, 118);
+    lv_obj_align(s_clare_wifi, LV_ALIGN_TOP_MID, 0, 114);
 
-    // Notes card: centered 330-wide, corners verified inside the glass.
+    // Notes card fills the usable width without touching the rounded corners.
     lv_obj_t *notes = lv_obj_create(s_clare);
-    lv_obj_set_size(notes, kContentWidth, 200);
-    lv_obj_align(notes, LV_ALIGN_TOP_MID, 0, 138);
+    lv_obj_set_size(notes, kContentWidth, 220);
+    lv_obj_align(notes, LV_ALIGN_TOP_MID, 0, 134);
     lv_obj_set_style_radius(notes, 18, 0);
     lv_obj_set_style_bg_color(notes, color(0x182231), 0);
     lv_obj_set_style_bg_opa(notes, LV_OPA_COVER, 0);
@@ -301,7 +292,7 @@ static void create_clare(void)
     // rectangle because their lowest point is at center-x.
     lv_obj_t *controls = lv_obj_create(s_clare);
     lv_obj_set_size(controls, kContentWidth, 64);
-    lv_obj_align(controls, LV_ALIGN_BOTTOM_MID, 0, -38);
+    lv_obj_align(controls, LV_ALIGN_BOTTOM_MID, 0, -28);
     lv_obj_set_style_bg_opa(controls, LV_OPA_TRANSP, 0);
     lv_obj_set_style_border_width(controls, 0, 0);
     lv_obj_set_style_pad_all(controls, 0, 0);
@@ -331,7 +322,7 @@ static void create_demo(void)
 
     lv_obj_t *panel = lv_obj_create(s_demo);
     lv_obj_set_size(panel, kContentWidth, 240);
-    lv_obj_align(panel, LV_ALIGN_CENTER, 0, 24);
+    lv_obj_align(panel, LV_ALIGN_CENTER, 0, 28);
     lv_obj_set_style_radius(panel, 18, 0);
     lv_obj_set_style_bg_color(panel, color(0x182231), 0);
     lv_obj_set_style_bg_opa(panel, LV_OPA_COVER, 0);
@@ -343,7 +334,7 @@ static void create_demo(void)
     lv_obj_set_style_pad_row(panel, 8, 0);
     make_label(panel, LV_SYMBOL_OK, 0x8ED1B2, LV_TEXT_ALIGN_CENTER);
     make_label(panel, "S3 hardware online", 0xF4F7FB, LV_TEXT_ALIGN_CENTER);
-    make_label(panel, "CO5300 466x466 round", 0x9EB2C9, LV_TEXT_ALIGN_CENTER);
+    make_label(panel, "CO5300 480x480", 0x9EB2C9, LV_TEXT_ALIGN_CENTER);
     make_label(panel, "CST9217 touch", 0x9EB2C9, LV_TEXT_ALIGN_CENTER);
     make_label(panel, "ES8311 + ES7210 audio", 0x9EB2C9, LV_TEXT_ALIGN_CENTER);
 }

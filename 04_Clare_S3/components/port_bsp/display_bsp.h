@@ -26,8 +26,8 @@ private:
     uint8_t brightness_ = 100;
 
 public:
-    // Defaults follow the Waveshare ESP32-S3-Touch-AMOLED-1.75C pin map.
-    DisplayPort(I2cMasterBus &i2cbus, int width = 466, int height = 466, int scl = 38, int d0 = 4, int d1 = 5, int d2 = 6, int d3 = 7, int cs = 12, int tp_int = 11, int tp_reset = 2, int lcd_rst = 1, spi_host_device_t spihost = SPI2_HOST);
+    // Defaults follow the Waveshare ESP32-S3-Touch-AMOLED-2.16 pin map.
+    DisplayPort(I2cMasterBus &i2cbus, int width = 480, int height = 480, int scl = 38, int d0 = 4, int d1 = 5, int d2 = 6, int d3 = 7, int cs = 12, int tp_int = 11, int tp_reset = 40, int lcd_rst = 39, spi_host_device_t spihost = SPI2_HOST);
     ~DisplayPort();
 
     void DisplayPort_TouchInit(void);
