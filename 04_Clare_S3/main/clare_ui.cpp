@@ -30,6 +30,8 @@ enum class Action : uint8_t {
     ToggleHost,
     Refresh,
     OpenDemo,
+    OpenWifiSetup,
+    CloseWifiSetup,
 };
 
 constexpr int kScreenSize = 480;
@@ -40,8 +42,11 @@ lv_obj_t *s_screen = nullptr;
 lv_obj_t *s_home = nullptr;
 lv_obj_t *s_clare = nullptr;
 lv_obj_t *s_demo = nullptr;
+lv_obj_t *s_setup = nullptr;
 lv_obj_t *s_wifi = nullptr;
 lv_obj_t *s_clare_wifi = nullptr;
+lv_obj_t *s_prov_ssid = nullptr;
+lv_obj_t *s_prov_status = nullptr;
 lv_obj_t *s_status = nullptr;
 lv_obj_t *s_transcript = nullptr;
 lv_obj_t *s_answer = nullptr;
@@ -128,6 +133,14 @@ static void dispatch_action(Action action)
     case Action::OpenDemo:
         set_page_locked(CLARE_UI_DEMO);
         break;
+    case Action::OpenWifiSetup:
+        set_page_locked(CLARE_UI_WIFI_SETUP);
+        if (s_callbacks.open_wifi_setup) s_callbacks.open_wifi_setup(s_callbacks.ctx);
+        break;
+    case Action::CloseWifiSetup:
+        set_page_locked(CLARE_UI_HOME);
+        if (s_callbacks.close_wifi_setup) s_callbacks.close_wifi_setup(s_callbacks.ctx);
+        break;
     }
 }
 
@@ -163,9 +176,9 @@ static lv_obj_t *make_touch_button(lv_obj_t *parent, const char *title, Action a
 }
 
 /* Small circular back button anchored on the top-left chord (verified visible). */
-static void make_back_button(lv_obj_t *page)
+static void make_back_button(lv_obj_t *page, Action action)
 {
-    lv_obj_t *back = make_touch_button(page, LV_SYMBOL_LEFT, Action::CloseClare,
+    lv_obj_t *back = make_touch_button(page, LV_SYMBOL_LEFT, action,
                                        44, 44, true, 0x1D2939, 0xF4F7FB,
                                        &lv_font_montserrat_16);
     lv_obj_set_pos(back, 62, 50);
@@ -225,19 +238,30 @@ static void create_home(void)
     lv_obj_set_style_text_font(name, &lv_font_montserrat_24, 0);
     make_label(clare_btn, "meeting notes", 0xB8D6E8, LV_TEXT_ALIGN_CENTER);
 
-    // Device demo entry on the bottom center chord.
-    lv_obj_t *demo = make_touch_button(s_home, "Device demo", Action::OpenDemo,
-                                       150, 44, false, 0x202B3B);
+    // Bottom chord: Wi-Fi setup and device demo entries side by side.
+    lv_obj_t *bottom = lv_obj_create(s_home);
+    lv_obj_set_size(bottom, kContentWidth, 44);
+    lv_obj_align(bottom, LV_ALIGN_BOTTOM_MID, 0, -42);
+    lv_obj_set_style_bg_opa(bottom, LV_OPA_TRANSP, 0);
+    lv_obj_set_style_border_width(bottom, 0, 0);
+    lv_obj_set_style_pad_all(bottom, 0, 0);
+    lv_obj_set_flex_flow(bottom, LV_FLEX_FLOW_ROW);
+    lv_obj_set_flex_align(bottom, LV_FLEX_ALIGN_SPACE_BETWEEN, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
+    lv_obj_t *setup = make_touch_button(bottom, "WiFi Setup", Action::OpenWifiSetup,
+                                        186, 44, false, 0x202B3B);
+    lv_obj_set_style_border_width(setup, 1, 0);
+    lv_obj_set_style_border_color(setup, color(0x394B63), 0);
+    lv_obj_t *demo = make_touch_button(bottom, "Device demo", Action::OpenDemo,
+                                       186, 44, false, 0x202B3B);
     lv_obj_set_style_border_width(demo, 1, 0);
     lv_obj_set_style_border_color(demo, color(0x394B63), 0);
-    lv_obj_align(demo, LV_ALIGN_BOTTOM_MID, 0, -42);
 }
 
 static void create_clare(void)
 {
     s_clare = make_page(0x101722);
 
-    make_back_button(s_clare);
+    make_back_button(s_clare, Action::CloseClare);
 
     lv_obj_t *title = make_label(s_clare, "Clare", 0xF4F7FB, LV_TEXT_ALIGN_CENTER);
     lv_obj_set_style_text_font(title, &lv_font_montserrat_24, 0);
@@ -314,7 +338,7 @@ static void create_demo(void)
 {
     s_demo = make_page(0x101722);
 
-    make_back_button(s_demo);
+    make_back_button(s_demo, Action::CloseClare);
 
     lv_obj_t *title = make_label(s_demo, "Device", 0xF4F7FB, LV_TEXT_ALIGN_CENTER);
     lv_obj_set_style_text_font(title, &lv_font_montserrat_24, 0);
@@ -339,6 +363,43 @@ static void create_demo(void)
     make_label(panel, "ES8311 + ES7210 audio", 0x9EB2C9, LV_TEXT_ALIGN_CENTER);
 }
 
+static void create_wifi_setup(void)
+{
+    s_setup = make_page(0x101722);
+
+    make_back_button(s_setup, Action::CloseWifiSetup);
+
+    lv_obj_t *title = make_label(s_setup, "Wi-Fi Setup", 0xF4F7FB, LV_TEXT_ALIGN_CENTER);
+    lv_obj_set_style_text_font(title, &lv_font_montserrat_24, 0);
+    lv_obj_align(title, LV_ALIGN_TOP_MID, 0, 52);
+
+    lv_obj_t *card = lv_obj_create(s_setup);
+    lv_obj_set_size(card, kContentWidth, 236);
+    lv_obj_align(card, LV_ALIGN_CENTER, 0, 6);
+    lv_obj_set_style_radius(card, 18, 0);
+    lv_obj_set_style_bg_color(card, color(0x182231), 0);
+    lv_obj_set_style_bg_opa(card, LV_OPA_COVER, 0);
+    lv_obj_set_style_border_width(card, 1, 0);
+    lv_obj_set_style_border_color(card, color(0x2A3B52), 0);
+    lv_obj_set_style_border_opa(card, LV_OPA_60, 0);
+    lv_obj_set_style_pad_all(card, 14, 0);
+    lv_obj_set_flex_flow(card, LV_FLEX_FLOW_COLUMN);
+    lv_obj_set_flex_align(card, LV_FLEX_ALIGN_START, LV_FLEX_ALIGN_START, LV_FLEX_ALIGN_START);
+
+    make_label(card, "SETUP HOTSPOT", 0x70B8D5);
+    s_prov_ssid = make_label(card, "starting...", 0xF4F7FB);
+    lv_obj_set_style_text_font(s_prov_ssid, &lv_font_montserrat_24, 0);
+    lv_label_set_long_mode(s_prov_ssid, LV_LABEL_LONG_DOT);
+    lv_obj_set_width(s_prov_ssid, LV_PCT(100));
+
+    s_prov_status = make_label(card, "Opening the setup hotspot...", 0x9EB2C9);
+    lv_label_set_long_mode(s_prov_status, LV_LABEL_LONG_WRAP);
+    lv_obj_set_width(s_prov_status, LV_PCT(100));
+    lv_obj_set_style_pad_top(s_prov_status, 8, 0);
+    lv_obj_set_style_text_color(s_prov_status, color(0xD5E2EE), 0);
+    lv_obj_set_style_text_font(s_prov_status, &lv_font_clare_cjk_16, 0);
+}
+
 static void set_hidden(lv_obj_t *obj, bool hidden)
 {
     if (!obj) return;
@@ -355,6 +416,7 @@ static void set_page_locked(clare_ui_page_t page)
     set_hidden(s_home, page != CLARE_UI_HOME);
     set_hidden(s_clare, page != CLARE_UI_CLARE);
     set_hidden(s_demo, page != CLARE_UI_DEMO);
+    set_hidden(s_setup, page != CLARE_UI_WIFI_SETUP);
 }
 
 } // namespace
@@ -372,6 +434,7 @@ extern "C" void clare_ui_init(const clare_ui_callbacks_t *callbacks)
     create_home();
     create_clare();
     create_demo();
+    create_wifi_setup();
     s_ui_initialized = true;
     set_page_locked(CLARE_UI_HOME);
     s_meeting_active = false;
@@ -503,5 +566,21 @@ extern "C" void clare_ui_set_host_active(bool active)
     if (Lvgl_lock(-1) != ESP_OK) return;
     s_host_active = active;
     if (s_host_label) lv_label_set_text(s_host_label, active ? "Send" : "Ask");
+    Lvgl_unlock();
+}
+
+extern "C" void clare_ui_set_prov_ssid(const char *text)
+{
+    if (!s_prov_ssid) return;
+    if (Lvgl_lock(-1) != ESP_OK) return;
+    lv_label_set_text(s_prov_ssid, text ? text : "");
+    Lvgl_unlock();
+}
+
+extern "C" void clare_ui_set_prov_status(const char *text)
+{
+    if (!s_prov_status) return;
+    if (Lvgl_lock(-1) != ESP_OK) return;
+    lv_label_set_text(s_prov_status, text ? text : "");
     Lvgl_unlock();
 }

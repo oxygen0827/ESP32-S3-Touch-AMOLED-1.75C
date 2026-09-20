@@ -39,6 +39,13 @@ typedef enum {
     // The server rejected the host channel (HTTP 403): the session is invalid
     // and the application must recreate it.
     CLARE_NET_EVENT_HOST_SESSION_REJECTED,
+    // Provisioning (Wi-Fi setup hotspot) lifecycle.  PROV_STARTED text is the
+    // hotspot SSID; PROV_CREDENTIALS_SAVED text is the configured SSID.  The
+    // password is never carried in events.
+    CLARE_NET_EVENT_PROV_STARTED,
+    CLARE_NET_EVENT_PROV_CLIENT_CONNECTED,
+    CLARE_NET_EVENT_PROV_CREDENTIALS_SAVED,
+    CLARE_NET_EVENT_PROV_STOPPED,
     CLARE_NET_EVENT_ERROR,
 } clare_net_event_type_t;
 
@@ -79,7 +86,16 @@ esp_err_t clare_net_init(const clare_net_config_t *config);
 // address has been assigned.
 esp_err_t clare_net_wifi_start(void);
 esp_err_t clare_net_wifi_connect(uint32_t timeout_ms);
+esp_err_t clare_net_wifi_stop(void);
 bool clare_net_wifi_is_connected(void);
+
+// Override the Kconfig credentials with runtime ones (e.g. supplied through
+// the provisioning portal and loaded from NVS).  The password is never
+// logged.  Takes effect on the next clare_net_wifi_start/connect.
+esp_err_t clare_net_wifi_set_credentials(const char *ssid, const char *password);
+
+// True when runtime or Kconfig credentials are available.
+bool clare_net_wifi_has_credentials(void);
 
 // Session HTTP API.  On success, out_session_id contains the ID and the
 // module also stores it for subsequent WebSocket calls.

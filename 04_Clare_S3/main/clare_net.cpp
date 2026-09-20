@@ -114,6 +114,10 @@ static bool s_initialized = false;
 static bool s_wifi_started = false;
 static volatile bool s_wifi_connected = false;
 static int s_wifi_retries = 0;
+// Runtime credentials (provisioning portal / NVS).  When s_runtime_ssid is
+// non-empty it overrides the Kconfig defaults in clare_net_wifi_start().
+static char s_runtime_ssid[33] = {};
+static char s_runtime_pass[65] = {};
 static clare_net_event_cb_t s_event_cb = nullptr;
 static void *s_event_ctx = nullptr;
 static char s_session_id[SESSION_ID_MAX] = {};
@@ -427,6 +431,10 @@ static void wifi_event_handler(void *, esp_event_base_t event_base,
                                int32_t event_id, void *event_data)
 {
     if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_START) {
+        // While the provisioning hotspot owns the radio (STA+AP with the STA
+        // interface unconfigured) STA_START also fires; never kick a connect
+        // from there — it would use a stale/empty STA config.
+        if (!s_wifi_started) return;
         s_wifi_retries = 0;
         if (s_wifi_events) {
             xEventGroupClearBits(s_wifi_events, WIFI_CONNECTED_BIT | WIFI_FAILED_BIT);
@@ -1281,7 +1289,23 @@ extern "C" esp_err_t clare_net_wifi_start(void)
     if (err != ESP_OK) {
         return err;
     }
-    if (CONFIG_CLARE_WIFI_SSID[0] == '\0') {
+    const char *ssid = nullptr;
+    const char *password = nullptr;
+    char runtime_ssid[33] = {};
+    char runtime_pass[65] = {};
+    if (take_lock()) {
+        strlcpy(runtime_ssid, s_runtime_ssid, sizeof(runtime_ssid));
+        strlcpy(runtime_pass, s_runtime_pass, sizeof(runtime_pass));
+        give_lock();
+    }
+    if (runtime_ssid[0]) {
+        ssid = runtime_ssid;
+        password = runtime_pass;
+    } else {
+        ssid = CONFIG_CLARE_WIFI_SSID;
+        password = CONFIG_CLARE_WIFI_PASSWORD;
+    }
+    if (ssid[0] == '\0') {
         ESP_LOGW(TAG, "Wi-Fi SSID is not configured");
         emit_event(CLARE_NET_EVENT_WIFI_FAILED, nullptr, nullptr, 0, false, 0,
                    ESP_ERR_INVALID_ARG);
@@ -1299,9 +1323,9 @@ extern "C" esp_err_t clare_net_wifi_start(void)
         return ESP_OK;
     }
     wifi_config_t wifi_cfg = {};
-    strlcpy(reinterpret_cast<char *>(wifi_cfg.sta.ssid), CONFIG_CLARE_WIFI_SSID,
+    strlcpy(reinterpret_cast<char *>(wifi_cfg.sta.ssid), ssid,
             sizeof(wifi_cfg.sta.ssid));
-    strlcpy(reinterpret_cast<char *>(wifi_cfg.sta.password), CONFIG_CLARE_WIFI_PASSWORD,
+    strlcpy(reinterpret_cast<char *>(wifi_cfg.sta.password), password,
             sizeof(wifi_cfg.sta.password));
     wifi_cfg.sta.threshold.authmode = WIFI_AUTH_OPEN;
     wifi_cfg.sta.pmf_cfg.capable = true;
@@ -1370,6 +1394,59 @@ extern "C" esp_err_t clare_net_wifi_connect(uint32_t timeout_ms)
 extern "C" bool clare_net_wifi_is_connected(void)
 {
     return s_wifi_connected;
+}
+
+extern "C" esp_err_t clare_net_wifi_stop(void)
+{
+    if (!s_initialized) {
+        return ESP_OK;
+    }
+    esp_err_t err = esp_wifi_stop();
+    if (err != ESP_OK && err != ESP_ERR_WIFI_STOP_STATE && err != ESP_ERR_WIFI_STATE) {
+        return err;
+    }
+    s_wifi_started = false;
+    s_wifi_connected = false;
+    s_wifi_retries = 0;
+    if (s_wifi_events) {
+        xEventGroupClearBits(s_wifi_events, WIFI_CONNECTED_BIT | WIFI_FAILED_BIT);
+    }
+    return ESP_OK;
+}
+
+extern "C" esp_err_t clare_net_wifi_set_credentials(const char *ssid, const char *password)
+{
+    if (!ssid || !ssid[0] || strlen(ssid) > 32) {
+        return ESP_ERR_INVALID_ARG;
+    }
+    if (password && strlen(password) > 64) {
+        return ESP_ERR_INVALID_ARG;
+    }
+    // Boot path: app_main sets credentials before clare_net_init() — make
+    // sure the lock exists first (init is idempotent).
+    if (!s_lock) {
+        esp_err_t init_err = clare_net_init(nullptr);
+        if (init_err != ESP_OK) {
+            return init_err;
+        }
+    }
+    if (!take_lock()) {
+        return ESP_ERR_TIMEOUT;
+    }
+    strlcpy(s_runtime_ssid, ssid, sizeof(s_runtime_ssid));
+    strlcpy(s_runtime_pass, password ? password : "", sizeof(s_runtime_pass));
+    give_lock();
+    return ESP_OK;
+}
+
+extern "C" bool clare_net_wifi_has_credentials(void)
+{
+    bool have_runtime = false;
+    if (take_lock()) {
+        have_runtime = s_runtime_ssid[0] != '\0';
+        give_lock();
+    }
+    return have_runtime || CONFIG_CLARE_WIFI_SSID[0] != '\0';
 }
 
 extern "C" esp_err_t clare_net_create_session(const char *topic,

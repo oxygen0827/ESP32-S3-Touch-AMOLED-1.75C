@@ -3,6 +3,7 @@ idf_component_register(
         "main.cpp"
         "clare_audio.cpp"
         "clare_net.cpp"
+        "clare_prov.cpp"
         "clare_ui.cpp"
         "lv_font_clare_cjk_16.c"
     INCLUDE_DIRS "."
@@ -16,6 +17,7 @@ idf_component_register(
         esp_netif
         esp_event
         esp_http_client
+        esp_http_server
         esp_websocket_client
         json
         mbedtls

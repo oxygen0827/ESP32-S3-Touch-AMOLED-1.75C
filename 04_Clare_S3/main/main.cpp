@@ -25,6 +25,7 @@
 #include "codec_bsp.h"
 #include "clare_audio.h"
 #include "clare_net.h"
+#include "clare_prov.h"
 #include "clare_ui.h"
 
 #ifndef CONFIG_CLARE_BOOT_SELF_TEST
@@ -63,6 +64,9 @@ enum class Action : uint8_t {
     RefreshSummary,
     FinishHost,
     CleanupHost,
+    StartProvisioning,
+    StopProvisioning,
+    ReconnectWifi,
 #if CONFIG_CLARE_BOOT_SELF_TEST
     BootNetworkSelfTest,
 #endif
@@ -181,6 +185,36 @@ static void net_event(const clare_net_event_t *event, void *)
         enqueue_action(Action::FinishHost);
         break;
     case CLARE_NET_EVENT_ERROR: ui_status("Network error - check Wi-Fi/API"); break;
+    case CLARE_NET_EVENT_PROV_STARTED:
+        clare_ui_set_wifi("Wi-Fi: setup hotspot");
+        clare_ui_set_page(CLARE_UI_WIFI_SETUP);
+        clare_ui_set_prov_ssid(event->text ? event->text : "Clare-S3");
+        clare_ui_set_prov_status("Hotspot active. On your phone:\n"
+                                 "1. Join this hotspot (no password)\n"
+                                 "2. The setup page opens by itself");
+        break;
+    case CLARE_NET_EVENT_PROV_CLIENT_CONNECTED:
+        clare_ui_set_prov_status("Phone connected.\n"
+                                 "Follow the popup to pick your Wi-Fi and type its password.");
+        break;
+    case CLARE_NET_EVENT_PROV_CREDENTIALS_SAVED: {
+        // The password never crosses the event channel: reload the full
+        // credentials from NVS and hand them to the transport.
+        char ssid[33] = {};
+        char pass[65] = {};
+        if (clare_prov_credentials_load(ssid, sizeof(ssid), pass, sizeof(pass)) == ESP_OK) {
+            (void)clare_net_wifi_set_credentials(ssid, pass);
+            clare_ui_set_wifi("Wi-Fi: saved, reconnecting");
+            clare_ui_set_prov_status("Saved. Reconnecting to your Wi-Fi...");
+        } else {
+            clare_ui_set_prov_status("Saved, but could not reload - restart the device.");
+        }
+        break;
+    }
+    case CLARE_NET_EVENT_PROV_STOPPED:
+        clare_ui_set_page(CLARE_UI_HOME);
+        enqueue_action(Action::ReconnectWifi);
+        break;
     default: break;
     }
 }
@@ -606,6 +640,59 @@ static void refresh_summary_impl(void *)
 static void open_clare(void *) { clare_ui_set_page(CLARE_UI_CLARE); }
 static void close_clare(void *) { if (!s_meeting_active) clare_ui_set_page(CLARE_UI_HOME); }
 
+// --- Wi-Fi provisioning (setup hotspot + captive portal) ---------------------
+//
+// Entering WiFi Setup stops the STA radio and opens an open hotspot with a
+// DNS captive portal (see clare_prov.cpp): the phone joins the hotspot, the
+// OS pops the config page, credentials land in NVS, the hotspot closes and
+// the device reconnects through clare_net with the stored credentials.
+
+static void start_provisioning_impl(void *)
+{
+    // Provisioning owns the radio: tear any live meeting/host flow down first.
+    if (s_meeting_active) stop_meeting_impl(nullptr);
+    if (s_host_connected || s_host_recording) {
+        (void)clare_net_host_disconnect();
+        s_host_connected = false;
+        s_host_recording = false;
+        s_host_answer_since = 0;
+        if (s_host_answer_timer) esp_timer_stop(s_host_answer_timer);
+        clare_ui_set_host_active(false);
+    }
+    clare_ui_set_wifi("Wi-Fi: setup hotspot");
+    clare_ui_set_page(CLARE_UI_WIFI_SETUP);
+    clare_ui_set_prov_status("Opening the setup hotspot...");
+    esp_err_t err = clare_prov_start();
+    if (err != ESP_OK) {
+        clare_ui_set_wifi("Wi-Fi: hotspot failed");
+        clare_ui_set_prov_status("The hotspot failed to start. Go back and try again.");
+    }
+}
+
+static void stop_provisioning_impl(void *)
+{
+    if (clare_prov_is_active()) {
+        // clare_prov_stop() emits PROV_STOPPED, which enqueues ReconnectWifi.
+        (void)clare_prov_stop();
+    } else {
+        enqueue_action(Action::ReconnectWifi);
+    }
+}
+
+static void reconnect_wifi_impl(void *)
+{
+    if (clare_net_wifi_is_connected()) return;
+    if (!clare_net_wifi_has_credentials()) {
+        clare_ui_set_wifi("Wi-Fi: tap WiFi Setup");
+        return;
+    }
+    clare_ui_set_wifi("Wi-Fi: connecting");
+    (void)clare_net_wifi_connect(20000);
+}
+
+static void open_wifi_setup(void *) { enqueue_action(Action::StartProvisioning); }
+static void close_wifi_setup(void *) { enqueue_action(Action::StopProvisioning); }
+
 #if CONFIG_CLARE_BOOT_SELF_TEST
 static void boot_network_self_test(void)
 {
@@ -755,6 +842,9 @@ static void action_task(void *)
                 (void)clare_net_host_disconnect();
             }
             break;
+        case Action::StartProvisioning: start_provisioning_impl(nullptr); break;
+        case Action::StopProvisioning: stop_provisioning_impl(nullptr); break;
+        case Action::ReconnectWifi: reconnect_wifi_impl(nullptr); break;
 #if CONFIG_CLARE_BOOT_SELF_TEST
         case Action::BootNetworkSelfTest:
             vTaskDelay(pdMS_TO_TICKS(8000));
@@ -832,15 +922,36 @@ extern "C" void app_main(void)
 
     clare_ui_callbacks_t callbacks = {
         .open_clare = open_clare, .close_clare = close_clare, .start_meeting = start_meeting,
-        .stop_meeting = stop_meeting, .toggle_host = toggle_host, .refresh_summary = refresh_summary, .ctx = nullptr,
+        .stop_meeting = stop_meeting, .toggle_host = toggle_host, .refresh_summary = refresh_summary,
+        .open_wifi_setup = open_wifi_setup, .close_wifi_setup = close_wifi_setup, .ctx = nullptr,
     };
     clare_ui_init(&callbacks);
-    clare_ui_set_wifi("Wi-Fi: starting");
     clare_net_config_t net_config = {.event_cb = net_event, .ctx = nullptr};
-    if (clare_net_init(&net_config) == ESP_OK) {
-        ret = clare_net_wifi_start();
-        if (ret != ESP_OK) clare_ui_set_wifi("Wi-Fi: configure locally");
-    } else clare_ui_set_wifi("Wi-Fi: unavailable");
+    // Provisioning reports through the same event callback as the transport.
+    (void)clare_prov_init(&net_config);
+    // Credentials provisioned earlier override the Kconfig defaults; with no
+    // credentials anywhere, open the setup hotspot right away so the phone
+    // can configure the device without touching a keyboard.
+    char prov_ssid[33] = {};
+    char prov_pass[65] = {};
+    if (clare_prov_credentials_load(prov_ssid, sizeof(prov_ssid),
+                                    prov_pass, sizeof(prov_pass)) == ESP_OK &&
+        prov_ssid[0]) {
+        esp_err_t cred_err = clare_net_wifi_set_credentials(prov_ssid, prov_pass);
+        if (cred_err != ESP_OK) {
+            ESP_LOGW(TAG, "NVS credentials rejected err=%d", static_cast<int>(cred_err));
+        }
+    }
+    if (clare_net_wifi_has_credentials()) {
+        clare_ui_set_wifi("Wi-Fi: starting");
+        if (clare_net_init(&net_config) == ESP_OK) {
+            ret = clare_net_wifi_start();
+            if (ret != ESP_OK) clare_ui_set_wifi("Wi-Fi: configure locally");
+        } else clare_ui_set_wifi("Wi-Fi: unavailable");
+    } else {
+        clare_ui_set_wifi("Wi-Fi: opening setup hotspot");
+        enqueue_action(Action::StartProvisioning);
+    }
 #if CONFIG_CLARE_BOOT_SELF_TEST
     enqueue_action(Action::BootNetworkSelfTest);
 #endif

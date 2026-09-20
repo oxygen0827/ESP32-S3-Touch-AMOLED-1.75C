@@ -10,6 +10,7 @@ typedef enum {
     CLARE_UI_HOME = 0,
     CLARE_UI_CLARE,
     CLARE_UI_DEMO,
+    CLARE_UI_WIFI_SETUP,
 } clare_ui_page_t;
 
 typedef struct {
@@ -19,6 +20,8 @@ typedef struct {
     void (*stop_meeting)(void *ctx);
     void (*toggle_host)(void *ctx);
     void (*refresh_summary)(void *ctx);
+    void (*open_wifi_setup)(void *ctx);
+    void (*close_wifi_setup)(void *ctx);
     void *ctx;
 } clare_ui_callbacks_t;
 
@@ -35,6 +38,8 @@ void clare_ui_append_answer_delta(const char *text, bool is_final);
 void clare_ui_set_wifi(const char *text);
 void clare_ui_set_meeting_active(bool active);
 void clare_ui_set_host_active(bool active);
+void clare_ui_set_prov_ssid(const char *text);
+void clare_ui_set_prov_status(const char *text);
 
 #ifdef __cplusplus
 }
