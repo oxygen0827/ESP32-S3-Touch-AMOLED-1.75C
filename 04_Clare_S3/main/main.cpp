@@ -929,6 +929,13 @@ extern "C" void app_main(void)
     clare_net_config_t net_config = {.event_cb = net_event, .ctx = nullptr};
     // Provisioning reports through the same event callback as the transport.
     (void)clare_prov_init(&net_config);
+    // Register the transport event callback UNCONDITIONALLY, before any Wi-Fi
+    // path runs.  clare_net_init() is idempotent, but a nullptr config leaves
+    // s_event_cb unset — which silently drops every transport event
+    // (transcripts above all) whenever the provisioning flow owned the boot
+    // (no-credentials auto-hotspot path).  That was the "meeting starts but
+    // nothing is transcribed" regression after provisioning.
+    ret = clare_net_init(&net_config);
     // Credentials provisioned earlier override the Kconfig defaults; with no
     // credentials anywhere, open the setup hotspot right away so the phone
     // can configure the device without touching a keyboard.
@@ -944,7 +951,7 @@ extern "C" void app_main(void)
     }
     if (clare_net_wifi_has_credentials()) {
         clare_ui_set_wifi("Wi-Fi: starting");
-        if (clare_net_init(&net_config) == ESP_OK) {
+        if (ret == ESP_OK) {
             ret = clare_net_wifi_start();
             if (ret != ESP_OK) clare_ui_set_wifi("Wi-Fi: configure locally");
         } else clare_ui_set_wifi("Wi-Fi: unavailable");

@@ -740,6 +740,17 @@ static esp_err_t tts_decoder_reopen()
     return (err == ESP_AUDIO_ERR_OK) ? ESP_OK : ESP_FAIL;
 }
 
+// --- Shared TX-feed state (keep-alive task below) ---
+// s_pcm_streaming is true while tts_play_task owns the codec feed (real PCM
+// or underrun silence).  The keep-alive must park on THIS flag, not on
+// mp3_active: mp3_active turns true at mp3_start, a whole prebuffer period
+// BEFORE the first codec write, so parking on it left the TX idle exactly
+// when the stream started — the idle->active transition then ate the first
+// ~0.7 s of every answer's opening sentence (pit 19, still audible).
+constexpr size_t kKeepAliveFrames = 320;  // 20 ms at 16 kHz
+static const int16_t kKeepAliveSilence[kKeepAliveFrames] = {};
+static volatile bool s_pcm_streaming = false;
+
 static void tts_play_task(void *)
 {
     // Prebuffer: wait for enough compressed audio (or stream end) so the
@@ -766,6 +777,10 @@ static void tts_play_task(void *)
     uint32_t stat_ring_bytes = 0;
     uint32_t stat_pcm_bytes = 0;
     uint32_t stat_t0 = 0;
+    // From here until exit this task feeds the codec on every iteration
+    // (real PCM, or silence while the ring is dry), so the keep-alive can
+    // safely park and the TX path never returns to idle mid-handover.
+    s_pcm_streaming = true;
     while (stream_open) {
         lock(s_tts.lock);
         const bool eos = s_tts.eos;
@@ -794,7 +809,11 @@ static void tts_play_task(void *)
                 }
                 break;
             }
-            vTaskDelay(pdMS_TO_TICKS(10));
+            // Ring underrun mid-stream: feed silence so the TX path never
+            // falls back into idle (the idle->active transition eats the
+            // start of the next real audio — vocat's player does the same;
+            // the write paces itself in real time via esp_codec_dev_write).
+            (void)clare_audio_write_pcm16(kKeepAliveSilence, kKeepAliveFrames);
             continue;
         }
         esp_audio_simple_dec_raw_t raw = {};
@@ -867,6 +886,7 @@ static void tts_play_task(void *)
         esp_audio_simple_dec_close(s_audio.mp3_decoder);
         s_audio.mp3_decoder = nullptr;
     }
+    s_pcm_streaming = false;  // hand the codec feed back to the keep-alive
     s_audio.mp3_active = false;
     ESP_LOGI(TAG, "tts playback task done: ring=%u B pcm=%u B",
              static_cast<unsigned>(stat_ring_bytes), static_cast<unsigned>(stat_pcm_bytes));
@@ -895,16 +915,11 @@ static esp_err_t tts_stream_init()
 // ring/pcm byte-exact, zero write errors, "first audio out" at 1024 B consumed
 // for every stream).  What is eaten is the idle->active transition of the TX
 // path itself (the I2S driver falls back to auto_clear zero-output during
-// idle; re-priming swallows the first real samples).  The proven vocat
-// reference avoids this entirely: its mp3_play_task (pipeline_ws.c) NEVER
-// lets the TX go idle — it writes zeros whenever there is no real PCM, plus
-// a 100 ms pre-roll after an underrun.  Mirror that: while no TTS stream is
-// active, feed 20 ms silence chunks so the channel never drops back into the
-// idle state.  The keeper serializes through playback_lock like normal PCM
-// and stays parked while a stream is active (mp3_active), so it can never
-// interleave zeros into speech.
-constexpr size_t kKeepAliveFrames = 320;  // 20 ms at 16 kHz
-static const int16_t kKeepAliveSilence[kKeepAliveFrames] = {};
+// idle; re-priming swallows the first real samples).  vocat's mp3_play_task
+// NEVER lets the TX go idle: it writes zeros whenever there is no real PCM.
+// Mirror: while tts_play_task does not own the feed (s_pcm_streaming), feed
+// 20 ms silence chunks so the channel never drops back into idle.  Parking
+// must be on s_pcm_streaming, NOT mp3_active — see the flag's comment above.
 static volatile bool s_keepalive_run = false;
 static TaskHandle_t s_keepalive_task = nullptr;
 
@@ -912,7 +927,7 @@ static void tts_keepalive_task(void *)
 {
     while (s_keepalive_run) {
         if (!clare_audio_is_ready()) break;
-        if (s_audio.mp3_active) {
+        if (s_pcm_streaming) {
             vTaskDelay(pdMS_TO_TICKS(50));
             continue;
         }

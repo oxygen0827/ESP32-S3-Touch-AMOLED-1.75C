@@ -1,0 +1,610 @@
+ESP-ROM:esp32s3-20210327
+Build:Mar 27 2021
+rst:0x15 (USB_UART_CHIP_RESET),boot:0x2b (SPI_FAST_FLASH_BOOT)
+Saved PC:0x40396b66
+SPIWP:0xee
+mode:DIO, clock div:1
+load:0x3fce2820,len:0x16a4
+load:0x403c8700,len:0xe80
+load:0x403cb700,len:0x3188
+entry 0x403c8948
+I (24) boot: ESP-IDF v5.5.3 2nd stage bootloader
+I (24) boot: compile time Sep  6 2026 19:28:57
+I (25) boot: Multicore bootloader
+I (25) boot: chip revision: v0.2
+I (25) boot: efuse block revision: v1.4
+I (25) qio_mode: Enabling default flash chip QIO
+I (25) boot.esp32s3: Boot SPI Speed : 80MHz
+I (26) boot.esp32s3: SPI Mode       : QIO
+I (26) boot.esp32s3: SPI Flash Size : 16MB
+I (26) boot: Enabling RNG early entropy source...
+I (26) boot: Partition Table:
+I (26) boot: ## Label            Usage          Type ST Offset   Length
+I (27) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (27) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (28) boot:  2 factory          factory app      00 00 00010000 00600000
+I (28) boot:  3 storage          Unknown data     01 82 00610000 00300000
+I (28) boot: End of partition table
+I (29) esp_image: segment 0: paddr=00010020 vaddr=3c110020 size=1389c0h (1280448) map
+I (219) esp_image: segment 1: paddr=001489e8 vaddr=3fcb4700 size=057fch ( 22524) load
+I (223) esp_image: segment 2: paddr=0014e1ec vaddr=40374000 size=01e2ch (  7724) load
+I (225) esp_image: segment 3: paddr=00150020 vaddr=42000020 size=10849ch (1082524) map
+I (386) esp_image: segment 4: paddr=002584c4 vaddr=40375e2c size=2e7dch (190428) load
+I (422) esp_image: segment 5: paddr=00286ca8 vaddr=50000000 size=00020h (    32) load
+I (441) boot: Loaded app from partition at offset 0x10000
+I (441) boot: Disabling RNG early entropy source...
+I (442) octal_psram: vendor id    : 0x0d (AP)
+I (442) octal_psram: dev id       : 0x02 (generation 3)
+I (442) octal_psram: density      : 0x03 (64 Mbit)
+I (442) octal_psram: good-die     : 0x01 (Pass)
+I (442) octal_psram: Latency      : 0x01 (Fixed)
+I (443) octal_psram: VCC          : 0x01 (3V)
+I (443) octal_psram: SRF          : 0x01 (Fast Refresh)
+I (443) octal_psram: BurstType    : 0x01 (Hybrid Wrap)
+I (443) octal_psram: BurstLen     : 0x01 (32 Byte)
+I (443) octal_psram: Readlatency  : 0x02 (10 cycles@Fixed)
+I (444) octal_psram: DriveStrength: 0x00 (1/1)
+I (444) MSPI Timing: Enter psram timing tuning
+I (445) esp_psram: Found 8MB PSRAM device
+I (445) esp_psram: Speed: 80MHz
+I (518) mmu_psram: Read only data copied and mapped to SPIRAM
+I (590) mmu_psram: Instructions copied and mapped to SPIRAM
+I (590) cpu_start: Multicore app
+I (793) esp_psram: SPI SRAM memory test OK
+I (802) cpu_start: Pro cpu start user code
+I (802) cpu_start: cpu freq: 240000000 Hz
+I (802) app_init: Application information:
+I (802) app_init: Project name:     Clare_S3
+I (802) app_init: App version:      7415ccb
+I (802) app_init: Compile time:     Sep 20 2026 16:29:55
+I (803) app_init: ELF file SHA256:  67b2ceb772001fa3...
+I (803) app_init: ESP-IDF:          v5.5.3
+I (803) efuse_init: Min chip rev:     v0.0
+I (803) efuse_init: Max chip rev:     v0.99 
+I (803) efuse_init: Chip rev:         v0.2
+I (803) heap_init: Initializing. RAM available for dynamic allocation:
+I (804) heap_init: At 3FCBD700 len 0002C010 (176 KiB): RAM
+I (804) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM
+I (804) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM
+I (804) heap_init: At 600FE000 len 00001FE8 (7 KiB): RTCRAM
+I (804) esp_psram: Adding pool of 5797K of PSRAM memory to heap allocator
+I (804) esp_psram: Adding pool of 29K of PSRAM memory gap generated due to end address alignment of drom to the heap allocator
+I (805) spi_flash: detected chip: generic
+I (805) spi_flash: flash io: qio
+I (806) sleep_gpio: Configure to isolate all GPIO pins in sleep state
+I (806) sleep_gpio: Enable automatic switching of GPIO sleep configuration
+I (807) main_task: Started on CPU0
+I (808) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations
+I (808) main_task: Calling app_main()
+I (808) clare_s3: Clare S3 starting
+I (822) axp2101: Init PMU SUCCESS!
+I (829) DisplayPort: SPI BUS init
+I (829) DisplayPort: Install panel IO
+I (829) co5300: version: 2.1.0
+I (829) co5300_spi: LCD panel create success, version: 2.1.0
+W (1590) co5300_spi: The 3Ah command has been used and will be overwritten by external initialization sequence
+W (1590) co5300_spi: The 36h command has been used and will be overwritten by external initialization sequence
+I (2265) CST9217: Checkcode: 0x204ECACA
+I (2267) CST9217: Resolution X: 480, Y: 480
+I (2269) CST9217: Chip Type: 0x9220, ProjectID: 0x542F
+I (2269) esp_lvgl:adapter: LVGL adapter initialized successfully
+I (2272) esp_lvgl:touch: Touch input device registered successfully (IRQ mode: enabled)
+I (2303) esp_lvgl:adapter: LVGL task started successfully
+i2c: {sda: 15, scl: 14}
+i2s: {mclk: 42, bclk: 9, ws: 45, din: 10, dout: 8}
+out: {codec: ES8311, pa: 46, pa_gain: 6, use_mclk: 1}
+Codec 0 dir 2 type:1
+in: {codec: ES7210}
+Codec 1 dir 1 type:2
+I (2305) CODEC_INIT: in:1 out:1 port: 1
+I (2305) CODEC_INIT: Success to int i2c: 0
+I (2305) CODEC_INIT: Init i2s 0 type: 3 mclk:42 bclk:9 ws:45 din:10 dout:8
+I (2305) CODEC_INIT: tx:0x3c24c2f4 rx:0x3c24c4b0
+W (2306) i2s_tdm: the current mclk multiple is too small, adjust the mclk multiple to 384
+I (2306) CODEC_INIT: output init tdm ret 0
+W (2306) i2s_tdm: the current mclk multiple is too small, adjust the mclk multiple to 384
+I (2307) CODEC_INIT: Input init tdm ret 0
+I (2307) CODEC_INIT: Init i2s 0 ok
+I (2307) CODEC_INIT: Success to init i2s: 0
+I (2307) CODEC_INIT: Success to int i2c: 0
+I (2307) CODEC_INIT: Success to init i2s: 0
+I (2307) CODEC_INIT: Get out handle 0x3c24c2f4 port 0
+I (2313) ES8311: Work in Slave mode
+I (2319) ES7210: Work in Slave mode
+I (2325) ES7210: Enable ES7210_INPUT_MIC1
+I (2328) ES7210: Enable ES7210_INPUT_MIC2
+I (2331) ES7210: Enable ES7210_INPUT_MIC3
+I (2334) ES7210: Enable ES7210_INPUT_MIC4
+I (2337) ES7210: Enable TDM mode
+I (2344) I2S_IF: channel mode 2 bits:16/16 channel:2 mask:3
+I (2344) I2S_IF: TDM Mode 1 bits:16/16 channel:2 sample_rate:16000 mask:3
+I (2359) Adev_Codec: Open codec device OK
+I (2360) I2S_IF: channel mode 2 bits:16/16 channel:2 mask:3
+I (2360) I2S_IF: TDM Mode 0 bits:16/16 channel:2 sample_rate:16000 mask:3
+I (2361) ES7210: Bits 8
+I (2368) ES7210: Enable ES7210_INPUT_MIC1
+I (2371) ES7210: Enable ES7210_INPUT_MIC2
+I (2374) ES7210: Enable ES7210_INPUT_MIC3
+I (2377) ES7210: Enable ES7210_INPUT_MIC4
+I (2380) ES7210: Enable TDM mode
+I (2386) ES7210: Unmuted
+I (2386) Adev_Codec: Open codec device OK
+I (2386) Adev_Codec: Input already open
+I (2386) Adev_Codec: Input already open
+I (2390) Adev_Codec: Input already open
+I (2390) Adev_Codec: Input already open
+I (2391) clare_audio: ready: 16000 Hz, 16-bit, 2 codec channels, mono network PCM
+I (2396) clare_audio: ALC ready: 16000 Hz mono PCM16, gain 6 dB
+I (2518) pp: pp rom version: e7ae62f
+I (2518) net80211: net80211 rom version: e7ae62f
+I (2519) wifi:wifi driver task: 3fcdebe0, prio:23, stack:6656, core=0
+I (2524) wifi:wifi firmware version: 4df78f2
+I (2524) wifi:wifi certification version: v7.0
+I (2524) wifi:config NVS flash: enabled
+I (2525) wifi:config nano formatting: disabled
+I (2525) wifi:Init data frame dynamic rx buffer num: 32
+I (2525) wifi:Init dynamic rx mgmt buffer num: 5
+I (2525) wifi:Init management short buffer num: 32
+I (2526) wifi:Init static tx buffer num: 16
+I (2526) wifi:Init tx cache buffer num: 32
+I (2526) wifi:Init static tx FG buffer num: 2
+I (2526) wifi:Init static rx buffer size: 1600
+I (2527) wifi:Init static rx buffer num: 16
+I (2527) wifi:Init dynamic rx buffer num: 32
+I (2527) wifi_init: rx ba win: 6
+I (2528) wifi_init: accept mbox: 6
+I (2528) wifi_init: tcpip mbox: 32
+I (2528) wifi_init: udp mbox: 6
+I (2528) wifi_init: tcp mbox: 10
+I (2528) wifi_init: tcp tx win: 65535
+I (2528) wifi_init: tcp rx win: 5760
+I (2528) wifi_init: tcp mss: 1440
+I (2528) wifi_init: WiFi/LWIP prefer SPIRAM
+W (2529) wifi:Password length matches WPA2 standards, authmode threshold changes from OPEN to WPA2
+I (2529) phy_init: phy_version 711,97bcf0a2,Aug 25 2025,19:04:10
+I (2564) wifi:mode : sta (28:84:85:90:68:e8)
+I (2564) wifi:enable tsf
+I (2565) clare_net: Wi-Fi protocols limited to 11b/g/n mask=0x07
+I (2566) wifi:Set ps type: 0, coexist: 0
+
+I (2566) clare_s3: Clare UI ready; touch the Clare tile
+I (2567) ESP_ES_PARSER: The version of es_parser is v1.0.1
+I (2568) clare_s3: Boot chime playback err=0
+I (2568) main_task: Returned from app_main()
+I (2587) clare_audio: tts playback task started
+I (2600) clare_audio: tts first audio out (ring consumed 1024 bytes so far)
+I (5915) clare_audio: tts playback task done: ring=26733 B pcm=160128 B
+I (10566) clare_s3: Boot network self-test begin
+I (10575) wifi:new:<6,1>, old:<1,0>, ap:<255,255>, sta:<6,1>, prof:1, snd_ch_cfg:0x0
+I (10575) wifi:state: init -> auth (0xb0)
+I (10596) wifi:state: auth -> assoc (0x0)
+I (10606) wifi:state: assoc -> run (0x10)
+I (10641) wifi:connected with LDKJ, aid = 3, channel 6, 40U, bssid = 50:fe:39:e6:47:92
+I (10641) wifi:security: WPA2-PSK, phy: bgn, rssi: -35
+I (10642) wifi:pm start, type: 0
+
+I (10642) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us
+I (10643) wifi:set rx beacon pti, rx_bcn_pti: 0, bcn_timeout: 25000, mt_pti: 0, mt_time: 10000
+I (10658) wifi:<ba-add>idx:0 (ifx:0, 50:fe:39:e6:47:92), tid:0, ssn:0, winSize:64
+I (10676) wifi:AP's beacon interval = 102400 us, DTIM period = 1
+I (11695) esp_netif_handlers: sta ip: 192.168.31.8, mask: 255.255.255.0, gw: 192.168.31.1
+I (11695) clare_net: DHCP DNS main=192.168.31.1
+I (11695) clare_net: Create session URL ready=1
+I (11695) clare_net: HTTP before init free8=4862035 largest8=4718592 free_internal=67019 largest_internal=31744
+I (11707) wifi:<ba-add>idx:1 (ifx:0, 50:fe:39:e6:47:92), tid:6, ssn:2, winSize:64
+I (12324) clare_net: HTTP response status=200 bytes=105 truncated=0
+I (12326) clare_s3: Boot network self-test session err=0 (attempt 1/4)
+I (12327) websocket_client: Started
+I (12785) clare_net: WebSocket connected kind=0
+I (12785) clare_s3: Boot network self-test transcribe err=0
+I (13888) websocket_client: Started
+I (14324) clare_net: WebSocket connected kind=1
+I (14325) clare_s3: Ask Clare a question
+I (14325) clare_s3: Boot network self-test host err=0
+I (15427) clare_net: HTTP before init free8=4860803 largest8=4718592 free_internal=66559 largest_internal=31744
+I (15870) clare_net: HTTP response status=200 bytes=255 truncated=1
+I (15872) clare_s3: Boot network self-test complete
+I (70100) clare_s3: Creating meeting session...
+I (70100) clare_net: Create session URL ready=1
+I (70100) clare_net: HTTP before init free8=4859983 largest8=4718592 free_internal=66559 largest_internal=31744
+I (70611) clare_net: HTTP response status=200 bytes=105 truncated=0
+I (70615) clare_s3: Connecting transcription...
+I (70616) websocket_client: Started
+I (71063) clare_net: WebSocket connected kind=0
+I (71063) clare_s3: Listening - live transcription
+I (71063) clare_s3: Listening - live transcription
+I (71066) clare_s3: Audio stream started
+I (76644) clare_net: recv kind=0 type=transcript len=82
+I (76644) clare_net: transcript partial peek=吃饭
+I (76666) clare_net: recv kind=0 type=transcript len=82
+I (76666) clare_net: transcript partial peek=吃饭
+I (76697) clare_net: recv kind=0 type=transcript len=82
+I (76698) clare_net: transcript partial peek=吃饭
+I (76911) clare_net: recv kind=0 type=transcript len=85
+I (76912) clare_net: transcript partial peek=吃饭了
+I (76949) clare_net: recv kind=0 type=transcript len=85
+I (76949) clare_net: transcript partial peek=吃饭了
+I (77000) clare_net: recv kind=0 type=transcript len=85
+I (77001) clare_net: transcript partial peek=吃饭了
+I (77201) clare_net: recv kind=0 type=transcript len=94
+I (77201) clare_net: transcript partial peek=吃饭了，然后
+I (77234) clare_net: recv kind=0 type=transcript len=94
+I (77234) clare_net: transcript partial peek=吃饭了，然后
+I (77312) clare_net: recv kind=0 type=transcript len=94
+I (77312) clare_net: transcript partial peek=吃饭了，然后
+I (77395) clare_net: recv kind=0 type=transcript len=94
+I (77395) clare_net: transcript partial peek=吃饭了，然后
+I (77627) clare_net: recv kind=0 type=transcript len=103
+I (77628) clare_net: transcript partial peek=吃饭了，然后像晚上
+I (77659) clare_net: recv kind=0 type=transcript len=103
+I (77659) clare_net: transcript partial peek=吃饭了，然后像晚上
+I (77697) clare_net: recv kind=0 type=transcript len=103
+I (77697) clare_net: transcript partial peek=吃饭了，然后像晚上
+I (77938) clare_net: recv kind=0 type=transcript len=112
+I (77938) clare_net: transcript partial peek=吃饭了，然后像晚上要上课
+I (77968) clare_net: recv kind=0 type=transcript len=112
+I (77968) clare_net: transcript partial peek=吃饭了，然后像晚上要上课
+I (77999) clare_net: recv kind=0 type=transcript len=112
+I (78000) clare_net: transcript partial peek=吃饭了，然后像晚上要上课
+I (78173) clare_net: recv kind=0 type=transcript len=112
+I (78173) clare_net: transcript partial peek=吃饭了，然后像晚上要上课
+I (78204) clare_net: recv kind=0 type=transcript len=112
+I (78204) clare_net: transcript partial peek=吃饭了，然后像晚上要上课
+I (78298) clare_net: recv kind=0 type=transcript len=112
+I (78299) clare_net: transcript partial peek=吃饭了，然后像晚上要上课
+I (78486) clare_net: recv kind=0 type=transcript len=114
+I (78486) clare_net: transcript final peek=吃饭了，然后像晚上要上课。
+I (81482) clare_net: recv kind=0 type=transcript len=82
+I (81482) clare_net: transcript partial peek=然后
+I (81512) clare_net: recv kind=0 type=transcript len=82
+I (81512) clare_net: transcript partial peek=然后
+I (81587) clare_net: recv kind=0 type=transcript len=82
+I (81587) clare_net: transcript partial peek=然后
+I (81737) clare_net: recv kind=0 type=transcript len=82
+I (81737) clare_net: transcript partial peek=然后
+I (81767) clare_net: recv kind=0 type=transcript len=82
+I (81767) clare_net: transcript partial peek=然后
+I (81800) clare_net: recv kind=0 type=transcript len=82
+I (81800) clare_net: transcript partial peek=然后
+I (81945) clare_net: recv kind=0 type=transcript len=82
+I (81945) clare_net: transcript partial peek=然后
+I (82024) clare_net: recv kind=0 type=transcript len=82
+I (82024) clare_net: transcript partial peek=然后
+I (82104) clare_net: recv kind=0 type=transcript len=82
+I (82104) clare_net: transcript partial peek=然后
+I (82337) clare_net: recv kind=0 type=transcript len=82
+I (82338) clare_net: transcript partial peek=然后
+I (82373) clare_net: recv kind=0 type=transcript len=82
+I (82373) clare_net: transcript partial peek=然后
+I (82431) clare_net: recv kind=0 type=transcript len=84
+I (82431) clare_net: transcript final peek=然后。
+I (84008) clare_net: recv kind=0 type=transcript len=82
+I (84009) clare_net: transcript partial peek=上完
+I (84038) clare_net: recv kind=0 type=transcript len=82
+I (84038) clare_net: transcript partial peek=上完
+I (84109) clare_net: recv kind=0 type=transcript len=82
+I (84110) clare_net: transcript partial peek=上完
+I (84349) clare_net: recv kind=0 type=transcript len=91
+I (84349) clare_net: transcript partial peek=上完课的话
+I (84382) clare_net: recv kind=0 type=transcript len=91
+I (84383) clare_net: transcript partial peek=上完课的话
+I (84414) clare_net: recv kind=0 type=transcript len=91
+I (84414) clare_net: transcript partial peek=上完课的话
+I (84588) clare_net: recv kind=0 type=transcript len=97
+I (84588) clare_net: transcript partial peek=上完课的话回去
+I (84619) clare_net: recv kind=0 type=transcript len=97
+I (84619) clare_net: transcript partial peek=上完课的话回去
+I (84698) clare_net: recv kind=0 type=transcript len=97
+I (84698) clare_net: transcript partial peek=上完课的话回去
+I (84886) clare_net: recv kind=0 type=transcript len=97
+I (84886) clare_net: transcript partial peek=上完课的话回去
+I (84915) clare_net: recv kind=0 type=transcript len=97
+I (84915) clare_net: transcript partial peek=上完课的话回去
+I (85002) clare_net: recv kind=0 type=transcript len=97
+I (85002) clare_net: transcript partial peek=上完课的话回去
+I (85266) clare_net: recv kind=0 type=transcript len=100
+I (85266) clare_net: transcript partial peek=上完课的话回去把
+I (85298) clare_net: recv kind=0 type=transcript len=100
+I (85298) clare_net: transcript partial peek=上完课的话回去把
+I (85337) clare_net: recv kind=0 type=transcript len=100
+I (85337) clare_net: transcript partial peek=上完课的话回去把
+I (85402) clare_net: recv kind=0 type=transcript len=100
+I (85403) clare_net: transcript partial peek=上完课的话回去把
+I (85592) clare_net: recv kind=0 type=transcript len=100
+I (85592) clare_net: transcript partial peek=上完课的话回去把
+I (85620) clare_net: recv kind=0 type=transcript len=100
+I (85620) clare_net: transcript partial peek=上完课的话回去把
+I (85702) clare_net: recv kind=0 type=transcript len=100
+I (85702) clare_net: transcript partial peek=上完课的话回去把
+I (85852) clare_net: recv kind=0 type=transcript len=100
+I (85853) clare_net: transcript partial peek=上完课的话回去把
+I (85898) clare_net: recv kind=0 type=transcript len=100
+I (85898) clare_net: transcript partial peek=上完课的话回去把
+I (86006) clare_net: recv kind=0 type=transcript len=100
+I (86006) clare_net: transcript partial peek=上完课的话回去把
+I (86236) clare_net: recv kind=0 type=transcript len=106
+I (86236) clare_net: transcript partial peek=上完课的话回去把新的
+I (86265) clare_net: recv kind=0 type=transcript len=106
+I (86266) clare_net: transcript partial peek=上完课的话回去把新的
+I (86300) clare_net: recv kind=0 type=transcript len=106
+I (86300) clare_net: transcript partial peek=上完课的话回去把新的
+I (86502) clare_net: recv kind=0 type=transcript len=106
+I (86502) clare_net: transcript partial peek=上完课的话回去把新的
+I (86532) clare_net: recv kind=0 type=transcript len=106
+I (86532) clare_net: transcript partial peek=上完课的话回去把新的
+I (86602) clare_net: recv kind=0 type=transcript len=106
+I (86603) clare_net: transcript partial peek=上完课的话回去把新的
+I (86710) clare_net: recv kind=0 type=transcript len=108
+I (86710) clare_net: transcript final peek=上完课的话回去把新的。
+I (87694) clare_net: recv kind=0 type=transcript len=82
+I (87694) clare_net: transcript partial peek=快递
+I (87725) clare_net: recv kind=0 type=transcript len=82
+I (87725) clare_net: transcript partial peek=快递
+I (87804) clare_net: recv kind=0 type=transcript len=82
+I (87804) clare_net: transcript partial peek=快递
+I (88034) clare_net: recv kind=0 type=transcript len=88
+I (88034) clare_net: transcript partial peek=快递拿一
+I (88066) clare_net: recv kind=0 type=transcript len=88
+I (88067) clare_net: transcript partial peek=快递拿一
+I (88096) clare_net: recv kind=0 type=transcript len=88
+I (88097) clare_net: transcript partial peek=快递拿一
+I (88329) clare_net: recv kind=0 type=transcript len=97
+I (88329) clare_net: transcript partial peek=快递拿一拿衣服
+I (88358) clare_net: recv kind=0 type=transcript len=97
+I (88358) clare_net: transcript partial peek=快递拿一拿衣服
+I (88408) clare_net: recv kind=0 type=transcript len=97
+I (88409) clare_net: transcript partial peek=快递拿一拿衣服
+I (88530) clare_net: recv kind=0 type=transcript len=97
+I (88530) clare_net: transcript partial peek=快递拿一拿衣服
+I (88682) clare_net: recv kind=0 type=transcript len=106
+I (88683) clare_net: transcript partial peek=快递拿一拿，衣服洗一
+I (88717) clare_net: recv kind=0 type=transcript len=106
+I (88718) clare_net: transcript partial peek=快递拿一拿，衣服洗一
+I (88800) clare_net: recv kind=0 type=transcript len=106
+I (88801) clare_net: transcript partial peek=快递拿一拿，衣服洗一
+I (89003) clare_net: recv kind=0 type=transcript len=109
+I (89003) clare_net: transcript partial peek=快递拿一拿，衣服洗一洗
+I (89035) clare_net: recv kind=0 type=transcript len=109
+I (89035) clare_net: transcript partial peek=快递拿一拿，衣服洗一洗
+I (89119) clare_net: recv kind=0 type=transcript len=109
+I (89120) clare_net: transcript partial peek=快递拿一拿，衣服洗一洗
+I (89319) clare_net: recv kind=0 type=transcript len=124
+I (89319) clare_net: transcript partial peek=快递拿一拿，衣服洗一洗，明天准备
+I (89359) clare_net: recv kind=0 type=transcript len=124
+I (89359) clare_net: transcript partial peek=快递拿一拿，衣服洗一洗，明天准备
+I (89388) clare_net: recv kind=0 type=transcript len=124
+I (89388) clare_net: transcript partial peek=快递拿一拿，衣服洗一洗，明天准备
+I (89614) clare_net: recv kind=0 type=transcript len=124
+I (89615) clare_net: transcript partial peek=快递拿一拿，衣服洗一洗，明天准备
+I (89646) clare_net: recv kind=0 type=transcript len=124
+I (89646) clare_net: transcript partial peek=快递拿一拿，衣服洗一洗，明天准备
+I (89689) clare_net: recv kind=0 type=transcript len=124
+I (89689) clare_net: transcript partial peek=快递拿一拿，衣服洗一洗，明天准备
+I (89884) clare_net: recv kind=0 type=transcript len=124
+I (89884) clare_net: transcript partial peek=快递拿一拿，衣服洗一洗，明天准备
+I (89919) clare_net: recv kind=0 type=transcript len=124
+I (89920) clare_net: transcript partial peek=快递拿一拿，衣服洗一洗，明天准备
+I (89991) clare_net: recv kind=0 type=transcript len=124
+I (89991) clare_net: transcript partial peek=快递拿一拿，衣服洗一洗，明天准备
+I (90101) clare_net: recv kind=0 type=transcript len=124
+I (90101) clare_net: transcript partial peek=快递拿一拿，衣服洗一洗，明天准备
+I (90311) clare_net: recv kind=0 type=transcript len=127
+I (90311) clare_net: transcript partial peek=快递拿一拿，衣服洗一洗，明天准备去
+I (90354) clare_net: recv kind=0 type=transcript len=127
+I (90354) clare_net: transcript partial peek=快递拿一拿，衣服洗一洗，明天准备去
+I (90437) clare_net: recv kind=0 type=transcript len=127
+I (90437) clare_net: transcript partial peek=快递拿一拿，衣服洗一洗，明天准备去
+I (90611) clare_net: recv kind=0 type=transcript len=127
+I (90611) clare_net: transcript partial peek=快递拿一拿，衣服洗一洗，明天准备去
+I (90646) clare_net: recv kind=0 type=transcript len=127
+I (90646) clare_net: transcript partial peek=快递拿一拿，衣服洗一洗，明天准备去
+I (90728) clare_net: recv kind=0 type=transcript len=127
+I (90728) clare_net: transcript partial peek=快递拿一拿，衣服洗一洗，明天准备去
+I (90870) clare_net: recv kind=0 type=transcript len=127
+I (90871) clare_net: transcript partial peek=快递拿一拿，衣服洗一洗，明天准备去
+I (90904) clare_net: recv kind=0 type=transcript len=127
+I (90904) clare_net: transcript partial peek=快递拿一拿，衣服洗一洗，明天准备去
+I (91002) clare_net: recv kind=0 type=transcript len=127
+I (91002) clare_net: transcript partial peek=快递拿一拿，衣服洗一洗，明天准备去
+I (91251) clare_net: recv kind=0 type=transcript len=136
+I (91251) clare_net: transcript partial peek=快递拿一拿，衣服洗一洗，明天准备去，然后
+I (91285) clare_net: recv kind=0 type=transcript len=136
+I (91285) clare_net: transcript partial peek=快递拿一拿，衣服洗一洗，明天准备去，然后
+I (91317) clare_net: recv kind=0 type=transcript len=136
+I (91317) clare_net: transcript partial peek=快递拿一拿，衣服洗一洗，明天准备去，然后
+I (91524) clare_net: recv kind=0 type=transcript len=136
+I (91524) clare_net: transcript partial peek=快递拿一拿，衣服洗一洗，明天准备去，然后
+I (91553) clare_net: recv kind=0 type=transcript len=136
+I (91553) clare_net: transcript partial peek=快递拿一拿，衣服洗一洗，明天准备去，然后
+I (91605) clare_net: recv kind=0 type=transcript len=136
+I (91605) clare_net: transcript partial peek=快递拿一拿，衣服洗一洗，明天准备去，然后
+I (91741) clare_net: recv kind=0 type=transcript len=136
+I (91742) clare_net: transcript partial peek=快递拿一拿，衣服洗一洗，明天准备去，然后
+I (91920) clare_net: recv kind=0 type=transcript len=145
+I (91921) clare_net: transcript partial peek=快递拿一拿，衣服洗一洗，明天准备去，然后
+I (91951) clare_net: recv kind=0 type=transcript len=145
+I (91952) clare_net: transcript partial peek=快递拿一拿，衣服洗一洗，明天准备去，然后
+I (92005) clare_net: recv kind=0 type=transcript len=145
+I (92005) clare_net: transcript partial peek=快递拿一拿，衣服洗一洗，明天准备去，然后
+I (92215) clare_net: recv kind=0 type=transcript len=151
+I (92216) clare_net: transcript partial peek=快递拿一拿，衣服洗一洗，明天准备去，然后
+I (92260) clare_net: recv kind=0 type=transcript len=151
+I (92260) clare_net: transcript partial peek=快递拿一拿，衣服洗一洗，明天准备去，然后
+I (92341) clare_net: recv kind=0 type=transcript len=151
+I (92342) clare_net: transcript partial peek=快递拿一拿，衣服洗一洗，明天准备去，然后
+I (92515) clare_net: recv kind=0 type=transcript len=151
+I (92515) clare_net: transcript partial peek=快递拿一拿，衣服洗一洗，明天准备去，然后
+I (92559) clare_net: recv kind=0 type=transcript len=151
+I (92560) clare_net: transcript partial peek=快递拿一拿，衣服洗一洗，明天准备去，然后
+I (92606) clare_net: recv kind=0 type=transcript len=151
+I (92606) clare_net: transcript partial peek=快递拿一拿，衣服洗一洗，明天准备去，然后
+I (92812) clare_net: recv kind=0 type=transcript len=166
+I (92812) clare_net: transcript partial peek=快递拿一拿，衣服洗一洗，明天准备去，然后
+I (92842) clare_net: recv kind=0 type=transcript len=166
+I (92842) clare_net: transcript partial peek=快递拿一拿，衣服洗一洗，明天准备去，然后
+I (92915) clare_net: recv kind=0 type=transcript len=166
+I (92915) clare_net: transcript partial peek=快递拿一拿，衣服洗一洗，明天准备去，然后
+I (93082) clare_net: recv kind=0 type=transcript len=169
+I (93082) clare_net: transcript partial peek=快递拿一拿，衣服洗一洗，明天准备去，然后
+I (93113) clare_net: recv kind=0 type=transcript len=169
+I (93114) clare_net: transcript partial peek=快递拿一拿，衣服洗一洗，明天准备去，然后
+I (93206) clare_net: recv kind=0 type=transcript len=169
+I (93206) clare_net: transcript partial peek=快递拿一拿，衣服洗一洗，明天准备去，然后
+I (93338) clare_net: recv kind=0 type=transcript len=169
+I (93338) clare_net: transcript partial peek=快递拿一拿，衣服洗一洗，明天准备去，然后
+I (93542) clare_net: recv kind=0 type=transcript len=172
+I (93542) clare_net: transcript partial peek=快递拿一拿，衣服洗一洗，明天准备去，然后
+I (93574) clare_net: recv kind=0 type=transcript len=172
+I (93574) clare_net: transcript partial peek=快递拿一拿，衣服洗一洗，明天准备去，然后
+I (93608) clare_net: recv kind=0 type=transcript len=172
+I (93608) clare_net: transcript partial peek=快递拿一拿，衣服洗一洗，明天准备去，然后
+I (93765) clare_net: recv kind=0 type=transcript len=174
+I (93766) clare_net: transcript final peek=快递拿一拿，衣服洗一洗，明天准备去，然后
+I (94271) clare_net: recv kind=0 type=transcript len=82
+I (94272) clare_net: transcript partial peek=南京
+I (94303) clare_net: recv kind=0 type=transcript len=82
+I (94303) clare_net: transcript partial peek=南京
+I (94403) clare_net: recv kind=0 type=transcript len=82
+I (94404) clare_net: transcript partial peek=南京
+I (94670) clare_net: recv kind=0 type=transcript len=82
+I (94670) clare_net: transcript partial peek=南京
+I (94699) clare_net: recv kind=0 type=transcript len=82
+I (94699) clare_net: transcript partial peek=南京
+I (94731) clare_net: recv kind=0 type=transcript len=82
+I (94731) clare_net: transcript partial peek=南京
+I (94923) clare_net: recv kind=0 type=transcript len=88
+I (94923) clare_net: transcript partial peek=南京专家
+I (94957) clare_net: recv kind=0 type=transcript len=88
+I (94957) clare_net: transcript partial peek=南京专家
+I (95002) clare_net: recv kind=0 type=transcript len=88
+I (95002) clare_net: transcript partial peek=南京专家
+I (95264) clare_net: recv kind=0 type=transcript len=103
+I (95265) clare_net: transcript partial peek=南京专家，黑客松了
+I (95299) clare_net: recv kind=0 type=transcript len=103
+I (95299) clare_net: transcript partial peek=南京专家，黑客松了
+I (95330) clare_net: recv kind=0 type=transcript len=103
+I (95330) clare_net: transcript partial peek=南京专家，黑客松了
+I (95491) clare_net: recv kind=0 type=transcript len=103
+I (95491) clare_net: transcript partial peek=南京专家，黑客松了
+I (95540) clare_net: recv kind=0 type=transcript len=105
+I (95541) clare_net: transcript final peek=南京专家，黑客松了。
+I (98021) clare_net: recv kind=0 type=transcript len=85
+I (98022) clare_net: transcript partial peek=去南京
+I (98053) clare_net: recv kind=0 type=transcript len=85
+I (98053) clare_net: transcript partial peek=去南京
+I (98102) clare_net: recv kind=0 type=transcript len=85
+I (98102) clare_net: transcript partial peek=去南京
+I (98380) clare_net: recv kind=0 type=transcript len=85
+I (98381) clare_net: transcript partial peek=去南京
+I (98407) clare_net: recv kind=0 type=transcript len=85
+I (98407) clare_net: transcript partial peek=去南京
+I (98443) clare_net: recv kind=0 type=transcript len=85
+I (98443) clare_net: transcript partial peek=去南京
+I (98598) clare_net: recv kind=0 type=transcript len=91
+I (98598) clare_net: transcript partial peek=去南京参加
+I (98629) clare_net: recv kind=0 type=transcript len=91
+I (98630) clare_net: transcript partial peek=去南京参加
+I (98693) clare_net: recv kind=0 type=transcript len=91
+I (98693) clare_net: transcript partial peek=去南京参加
+I (98879) clare_net: recv kind=0 type=transcript len=91
+I (98879) clare_net: transcript partial peek=去南京参加
+I (98908) clare_net: recv kind=0 type=transcript len=91
+I (98909) clare_net: transcript partial peek=去南京参加
+I (99037) clare_net: recv kind=0 type=transcript len=91
+I (99037) clare_net: transcript partial peek=去南京参加
+I (99099) clare_net: recv kind=0 type=transcript len=91
+I (99099) clare_net: transcript partial peek=去南京参加
+I (99734) clare_net: recv kind=0 type=transcript len=97
+I (99734) clare_net: transcript partial peek=去南京参加黑客
+I (99769) clare_net: recv kind=0 type=transcript len=97
+I (99770) clare_net: transcript partial peek=去南京参加黑客
+I (99809) clare_net: recv kind=0 type=transcript len=97
+I (99809) clare_net: transcript partial peek=去南京参加黑客
+I (99984) clare_net: recv kind=0 type=transcript len=106
+I (99984) clare_net: transcript partial peek=去南京参加黑客松比赛
+I (100014) clare_net: recv kind=0 type=transcript len=106
+I (100015) clare_net: transcript partial peek=去南京参加黑客松比赛
+I (100045) clare_net: recv kind=0 type=transcript len=106
+I (100045) clare_net: transcript partial peek=去南京参加黑客松比赛
+I (100209) clare_net: recv kind=0 type=transcript len=106
+I (100209) clare_net: transcript partial peek=去南京参加黑客松比赛
+I (100248) clare_net: recv kind=0 type=transcript len=106
+I (100248) clare_net: transcript partial peek=去南京参加黑客松比赛
+I (100348) clare_net: recv kind=0 type=transcript len=108
+I (100348) clare_net: transcript final peek=去南京参加黑客松比赛。
+I (101419) clare_s3: Connecting Clare...
+I (101421) websocket_client: Started
+I (101870) clare_net: WebSocket connected kind=1
+I (101870) clare_s3: Ask Clare a question
+I (105354) clare_s3: Clare is answering...
+I (105529) clare_net: recv kind=1 type=transcription len=73
+I (105529) clare_net: host transcription peek=告诉我明天要去干什么来着？
+I (105534) clare_s3: Question received
+I (108299) clare_net: recv kind=1 type=answer_text len=45
+I (108299) clare_net: host answer_text peek=
+I (108301) clare_net: recv kind=1 type=answer_text len=51
+I (108301) clare_net: host answer_text peek=根据
+I (108301) clare_s3: Answer text feed append cur=52 chunk=6 peek=根据
+I (108333) clare_net: recv kind=1 type=answer_text len=51
+I (108333) clare_net: host answer_text peek=会议
+I (108333) clare_s3: Answer text feed append cur=58 chunk=6 peek=会议
+I (108390) clare_net: recv kind=1 type=answer_text len=54
+I (108390) clare_net: host answer_text peek=记录，
+I (108390) clare_s3: Answer text feed append cur=64 chunk=9 peek=记录，
+I (108687) clare_net: recv kind=1 type=answer_text len=54
+I (108687) clare_net: host answer_text peek=你明天
+I (108687) clare_s3: Answer text feed append cur=73 chunk=9 peek=你明天
+I (108689) clare_net: recv kind=1 type=answer_text len=57
+I (108689) clare_net: host answer_text peek=要去南京
+I (108689) clare_s3: Answer text feed append cur=82 chunk=12 peek=要去南京
+I (108691) clare_net: recv kind=1 type=answer_text len=57
+I (108691) clare_net: host answer_text peek=参加黑客
+I (108691) clare_s3: Answer text feed append cur=94 chunk=12 peek=参加黑客
+I (108693) clare_net: recv kind=1 type=answer_text len=54
+I (108693) clare_net: host answer_text peek=松比赛
+I (108693) clare_s3: Answer text feed append cur=106 chunk=9 peek=松比赛
+I (108698) clare_net: recv kind=1 type=answer_text len=48
+I (108699) clare_net: host answer_text peek=，
+I (108699) clare_s3: Answer text feed append cur=115 chunk=3 peek=，
+I (108704) clare_net: recv kind=1 type=answer_text len=51
+I (108704) clare_net: host answer_text peek=记得
+I (108704) clare_s3: Answer text feed append cur=118 chunk=6 peek=记得
+I (108739) clare_net: recv kind=1 type=answer_text len=51
+I (108740) clare_net: host answer_text peek=先向
+I (108740) clare_s3: Answer text feed append cur=124 chunk=6 peek=先向
+I (108745) clare_net: recv kind=1 type=answer_text len=57
+I (108745) clare_net: host answer_text peek=老师请假
+I (108745) clare_s3: Answer text feed append cur=130 chunk=12 peek=老师请假
+I (108791) clare_net: recv kind=1 type=answer_text len=48
+I (108791) clare_net: host answer_text peek=。
+I (108791) clare_s3: Answer text feed append cur=142 chunk=3 peek=。
+I (108818) clare_net: recv kind=1 type=answer_text len=44
+I (108819) clare_net: host answer_text peek=
+I (108837) ESP_ES_PARSER: The version of es_parser is v1.0.1
+I (108837) clare_net: tts stream begin expected=7517
+I (108868) clare_net: tts stream end
+I (109175) clare_net: tts stream begin expected=10017
+I (109197) clare_audio: tts playback task started
+I (109200) clare_audio: tts first audio out (ring consumed 1024 bytes so far)
+I (109216) clare_net: tts stream end
+I (109526) clare_net: tts stream begin expected=7517
+I (109555) clare_net: tts stream end
+I (109877) clare_net: tts stream begin expected=8481
+I (109911) clare_net: tts stream end
+I (110228) clare_net: tts stream begin expected=8737
+I (110262) clare_net: tts stream end
+I (110578) clare_net: tts stream begin expected=8481
+I (110611) clare_net: tts stream end
+I (110927) clare_net: tts stream begin expected=8481
+I (110961) clare_net: tts stream end
+I (111279) clare_net: tts stream begin expected=8225
+I (111312) clare_net: tts stream end
+I (111314) clare_net: recv kind=1 type=done len=15
+I (115314) clare_audio: tts drain continues in background (long answer); decoder owned by task
+I (115385) clare_audio: tts playback task done: ring=50394 B pcm=300672 B
+I (115423) clare_s3: Resuming live transcription...
+W (116122) clare_s3: Audio stream send failed err=259
+I (116320) websocket_client: Started
+I (116774) clare_net: WebSocket connected kind=0
+I (116775) clare_s3: Listening - live transcription
+I (116775) clare_s3: Listening - live transcription

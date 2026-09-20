@@ -30,6 +30,7 @@
 #include "esp_netif.h"
 #include "esp_wifi.h"
 #include "freertos/FreeRTOS.h"
+#include "freertos/semphr.h"
 #include "freertos/task.h"
 #include "nvs_flash.h"
 
@@ -64,6 +65,36 @@ static std::atomic<uint32_t> s_session{0};
 // Wi-Fi/TLS stacks (see clare_net.cpp memory notes).
 EXT_RAM_BSS_ATTR static wifi_ap_record_t s_scan_records[SCAN_MAX];
 EXT_RAM_BSS_ATTR static char s_scan_json[SCAN_JSON_MAX];
+
+// Scan cache: the hotspot kicks a scan as soon as the AP is up and on every
+// SCAN_DONE; /scan.json answers instantly from the cache and orders the next
+// round.  A blocking scan inside the HTTP handler outlasts the captive
+// portal browser's fetch timeout — that is why the page showed no networks.
+static SemaphoreHandle_t s_scan_lock = nullptr;
+static bool s_scan_busy = false;
+static uint16_t s_scan_num = 0;
+
+static bool scan_lock_take(void)
+{
+    return s_scan_lock != nullptr &&
+           xSemaphoreTake(s_scan_lock, pdMS_TO_TICKS(1000)) == pdTRUE;
+}
+
+static void kick_scan(void)
+{
+    if (!scan_lock_take()) return;
+    if (!s_scan_busy) {
+        wifi_scan_config_t cfg = {};
+        cfg.show_hidden = false;
+        esp_err_t err = esp_wifi_scan_start(&cfg, false);
+        if (err == ESP_OK) {
+            s_scan_busy = true;
+        } else if (err != ESP_ERR_WIFI_STATE) {
+            ESP_LOGW(TAG, "scan kick err=%d", static_cast<int>(err));
+        }
+    }
+    xSemaphoreGive(s_scan_lock);
+}
 
 static void emit_event(clare_net_event_type_t type, const char *text = nullptr)
 {
@@ -188,40 +219,46 @@ static const char kIndexHtml[] =
     "body{font-family:-apple-system,Segoe UI,sans-serif;background:#101722;color:#F4F7FB;margin:0;padding:24px}"
     ".card{max-width:440px;margin:0 auto;background:#182231;border-radius:16px;padding:20px}"
     "h1{font-size:20px;margin:0 0 12px}"
-    "select,input{width:100%;padding:12px;border-radius:8px;border:1px solid #394B63;background:#0F1622;color:#F4F7FB;box-sizing:border-box;margin:6px 0;font-size:16px}"
+    "input{width:100%;padding:12px;border-radius:8px;border:1px solid #394B63;background:#0F1622;color:#F4F7FB;box-sizing:border-box;margin:6px 0;font-size:16px}"
     "button{width:100%;padding:12px;border:0;border-radius:8px;background:#247C68;color:#fff;font-size:16px;margin-top:6px}"
     ".msg{margin-top:12px;font-size:14px;color:#9EB2C9}"
     "#result{color:#8ED1B2}"
     "</style></head><body><div class=card>"
     "<h1>Clare Wi-Fi Setup</h1>"
     "<div id=msg class=msg>Scanning networks...</div>"
-    "<select id=ssid></select>"
+    "<input id=ssid list=ssids autocomplete=off placeholder=\"Wi-Fi name (SSID) - pick from list or type\">"
+    "<datalist id=ssids></datalist>"
     "<input id=pass type=password placeholder=\"Wi-Fi password (leave empty for open networks)\">"
     "<button onclick=save()>Connect</button>"
     "<div id=result class=msg></div>"
     "</div><script>"
-    "async function scan(){"
-    "var m=document.getElementById('msg');m.textContent='Scanning networks...';"
+    "var timer=null;"
+    "function setMsg(t){document.getElementById('msg').textContent=t;}"
+    "async function scan(auto){"
+    "if(!auto)setMsg('Scanning networks...');"
     "try{"
     "var r=await fetch('/scan.json');var aps=await r.json();"
-    "var sel=document.getElementById('ssid');sel.innerHTML='';"
+    "var dl=document.getElementById('ssids');dl.innerHTML='';"
     "aps.forEach(function(a){var o=document.createElement('option');o.value=a.s;"
-    "o.textContent=a.s+' ('+a.r+' dBm'+(a.a?', secured':'')+')';sel.appendChild(o);});"
-    "m.textContent=aps.length?'Select your Wi-Fi network':'No networks found - tap here to retry';"
-    "}catch(e){m.textContent='Scan failed - tap here to retry';}}"
+    "o.label=a.r+' dBm'+(a.a?' · secured':'');dl.appendChild(o);});"
+    "if(aps.length){setMsg('Found '+aps.length+' networks - pick one above or type a name, then Connect');"
+    "if(timer){clearInterval(timer);timer=null;}}"
+    "else if(!timer)setMsg('No networks yet - retrying automatically...');"
+    "}catch(e){if(!timer)setMsg('Scan failed - retrying automatically...');}}"
+    "function startPolling(){if(!timer)timer=setInterval(function(){scan(true)},5000);}"
     "async function save(){"
     "var s=document.getElementById('ssid').value;"
     "var p=document.getElementById('pass').value;"
     "var r=document.getElementById('result');"
-    "if(!s){r.textContent='Please select a network first';return;}"
+    "if(!s){r.textContent='Please pick a network or type its name first';return;}"
     "r.textContent='Saving...';"
     "try{"
     "await fetch('/save',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},"
     "body:'ssid='+encodeURIComponent(s)+'&pass='+encodeURIComponent(p)});"
     "r.textContent='Saved. Clare is reconnecting - you can close this page.';"
     "}catch(e){r.textContent='Save failed - please retry';}}"
-    "document.getElementById('msg').addEventListener('click',scan);"
-    "scan();"
+    "document.getElementById('msg').addEventListener('click',function(){scan(false);});"
+    "scan(true);startPolling();"
     "</script></body></html>";
 
 static esp_err_t page_handler(httpd_req_t *req)
@@ -250,22 +287,16 @@ static size_t json_escape(char *out, size_t out_len, const char *in)
 
 static esp_err_t scan_handler(httpd_req_t *req)
 {
-    wifi_scan_config_t scan_cfg = {};
-    scan_cfg.show_hidden = false;
-    esp_err_t err = esp_wifi_scan_start(&scan_cfg, true);
-    if (err != ESP_OK) {
-        ESP_LOGW(TAG, "scan_start err=%d", static_cast<int>(err));
-        httpd_resp_set_status(req, "503 Service Unavailable");
+    // Order the next round first; this request itself is served from the
+    // cache so the phone gets an instant answer.
+    kick_scan();
+
+    httpd_resp_set_type(req, "application/json");
+    if (!scan_lock_take()) {
         httpd_resp_send(req, "[]", 2);
         return ESP_OK;
     }
-    uint16_t num = SCAN_MAX;
-    err = esp_wifi_scan_get_ap_records(&num, s_scan_records);
-    if (err != ESP_OK) {
-        httpd_resp_set_status(req, "503 Service Unavailable");
-        httpd_resp_send(req, "[]", 2);
-        return ESP_OK;
-    }
+    const uint16_t num = s_scan_num;
     // Skip duplicate SSIDs (the radio reports one record per BSSID).
     size_t o = 0;
     int written = snprintf(s_scan_json + o, SCAN_JSON_MAX - o, "[");
@@ -293,7 +324,7 @@ static esp_err_t scan_handler(httpd_req_t *req)
         first = 0;
     }
     snprintf(s_scan_json + o, SCAN_JSON_MAX - o, "]");
-    httpd_resp_set_type(req, "application/json");
+    xSemaphoreGive(s_scan_lock);
     httpd_resp_send(req, s_scan_json, HTTPD_RESP_USE_STRLEN);
     return ESP_OK;
 }
@@ -459,8 +490,29 @@ static esp_err_t start_httpd(void)
 
 static void ap_event_handler(void *, esp_event_base_t base, int32_t id, void *)
 {
-    if (base != WIFI_EVENT || !s_active) return;
-    if (id == WIFI_EVENT_AP_STACONNECTED) {
+    if (base != WIFI_EVENT) return;
+    // Scan bookkeeping runs regardless of s_active: a scan started in a
+    // previous session may finish after the hotspot closed, and a stale
+    // busy flag would otherwise freeze scanning in the next session.
+    if (id == WIFI_EVENT_SCAN_DONE) {
+        if (scan_lock_take()) {
+            uint16_t num = SCAN_MAX;
+            if (esp_wifi_scan_get_ap_records(&num, s_scan_records) == ESP_OK) {
+                s_scan_num = num;
+            } else {
+                s_scan_num = 0;
+            }
+            s_scan_busy = false;
+            xSemaphoreGive(s_scan_lock);
+            ESP_LOGI(TAG, "Scan done: %u networks", static_cast<unsigned>(s_scan_num));
+        }
+        return;
+    }
+    if (!s_active) return;
+    if (id == WIFI_EVENT_AP_START) {
+        // Fresh results as early as possible; /scan.json tops up on request.
+        kick_scan();
+    } else if (id == WIFI_EVENT_AP_STACONNECTED) {
         ESP_LOGI(TAG, "Phone connected to setup hotspot");
         emit_event(CLARE_NET_EVENT_PROV_CLIENT_CONNECTED);
     } else if (id == WIFI_EVENT_AP_STADISCONNECTED) {
@@ -556,6 +608,15 @@ extern "C" esp_err_t clare_prov_start(void)
     if (err != ESP_OK) {
         ESP_LOGW(TAG, "Failed to disable Wi-Fi power save err=%d", static_cast<int>(err));
     }
+    if (!s_scan_lock) {
+        s_scan_lock = xSemaphoreCreateMutex();
+        if (!s_scan_lock) return ESP_ERR_NO_MEM;
+    }
+    if (scan_lock_take()) {
+        s_scan_busy = false;
+        xSemaphoreGive(s_scan_lock);
+    }
+    kick_scan();  // first results before the phone even connects
 
     s_dns_run = true;
     BaseType_t task_ok = xTaskCreate(dns_task, "prov_dns", 3072, nullptr, 5, &s_dns_task);
